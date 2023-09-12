@@ -8,14 +8,22 @@ import {
   Listbox,
 } from "@headlessui/react";
 import { SidebarItems } from "@/data/SidebarItems";
+import { sidebarToggle } from "./Navbar";
+import { useAtom } from "jotai";
 
 interface data {
   data: any;
 }
 
 export default function SmallCardInfo({ data }: data) {
+  const [open, setOpen] = useAtom(sidebarToggle);
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-md bg-gray-200 w-[350px]">
+    <a
+      href={`/${data.cardID}`}
+      className={`max-w-sm rounded overflow-hidden shadow-md bg-gray-200 w-[350px] ${
+        open === false ? "lg:w-[350px]" : "lg:w-[320px]"
+      }  cursor-pointer`}
+    >
       <img
         className="w-full"
         src="https://cdn.discordapp.com/attachments/1038339416843886612/1089146769541173359/PlaceHolderIMG.jpg"
@@ -87,6 +95,6 @@ export default function SmallCardInfo({ data }: data) {
           </button>
         </div>
       </div>
-    </div>
+    </a>
   );
 }

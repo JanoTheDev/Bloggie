@@ -16,6 +16,11 @@ function classNames(...classes: any) {
 interface props {
   children: any;
 }
+
+import { atom, useAtom } from "jotai";
+export const sidebarToggle = atom<boolean>(false);
+
+
 export default function SideBar({ children }: props) {
   const router = useRouter();
   const [sideItems, setSideItems] = useState<any>(SidebarItems);
@@ -50,7 +55,7 @@ export default function SideBar({ children }: props) {
     setSideItems(updatedItems); // Update the state with the new items
   }, [router.query, router.pathname]);
 
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = useAtom(sidebarToggle);
   const handleOpen = () => {
     setOpen(!open);
   };

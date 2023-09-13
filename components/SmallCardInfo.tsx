@@ -31,6 +31,47 @@ export default function SmallCardInfo({ data }: data) {
       />
 
       <div className="px-6 py-4">
+        <a href={`/profile/${data.user.user_id}`} className="flex">
+          <div className="flex space-x-2">
+            <img
+              src={data.user.profile_picture}
+              alt="pfp"
+              className="w-8 h-8 rounded-full"
+            />
+
+            <p className="font-semibold text-lg text-gray-600 relative">
+              <div className="relative group">
+                {data.user.username}
+              </div>
+              
+            </p>
+            <div className="pt-1 relative">
+              {data.user.verified === true ? (
+                <div className="relative group">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+                    />
+                  </svg>
+                  <div className="absolute bottom-6 rounded-lg left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
+                    Verified
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+        </a>
         <div className="font-bold text-xl mb-2">{data.info.name}</div>
         <p className="text-gray-700 text-base">{data.info.shortDescription}</p>
         <div className="flex items-center justify-between pt-4">

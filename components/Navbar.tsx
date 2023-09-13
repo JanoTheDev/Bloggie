@@ -26,12 +26,9 @@ export default function SideBar({ children }: props) {
   const [sideItems, setSideItems] = useState<any>(SidebarItems);
 
   useEffect(() => {
-    console.log("Hi");
     let someQueryParam = router.query.list;
-    console.log(someQueryParam);
     let queryParamValue = "";
     if (!someQueryParam) someQueryParam = "";
-    console.log(someQueryParam);
 
     // Check if someQueryParam is an array or a string
     if (Array.isArray(someQueryParam)) {

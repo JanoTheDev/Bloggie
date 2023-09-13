@@ -56,6 +56,18 @@ export default function SideBar({ children }: props) {
   const handleOpen = () => {
     setOpen(!open);
   };
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    // Redirect to /results?sq=Text
+    window.location.href = `/results?sq=${encodeURIComponent(searchQuery)}`;
+  };
+
+  const handleInputChange = (e: any) => {
+    setSearchQuery(e.target.value);
+  };
   return (
     <div>
       <div className="flex m-4 z-[999] w-full mb-4">
@@ -79,7 +91,7 @@ export default function SideBar({ children }: props) {
           <p className="text-3xl font-bold lg:block hidden">Bloggie</p>
         </div>
         <div className="flex items-start justify-center w-[70%]">
-          <form>
+          <form onSubmit={handleSearch}>
             <label
               htmlFor="default-search"
               className="mb-2 text-sm font-medium text-gray-900 sr-only"
@@ -109,11 +121,14 @@ export default function SideBar({ children }: props) {
                 id="default-search"
                 className="block w-full sm:w-96 p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 "
                 placeholder="Search..."
+                value={searchQuery}
+                onChange={handleInputChange}
                 required
               />
               <button
                 type="submit"
                 className="text-gray-700 absolute right-2.5 bottom-2.5 bg-gray-300 hover:bg-gray-400 font-medium rounded-lg text-sm px-4 py-[4px]"
+                onClick={handleSearch}
               >
                 Search
               </button>

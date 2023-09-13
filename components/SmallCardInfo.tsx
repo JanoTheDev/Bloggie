@@ -31,6 +31,29 @@ export default function SmallCardInfo({ data }: data) {
       />
 
       <div className="px-6 py-4">
+        <div className="flex space-x-2 m-3 -ml-2 -mt-1">
+          {data.info.tags ? (
+            data.info.tags.slice(0, 3).map((tag: any, index: number) => (
+              <div
+                key={index}
+                className="bg-gray-100 px-2 py-1 rounded-lg text-xs"
+              >
+                {tag.charAt(0).toUpperCase() + tag.slice(1)}
+              </div>
+            ))
+          ) : (
+            <></>
+          )}
+          {data.info.tags ? (
+            data.info.tags.length > 3 && (
+              <div className="bg-gray-100 px-2 py-1 rounded-lg text-xs">
+                +{data.info.tags.length - 3}
+              </div>
+            )
+          ) : (
+            <></>
+          )}
+        </div>
         <a href={`/profile/${data.user.user_id}`} className="flex">
           <div className="flex space-x-2">
             <img
@@ -40,11 +63,9 @@ export default function SmallCardInfo({ data }: data) {
             />
 
             <p className="font-semibold text-lg text-gray-600 relative">
-              <div className="relative group">
-                {data.user.username}
-              </div>
-              
+              <div className="relative group">{data.user.username}</div>
             </p>
+
             <div className="pt-1 relative">
               {data.user.verified === true ? (
                 <div className="relative group">

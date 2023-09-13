@@ -19,6 +19,7 @@ export const BlogData = [
       views_count: "10k",
       like_count: "900",
       copy_count: "200",
+      tags: ["tag1", "tag2", "tag3", "tag4", "tag5"],
     },
   },
   {
@@ -41,6 +42,7 @@ export const BlogData = [
       views_count: "11k",
       like_count: "800",
       copy_count: "210",
+      tags: ["tag1", "tag2"],
     },
   },
   {
@@ -63,6 +65,7 @@ export const BlogData = [
       views_count: "12k",
       like_count: "950",
       copy_count: "310",
+      tags: ["tag1", "tag2", "tag3", "tag4", "jano"],
     },
   },
 ];

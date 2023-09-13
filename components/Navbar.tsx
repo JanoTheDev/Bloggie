@@ -19,6 +19,7 @@ interface props {
 
 import { atom, useAtom } from "jotai";
 export const sidebarToggle = atom<boolean>(false);
+export const searchBarText = atom<string>("");
 
 
 export default function SideBar({ children }: props) {
@@ -57,11 +58,12 @@ export default function SideBar({ children }: props) {
     setOpen(!open);
   };
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useAtom(searchBarText);
 
   const handleSearch = (e: any) => {
     e.preventDefault();
     // Redirect to /results?sq=Text
+    setSearchQuery(searchQuery)
     window.location.href = `/results?sq=${encodeURIComponent(searchQuery)}`;
   };
 

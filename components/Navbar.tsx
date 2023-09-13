@@ -90,7 +90,7 @@ export default function SideBar({ children }: props) {
               />
             </svg>
           </button>
-          <p className="text-3xl font-bold lg:block hidden">Bloggie</p>
+          <a href="/" className="text-3xl font-bold lg:block hidden">Bloggie</a>
         </div>
         <div className="flex items-start justify-center w-[70%]">
           <form onSubmit={handleSearch}>

@@ -9,14 +9,24 @@ import {
 } from "@headlessui/react";
 import { SidebarItems } from "@/data/SidebarItems";
 import { sidebarToggle } from "./Navbar";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 
 interface data {
   data: any;
 }
 
+export const searchBarFilter = atom<string>("");
+
 export default function SmallCardInfo({ data }: data) {
   const [open, setOpen] = useAtom(sidebarToggle);
+  const [filterQuery, setFilterQuery] = useAtom(searchBarFilter);
+
+
+  function handleTags(text: any) {
+    // Redirect to /results?sq=Text
+    setFilterQuery(text)
+    window.location.href = `/results?fq=${encodeURIComponent(text)}`;
+  };
   return (
     <a
       href={`/${data.cardID}`}
@@ -34,12 +44,14 @@ export default function SmallCardInfo({ data }: data) {
         <div className="flex space-x-2 m-3 -ml-2 -mt-1">
           {data.info.tags ? (
             data.info.tags.slice(0, 3).map((tag: any, index: number) => (
-              <div
+              <a
                 key={index}
                 className="bg-gray-100 px-2 py-1 rounded-lg text-xs"
+                onClick={() => handleTags(tag)}
+                href={`/results?fq=${tag}`}
               >
                 {tag.charAt(0).toUpperCase() + tag.slice(1)}
-              </div>
+              </a>
             ))
           ) : (
             <></>

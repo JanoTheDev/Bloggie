@@ -9,12 +9,18 @@ import React, { useEffect, useState } from "react";
 export default function Home() {
   const [userAcc, setUserAcc] = useAtom(userAccount);
   const [userPosts, setUserPosts] = useState<any>({});
+  const [userHistory, setUserHistory] = useState<any>({});
 
   useEffect(() => {
     const filteredPosts = BlogData.filter((data) => {
       return data.user.user_id === userAcc.user_id;
     });
     setUserPosts(filteredPosts);
+
+    const filteredHistory = BlogData.filter((data) => {
+      return data.info.views_count.includes(userAcc.user_id) && data.user.user_id !== userAcc.user_id;
+    });
+    setUserHistory(filteredHistory);
   }, []);
 
   return (
@@ -31,7 +37,9 @@ export default function Home() {
                 />
                 <div className="flex flex-col items-center lg:items-start justify-center">
                   <div className="flex items-center">
-                    <p className="text-2xl font-bold mr-2">{userAcc.username}</p>
+                    <p className="text-2xl font-bold mr-2">
+                      {userAcc.username}
+                    </p>
                     {userAcc.verified === true ? (
                       <div className="relative group">
                         <svg
@@ -146,23 +154,38 @@ export default function Home() {
             <div className="flex flex-wrap gap-6 pt-6 lg:pl-6">
               <p>Skills: {userAcc.skills.join(", ")}</p>
             </div>
-            
-            <p className="mt-12 text-xl pl-6">
-              {userPosts.length} posts
-            </p>
-            <div className=" items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
-              <div className="flex flex-wrap justify-start gap-3">
-                {userPosts.length > 0 ? (
-                  userPosts.map((x: any, i: number) => (
-                    <SmallCardInfo data={x} />
-                  ))
-                ) : (
-                  <p className="text-2xl text-center font-bold">
-                    No Posts Found
-                  </p>
-                )}
+
+            {userPosts.length > 0 ? (
+              <div>
+                <p className="mt-12 text-xl pl-6">{userPosts.length} blogs posted</p>
+
+                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                  <div className="flex overflow-x-auto gap-3">
+                    {userPosts.map((x: any, i: number) => (
+                      <SmallCardInfo data={x} key={i} />
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
+            ) : (
+              <></>
+            )}
+
+            {userHistory.length > 0 ? (
+              <div>
+                <p className="text-xl pl-6">{userHistory.length} viewed blogs</p>
+
+                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                  <div className="flex overflow-x-auto gap-3">
+                    {userHistory.map((x: any, i: number) => (
+                      <SmallCardInfo data={x} key={i} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         }
       />

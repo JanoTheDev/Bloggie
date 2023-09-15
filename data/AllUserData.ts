@@ -17,6 +17,7 @@ export const AllUserData = [
       instagram: "",
     },
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
+    history: ["1", "2", "3"],
     followers: ["2", "3"],
   },
   {
@@ -37,6 +38,7 @@ export const AllUserData = [
       instagram: "",
     },
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
+    history: ["1", "2", "3"],
     followers: ["1", "3"],
   },
   {
@@ -57,6 +59,7 @@ export const AllUserData = [
       instagram: "",
     },
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
+    history: ["1", "2", "3"],
     followers: ["1", "2"],
   },
 ];

@@ -14,6 +14,7 @@ export default function OtherProfile() {
   const [userAcc, setUserAcc] = useAtom(userAccount);
   const [userProfile, setUserProfile] = useState<any>({});
   const [userPosts, setUserPosts] = useState<any[]>([]);
+  const [userHistory, setUserHistory] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -31,6 +32,13 @@ export default function OtherProfile() {
         (data) => data.user.user_id === userID
       );
       setUserPosts(filteredPosts);
+
+      const filteredHistory = BlogData.filter((data) => {
+        return data.info.views_count.includes(userID as string) && data.user.user_id !== userID;
+      });
+      setUserHistory(filteredHistory);
+
+
       setLoading(false);
     }
   }, [userID]);
@@ -171,21 +179,41 @@ export default function OtherProfile() {
                   <p>Skills: {userProfile.skills.join(", ")}</p>
                 </div>
 
-                <p className="mt-12 text-xl pl-6">{userPosts.length} posts</p>
+                {userPosts.length > 0 ? (
+                  <div>
+                    <p className="mt-12 text-xl pl-6">
+                      {userPosts.length} posts
+                    </p>
 
-                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
-                  <div className="flex flex-wrap justify-start gap-3">
-                    {userPosts.length > 0 ? (
-                      userPosts.map((x: any, i: number) => (
-                        <SmallCardInfo data={x} />
-                      ))
-                    ) : (
-                      <p className="text-2xl text-center font-bold">
-                        No Posts Found
-                      </p>
-                    )}
+                    <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                      <div className="flex overflow-x-auto gap-3">
+                        {userPosts.map((x: any, i: number) => (
+                          <SmallCardInfo data={x} key={i} />
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <></>
+                )}
+
+                {userHistory.length > 0 ? (
+                  <div>
+                    <p className="text-xl pl-6">
+                      {userHistory.length} viewed blogs
+                    </p>
+
+                    <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                      <div className="flex overflow-x-auto gap-3">
+                        {userHistory.map((x: any, i: number) => (
+                          <SmallCardInfo data={x} key={i} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
             ) : loading === false && !userProfile.user_id ? (
               <p className="text-center font-bold text-2xl">User not found</p>

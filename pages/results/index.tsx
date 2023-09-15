@@ -38,13 +38,10 @@ export default function ResultsPage() {
           user.username
             .toLowerCase()
             .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          user.work_place
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          user.location
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
           info.name
+            .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string) ||
+          info.shortDescription
             .toLowerCase()
             .includes(SearchQuery?.toString().toLowerCase() as string) ||
           info.tags.includes(FilterQuery?.toString().toLowerCase() as string)
@@ -64,6 +61,9 @@ export default function ResultsPage() {
             .includes(SearchQuery?.toString().toLowerCase() as string) ||
           user.location
             .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string) ||
+          user.user_description
+            .toLowerCase()
             .includes(SearchQuery?.toString().toLowerCase() as string)
         );
       });
@@ -82,10 +82,7 @@ export default function ResultsPage() {
           (user.username
             .toLowerCase()
             .includes(SearchQuery?.toString().toLowerCase() as string) ||
-            user.work_place
-              .toLowerCase()
-              .includes(SearchQuery?.toString().toLowerCase() as string) ||
-            user.location
+            info.shortDescription
               .toLowerCase()
               .includes(SearchQuery?.toString().toLowerCase() as string) ||
             info.name
@@ -106,6 +103,9 @@ export default function ResultsPage() {
             .toLowerCase()
             .includes(SearchQuery?.toString().toLowerCase() as string) ||
           user.location
+            .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string) ||
+          user.user_description
             .toLowerCase()
             .includes(SearchQuery?.toString().toLowerCase() as string)
         );

@@ -196,7 +196,7 @@ export default function OtherProfile() {
                       {userPosts.length} posts
                     </p>
 
-                    <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                    <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-6">
                       <div className="flex overflow-x-auto gap-3">
                         {userPosts.map((x: any, i: number) => (
                           <SmallCardInfo data={x} key={i} />
@@ -214,7 +214,7 @@ export default function OtherProfile() {
                       {userHistory.length} viewed blogs
                     </p>
 
-                    <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                    <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-6">
                       <div className="flex overflow-x-auto gap-3">
                         {userHistory.map((x: any, i: number) => (
                           <SmallCardInfo data={x} key={i} />
@@ -232,7 +232,7 @@ export default function OtherProfile() {
                       {userLiked.length} liked blogs
                     </p>
 
-                    <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                    <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-6">
                       <div className="flex overflow-x-auto gap-3">
                         {userLiked.map((x: any, i: number) => (
                           <SmallCardInfo data={x} key={i} />

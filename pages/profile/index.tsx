@@ -157,6 +157,7 @@ export default function Home() {
                 />
               </a>
             </div>
+            
             <div className="flex flex-wrap gap-6 pt-6 lg:pl-6">
               <p>Skills: {userAcc.skills.join(", ")}</p>
             </div>
@@ -165,7 +166,7 @@ export default function Home() {
               <div>
                 <p className="mt-12 text-xl pl-6">{userPosts.length} blogs posted</p>
 
-                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-6">
                   <div className="flex overflow-x-auto gap-3">
                     {userPosts.map((x: any, i: number) => (
                       <SmallCardInfo data={x} key={i} />
@@ -181,7 +182,7 @@ export default function Home() {
               <div>
                 <p className="text-xl pl-6">{userHistory.length} viewed blogs</p>
 
-                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-6">
                   <div className="flex overflow-x-auto gap-3">
                     {userHistory.map((x: any, i: number) => (
                       <SmallCardInfo data={x} key={i} />
@@ -197,7 +198,7 @@ export default function Home() {
               <div>
                 <p className="text-xl pl-6">{userLiked.length} liked blogs</p>
 
-                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-6">
                   <div className="flex overflow-x-auto gap-3">
                     {userLiked.map((x: any, i: number) => (
                       <SmallCardInfo data={x} key={i} />

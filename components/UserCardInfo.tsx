@@ -9,7 +9,7 @@ interface props {
 export default function UserCardInfo({ data }: props) {
   return (
     <div className="flex flex-col space-y-6 lg:space-y-0 lg:flex-none lg:grid lg:grid-cols-2">
-      <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-start">
+      <a href={`/profile/${data.user_id}`} className="flex flex-col lg:flex-row items-center justify-center lg:justify-start">
         <img src={data.profile_picture} alt="" className="flex w-32 h-32" />
         <div className="flex flex-col items-center lg:items-start justify-center">
           <div className="flex items-center">
@@ -89,7 +89,7 @@ export default function UserCardInfo({ data }: props) {
             {data.user_description}
           </p>
         </div>
-      </div>
+      </a>
       <div className="flex items-center justify-center lg:justify-end lg:mr-12">
         <button className="text-white bg-gray-600 text-lg rounded-lg px-4 py-2 ">
           Follow

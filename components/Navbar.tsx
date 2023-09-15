@@ -18,9 +18,8 @@ interface props {
 }
 
 import { atom, useAtom } from "jotai";
-export const sidebarToggle = atom<boolean>(false);
-export const searchBarText = atom<string>("");
-
+import { searchBarText, sidebarToggle } from "@/atoms/Navbar";
+import { userAccount } from "@/atoms/userAccount";
 
 export default function SideBar({ children }: props) {
   const router = useRouter();
@@ -63,13 +62,17 @@ export default function SideBar({ children }: props) {
   const handleSearch = (e: any) => {
     e.preventDefault();
     // Redirect to /results?sq=Text
-    setSearchQuery(searchQuery)
+    setSearchQuery(searchQuery);
     window.location.href = `/results?sq=${encodeURIComponent(searchQuery)}`;
   };
 
   const handleInputChange = (e: any) => {
     setSearchQuery(e.target.value);
   };
+
+  const [userAcc, setUserAcc] = useAtom(userAccount);
+  // Switching Accounts Soon
+
   return (
     <div>
       <div className="flex m-4 z-[999] w-full mb-4">
@@ -90,7 +93,9 @@ export default function SideBar({ children }: props) {
               />
             </svg>
           </button>
-          <a href="/" className="text-3xl font-bold lg:block hidden">Bloggie</a>
+          <a href="/" className="text-3xl font-bold lg:block hidden">
+            Bloggie
+          </a>
         </div>
         <div className="flex items-start justify-center w-[70%]">
           <form onSubmit={handleSearch}>
@@ -140,8 +145,11 @@ export default function SideBar({ children }: props) {
         <Menu as="div" className="relative inline-block text-left w-[17%]">
           <div className="flex items-end justify-end">
             <Menu.Button className="flex justify-end rounded-full bg-[#090410] text-sm">
-              <span className="sr-only">Open user menu</span>
-              <div className="h-10 w-10 rounded-full" />
+              <img
+                src={userAcc.profile_picture}
+                alt=""
+                className="h-10 w-10 rounded-full"
+              />
             </Menu.Button>
           </div>
           <Transition

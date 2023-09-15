@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { BlogData } from "@/data/BlogData";
-import SideBar, { searchBarText, sidebarToggle } from "@/components/Navbar";
-import SmallCardInfo from "@/components/SmallCardInfo";
+import SideBar from "@/components/Navbar";
+import SmallCardInfo, { searchBarFilter } from "@/components/SmallCardInfo";
 import { useAtom } from "jotai";
+import { searchBarText, sidebarToggle } from "@/atoms/Navbar";
 
 export default function ResultsPage() {
   const router = useRouter();
@@ -11,14 +12,12 @@ export default function ResultsPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [items, setItems] = useState<any>([]);
   const [searchQuery, setSearchQuery] = useAtom(searchBarText);
-  const [filterQuery, setFilterQuery] = useAtom(searchBarText);
+  const [filterQuery, setFilterQuery] = useAtom(searchBarFilter);
   const [open, setOpen] = useAtom(sidebarToggle);
 
   useEffect(() => {
-    console.log(router.query);
     let SearchQuery = router.query.sq;
     let FilterQuery = router.query.fq;
-    console.log(FilterQuery);
     if (!SearchQuery) {
       SearchQuery = "";
     }
@@ -78,7 +77,6 @@ export default function ResultsPage() {
       setSearchQuery(SearchQuery?.toString());
       setFilterQuery(FilterQuery?.toString());
     } else if (FilterQuery && !SearchQuery) {
-      console.log(FilterQuery);
       const filteredData = BlogData.filter((item) => {
         const user = item.user;
         const info = item.info;

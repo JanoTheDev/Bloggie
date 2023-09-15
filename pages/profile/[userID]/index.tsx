@@ -44,8 +44,8 @@ export default function OtherProfile() {
 
       const filteredLiked = BlogData.filter((data) => {
         return (
-          data.info.like_count.includes(userAcc.user_id) &&
-          data.user.user_id !== userAcc.user_id
+          data.info.like_count.includes(userID as string) &&
+          data.user.user_id !== userID
         );
       });
       setUserLiked(filteredLiked);

@@ -62,4 +62,25 @@ export const AllUserData = [
     history: ["1", "2", "3"],
     followers: ["1", "2"],
   },
+  {
+    username: "User4",
+    verified: true,
+    user_id: "4",
+    profile_picture:
+      "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+    join_date: "1693732421",
+    user_description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    work_place: "Workplace 4",
+    location: "Location 4",
+    socials: {
+      github: "",
+      twitter: "",
+      youtube: "",
+      instagram: "",
+    },
+    skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
+    history: [],
+    followers: [],
+  },
 ];

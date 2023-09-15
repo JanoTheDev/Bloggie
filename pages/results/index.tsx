@@ -5,12 +5,15 @@ import SideBar from "@/components/Navbar";
 import SmallCardInfo, { searchBarFilter } from "@/components/SmallCardInfo";
 import { useAtom } from "jotai";
 import { searchBarText, sidebarToggle } from "@/atoms/Navbar";
+import { AllUserData } from "@/data/AllUserData";
+import UserCardInfo from "@/components/UserCardInfo";
 
 export default function ResultsPage() {
   const router = useRouter();
 
   const [loading, setLoading] = useState<boolean>(true);
   const [items, setItems] = useState<any>([]);
+  const [users, setUsers] = useState<any>([]);
   const [searchQuery, setSearchQuery] = useAtom(searchBarText);
   const [filterQuery, setFilterQuery] = useAtom(searchBarFilter);
   const [open, setOpen] = useAtom(sidebarToggle);
@@ -48,7 +51,25 @@ export default function ResultsPage() {
         );
       });
 
+      const filteredUsers = AllUserData.filter((user) => {
+        return (
+          user.user_id
+            .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string) ||
+          user.username
+            .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string) ||
+          user.work_place
+            .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string) ||
+          user.location
+            .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string)
+        );
+      });
+
       setItems(filteredData);
+      setUsers(filteredUsers);
       setSearchQuery(SearchQuery?.toString());
       setFilterQuery(FilterQuery?.toString());
     } else if (SearchQuery && FilterQuery) {
@@ -73,7 +94,25 @@ export default function ResultsPage() {
         );
       });
 
+      const filteredUsers = AllUserData.filter((user) => {
+        return (
+          user.user_id
+            .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string) ||
+          user.username
+            .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string) ||
+          user.work_place
+            .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string) ||
+          user.location
+            .toLowerCase()
+            .includes(SearchQuery?.toString().toLowerCase() as string)
+        );
+      });
+
       setItems(filteredData);
+      setUsers(filteredUsers);
       setSearchQuery(SearchQuery?.toString());
       setFilterQuery(FilterQuery?.toString());
     } else if (FilterQuery && !SearchQuery) {
@@ -89,8 +128,6 @@ export default function ResultsPage() {
       setSearchQuery(SearchQuery?.toString());
       setFilterQuery(FilterQuery?.toString());
     }
-
-    // setOpen(open);
   }, [router.query]);
 
   return (
@@ -100,6 +137,15 @@ export default function ResultsPage() {
       ) : (
         <div>
           <SideBar>
+            {users.length > 0 ? (
+              <div>
+                {users.map((x: any, i: number) => (
+                  <UserCardInfo data={x} key={i} />
+                ))}
+              </div>
+            ) : (
+              <></>
+            )}
             {items.length > 0 ? (
               <div className="items-center justify-center flex pt-6 lg:pt-0 lg:justify-start lg:items-start pb-24">
                 <div className="flex flex-wrap justify-center gap-3">

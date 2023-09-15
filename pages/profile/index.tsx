@@ -10,6 +10,7 @@ export default function Home() {
   const [userAcc, setUserAcc] = useAtom(userAccount);
   const [userPosts, setUserPosts] = useState<any>({});
   const [userHistory, setUserHistory] = useState<any>({});
+  const [userLiked, setUserLiked] = useState<any>({});
 
   useEffect(() => {
     const filteredPosts = BlogData.filter((data) => {
@@ -21,6 +22,11 @@ export default function Home() {
       return data.info.views_count.includes(userAcc.user_id) && data.user.user_id !== userAcc.user_id;
     });
     setUserHistory(filteredHistory);
+
+    const filteredLiked = BlogData.filter((data) => {
+      return data.info.like_count.includes(userAcc.user_id) && data.user.user_id !== userAcc.user_id;
+    });
+    setUserLiked(filteredLiked);
   }, []);
 
   return (
@@ -178,6 +184,22 @@ export default function Home() {
                 <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
                   <div className="flex overflow-x-auto gap-3">
                     {userHistory.map((x: any, i: number) => (
+                      <SmallCardInfo data={x} key={i} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+
+            {userLiked.length > 0 ? (
+              <div>
+                <p className="text-xl pl-6">{userLiked.length} liked blogs</p>
+
+                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-24">
+                  <div className="flex overflow-x-auto gap-3">
+                    {userLiked.map((x: any, i: number) => (
                       <SmallCardInfo data={x} key={i} />
                     ))}
                   </div>

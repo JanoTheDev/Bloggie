@@ -19,6 +19,7 @@ export const AllUserData = [
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: ["1", "2", "3"],
     followers: ["2", "3"],
+    following: ["2", "3"],
     profiles_opened: ["2", "3", "4"],
     read_later: ["2", "3", "4"],
     liked_blogs: ["2", "3", "4"]
@@ -43,6 +44,7 @@ export const AllUserData = [
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: ["1", "2", "3"],
     followers: ["1", "3"],
+    following: ["1", "3"],
     profiles_opened: ["1", "3"],
     read_later: ["2", "3", "4"],
     liked_blogs: ["2", "3", "4"]
@@ -67,6 +69,7 @@ export const AllUserData = [
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: ["1", "2", "3"],
     followers: ["1", "2"],
+    following: ["1", "2", "4"],
     profiles_opened: ["1", "2", "4"],
     read_later: ["2", "3", "4"],
     liked_blogs: ["2", "3", "4"]
@@ -91,6 +94,7 @@ export const AllUserData = [
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: [],
     followers: [],
+    following: ["1", "2", "3"],
     profiles_opened: ["1", "2", "3"],
     read_later: ["2", "3", "4"],
     liked_blogs: ["2", "3", "4"]

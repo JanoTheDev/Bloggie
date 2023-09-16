@@ -16,6 +16,7 @@ export const userData = {
   },
   skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
   followers: ["2", "3"],
+  following: ["2", "3"],
   history: ["1", "2", "3"],
   profiles_opened: ["2", "3", "4"],
   read_later: ["2", "3", "4"],

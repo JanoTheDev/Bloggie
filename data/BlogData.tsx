@@ -5,6 +5,7 @@ export const BlogData = [
       username: "User1",
       verified: true,
       user_id: "1",
+      followers: ["2", "3"],
       profile_picture:
         "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
@@ -31,6 +32,7 @@ export const BlogData = [
       username: "User2",
       verified: false,
       user_id: "2",
+      followers: ["1", "3"],
       profile_picture:
         "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
@@ -57,6 +59,7 @@ export const BlogData = [
       username: "User3",
       verified: false,
       user_id: "3",
+      followers: ["1", "2"],
       profile_picture:
         "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
@@ -83,6 +86,7 @@ export const BlogData = [
       username: "User3",
       verified: false,
       user_id: "3",
+      followers: ["1", "2"],
       profile_picture:
         "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
@@ -109,6 +113,7 @@ export const BlogData = [
       username: "User3",
       verified: false,
       user_id: "3",
+      followers: ["1", "2"],
       profile_picture:
         "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
@@ -135,6 +140,7 @@ export const BlogData = [
       username: "User3",
       verified: false,
       user_id: "3",
+      followers: ["1", "2"],
       profile_picture:
         "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
@@ -161,6 +167,7 @@ export const BlogData = [
       username: "User3",
       verified: false,
       user_id: "3",
+      followers: ["1", "2"],
       profile_picture:
         "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
@@ -187,6 +194,7 @@ export const BlogData = [
       username: "User4",
       verified: false,
       user_id: "4",
+      following: ["1", "2", "3"],
       profile_picture:
         "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
@@ -213,6 +221,7 @@ export const BlogData = [
       username: "User3",
       verified: false,
       user_id: "3",
+      followers: ["1", "2"],
       profile_picture:
         "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
@@ -239,6 +248,7 @@ export const BlogData = [
       username: "User4",
       verified: false,
       user_id: "4",
+      following: ["1", "2", "3"],
       profile_picture:
         "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",

@@ -137,6 +137,10 @@ export default function ResultsPage() {
       ) : (
         <div>
           <SideBar>
+            <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6">
+              Results for {searchQuery}
+            </p>
+            <div className="ml-6 lg:ml-0">
             {users.length > 0 ? (
               <div>
                 {users.map((x: any, i: number) => (
@@ -159,6 +163,8 @@ export default function ResultsPage() {
                 No items found
               </p>
             )}
+            </div>
+            
           </SideBar>
         </div>
       )}

@@ -60,7 +60,7 @@ export default function OtherProfile() {
         children={
           <div>
             {loading === false && userProfile.user_id ? (
-              <div>
+              <div className="ml-6 lg:ml-0">
                 <div className="flex flex-col space-y-6 lg:space-y-0 lg:flex-none lg:grid lg:grid-cols-2">
                   <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-start">
                     <img

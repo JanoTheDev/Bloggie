@@ -57,6 +57,7 @@ export default function Home() {
       ) : (
         <SideBar>
           <div
+          className="ml-6 lg:ml-0"
             style={{
               display: "flex",
               flexDirection: "row",

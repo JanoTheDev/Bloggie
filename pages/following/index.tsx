@@ -42,6 +42,9 @@ export default function Home() {
   return (
     <div>
       <SideBar>
+      <p className="text-3xl font-bold pl-6 text-center lg:text-start">
+          Follower's activity
+        </p>
         <div
           style={{
             display: "flex",

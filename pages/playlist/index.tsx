@@ -106,6 +106,9 @@ export default function Home() {
   return (
     <div>
       <SideBar>
+        <p className="text-3xl font-bold pl-6 text-center lg:text-start">
+          {list === "RH" ? "Blog history" : list === "LB" ? "Liked blogs" : "Read blogs later"}
+        </p>
         <div
           style={{
             display: "flex",

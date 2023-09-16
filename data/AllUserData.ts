@@ -20,6 +20,7 @@ export const AllUserData = [
     history: ["1", "2", "3"],
     followers: ["2", "3"],
     profiles_opened: ["2", "3", "4"],
+    read_later: ["2", "3", "4"],
   },
   {
     username: "User2",
@@ -42,6 +43,7 @@ export const AllUserData = [
     history: ["1", "2", "3"],
     followers: ["1", "3"],
     profiles_opened: ["1", "3"],
+    read_later: ["2", "3", "4"],
   },
   {
     username: "User3",
@@ -64,6 +66,7 @@ export const AllUserData = [
     history: ["1", "2", "3"],
     followers: ["1", "2"],
     profiles_opened: ["1", "2", "4"],
+    read_later: ["2", "3", "4"],
   },
   {
     username: "User4",
@@ -86,5 +89,6 @@ export const AllUserData = [
     history: [],
     followers: [],
     profiles_opened: ["1", "2", "3"],
+    read_later: ["2", "3", "4"],
   },
 ];

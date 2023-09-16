@@ -16,32 +16,61 @@ export default function Home() {
   const [userAcc, setUserAcc] = useAtom(userAccount);
 
   useEffect(() => {
-    if (list === "RH" && router.isReady) {
+    if (router.isReady) {
+      if (list === "RH") {
+        const usersToShow = AllUserData.filter((user) =>
+          userAcc.profiles_opened.includes(user.user_id)
+        );
+
+        const blogPostsToShow = BlogData.filter((post) =>
+          post.info.views_count.includes(userAcc.user_id)
+        );
+
+        const sortedData = [];
+
+        // Loop through usersToShow
+        for (const user of usersToShow) {
+          // Push user data to sortedData
+          sortedData.push(user);
+
+          // Filter blog posts seen by userAcc for this user
+          const userBlogPosts = blogPostsToShow.filter(
+            (post) => post.user.user_id === user.user_id
+          );
+
+          // Push the filtered blog posts to sortedData
+          sortedData.push(...userBlogPosts);
+        }
+
+        setData(sortedData);
+      }
       const usersToShow = AllUserData.filter((user) =>
-        userAcc.profiles_opened.includes(user.user_id)
+        userAcc.read_later.includes(user.user_id)
       );
 
       const blogPostsToShow = BlogData.filter((post) =>
-        post.info.views_count.includes(userAcc.user_id)
+        post.info.read_later.includes(userAcc.user_id)
       );
 
       const sortedData = [];
 
       // Loop through usersToShow
       for (const user of usersToShow) {
-        // Push user data to sortedData
-        sortedData.push(user);
-
         // Filter blog posts seen by userAcc for this user
         const userBlogPosts = blogPostsToShow.filter(
           (post) => post.user.user_id === user.user_id
         );
 
-        // Push the filtered blog posts to sortedData
-        sortedData.push(...userBlogPosts);
-      }
+        // Only add the user if there are blog posts to show for them
+        if (userBlogPosts.length > 0) {
+          // Push user data to sortedData
+          sortedData.push(user);
 
-      setData(sortedData);
+          // Push the filtered blog posts to sortedData
+          sortedData.push(...userBlogPosts);
+        }
+        setData(sortedData);
+      }
     }
   }, [list, router.isReady, userAcc.profiles_opened, userAcc.user_id]);
 

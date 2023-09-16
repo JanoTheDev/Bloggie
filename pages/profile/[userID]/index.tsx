@@ -61,12 +61,15 @@ export default function OtherProfile() {
           <div>
             {loading === false && userProfile.user_id ? (
               <div className="ml-6 lg:ml-0">
+                <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6 mb-6">
+                {userProfile.username === userAcc.username ? `Your` : `${userProfile.username}'s`} Profile
+                </p>
                 <div className="flex flex-col space-y-6 lg:space-y-0 lg:flex-none lg:grid lg:grid-cols-2">
                   <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-start">
                     <img
                       src={userProfile.profile_picture}
                       alt=""
-                      className="flex w-32 h-32"
+                      className="flex w-24 h-24"
                     />
                     <div className="flex flex-col items-center lg:items-start justify-center">
                       <div className="flex items-center">

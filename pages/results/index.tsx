@@ -137,7 +137,7 @@ export default function ResultsPage() {
       ) : (
         <div>
           <SideBar>
-            <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6">
+            <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6 mb-6">
               Results for {searchQuery}
             </p>
             <div className="ml-6 lg:ml-0">

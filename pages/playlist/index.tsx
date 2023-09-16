@@ -106,7 +106,7 @@ export default function Home() {
   return (
     <div>
       <SideBar>
-        <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6">
+        <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6 mb-6">
           {list === "RH" ? "Blog history" : list === "LB" ? "Liked blogs" : "Read blogs later"}
         </p>
         <div

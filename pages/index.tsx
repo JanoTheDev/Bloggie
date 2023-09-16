@@ -15,40 +15,38 @@ export default function Home() {
 
   useEffect(() => {
     const randomizedData = [];
-    
+
     // Shuffle the BlogData array randomly
     const shuffledBlogData = [...BlogData].sort(() => Math.random() - 0.5);
-    
+
     // Shuffle the AllUserData array randomly
     const shuffledUserData = [...AllUserData].sort(() => Math.random() - 0.5);
-    
+
     // Get the IDs of users that the current user follows
     const followedUserIds = userAcc.user_id
       ? AllUserData.find((user) => user.user_id === userAcc.user_id)
           ?.followers || []
       : [];
-    
+
     let blogIndex = 0;
-    
+
     // Loop to generate the pattern
     for (let i = 0; i < 5; i++) {
       // Push 5 blog posts
       const blogSlice = shuffledBlogData.slice(blogIndex, blogIndex + 5);
       randomizedData.push(...blogSlice);
       blogIndex += 5;
-      
+
       // Push a user if there are more users
       if (i < 4) {
         const userSlice = shuffledUserData.slice(i, i + 1);
         randomizedData.push(...userSlice);
       }
     }
-    
+
     setRandomData(randomizedData);
     setLoading(false);
   }, [userAcc.user_id]);
-
-
 
   return (
     <div>
@@ -56,8 +54,11 @@ export default function Home() {
         <></>
       ) : (
         <SideBar>
+          <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6 mb-6">
+            Home
+          </p>
           <div
-          className="ml-6 lg:ml-0"
+            className="ml-6 lg:ml-0"
             style={{
               display: "flex",
               flexDirection: "row",

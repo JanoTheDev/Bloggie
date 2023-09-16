@@ -2,7 +2,7 @@ export const BlogData = [
   {
     cardID: "1",
     user: {
-      username: "User1",
+      username: "0bama_7817",
       verified: true,
       user_id: "1",
       followers: ["2", "3"],

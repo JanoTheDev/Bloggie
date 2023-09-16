@@ -10,9 +10,9 @@ interface props {
 export default function UserCardInfo({ data }: props) {
   const [userAcc, setUserAcc] = useAtom(userAccount);
   return (
-    <div className="flex flex-col space-y-6 lg:space-y-0 lg:flex-none lg:grid lg:grid-cols-2">
+    <div className="flex flex-col space-y-6 lg:space-y-0 lg:flex-none lg:grid lg:grid-cols-2 pt-6">
       <a href={`/profile/${data.user_id}`} className="flex flex-col lg:flex-row items-center justify-center lg:justify-start">
-        <img src={data.profile_picture} alt="" className="flex w-32 h-32" />
+        <img src={data.profile_picture} alt="" className="flex w-24 h-24" />
         <div className="flex flex-col items-center lg:items-start justify-center">
           <div className="flex items-center">
             <p className="text-2xl font-bold mr-2">{data.username}</p>

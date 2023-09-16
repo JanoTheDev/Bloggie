@@ -69,7 +69,7 @@ export const BlogData = [
     },
   },
   {
-    cardID: "3",
+    cardID: "4",
     user: {
       username: "User3",
       verified: false,
@@ -83,7 +83,7 @@ export const BlogData = [
     info: {
       time_posted: "1693732421",
       image: "https://example.com/image3.jpg",
-      name: "Post 3",
+      name: "Post 4",
       shortDescription: "Short description for Post 3.",
       views_count: ["2", "3"],
       like_count: ["1", "2", "3"],
@@ -92,7 +92,7 @@ export const BlogData = [
     },
   },
   {
-    cardID: "3",
+    cardID: "5",
     user: {
       username: "User3",
       verified: false,
@@ -106,7 +106,7 @@ export const BlogData = [
     info: {
       time_posted: "1693732421",
       image: "https://example.com/image3.jpg",
-      name: "Post 3",
+      name: "Post 5",
       shortDescription: "Short description for Post 3.",
       views_count: ["1", "2"],
       like_count: ["1", "2", "3"],
@@ -115,7 +115,7 @@ export const BlogData = [
     },
   },
   {
-    cardID: "3",
+    cardID: "6",
     user: {
       username: "User3",
       verified: false,
@@ -129,7 +129,7 @@ export const BlogData = [
     info: {
       time_posted: "1693732421",
       image: "https://example.com/image3.jpg",
-      name: "Post 3",
+      name: "Post 6",
       shortDescription: "Short description for Post 3.",
       views_count: ["1", "3"],
       like_count: ["1", "2", "3"],
@@ -138,7 +138,7 @@ export const BlogData = [
     },
   },
   {
-    cardID: "3",
+    cardID: "7",
     user: {
       username: "User3",
       verified: false,
@@ -152,7 +152,7 @@ export const BlogData = [
     info: {
       time_posted: "1693732421",
       image: "https://example.com/image3.jpg",
-      name: "Post 3",
+      name: "Post 7",
       shortDescription: "Short description for Post 3.",
       views_count: ["2", "3"],
       like_count: ["1", "2", "3"],
@@ -161,11 +161,11 @@ export const BlogData = [
     },
   },
   {
-    cardID: "3",
+    cardID: "8",
     user: {
-      username: "User3",
+      username: "User4",
       verified: false,
-      user_id: "3",
+      user_id: "4",
       profile_picture: "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
       user_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -175,7 +175,7 @@ export const BlogData = [
     info: {
       time_posted: "1693732421",
       image: "https://example.com/image3.jpg",
-      name: "Post 3",
+      name: "Post 1",
       shortDescription: "Short description for Post 3.",
       views_count: ["1", "2", "3"],
       like_count: ["1", "2", "3"],
@@ -184,7 +184,7 @@ export const BlogData = [
     },
   },
   {
-    cardID: "3",
+    cardID: "9",
     user: {
       username: "User3",
       verified: false,
@@ -198,7 +198,7 @@ export const BlogData = [
     info: {
       time_posted: "1693732421",
       image: "https://example.com/image3.jpg",
-      name: "Post 3",
+      name: "Post 9",
       shortDescription: "Short description for Post 3.",
       views_count: ["1", "2", "3"],
       like_count: ["1", "2", "3"],
@@ -207,11 +207,11 @@ export const BlogData = [
     },
   },
   {
-    cardID: "3",
+    cardID: "10",
     user: {
-      username: "User3",
+      username: "User4",
       verified: false,
-      user_id: "3",
+      user_id: "4",
       profile_picture: "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
       join_date: "1693732421",
       user_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -221,7 +221,7 @@ export const BlogData = [
     info: {
       time_posted: "1693732421",
       image: "https://example.com/image3.jpg",
-      name: "Post 3",
+      name: "Post 2",
       shortDescription: "Short description for Post 3.",
       views_count: ["1", "2", "3"],
       like_count: ["1", "2", "3"],

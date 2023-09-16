@@ -19,4 +19,5 @@ export const userData = {
   history: ["1", "2", "3"],
   profiles_opened: ["2", "3", "4"],
   read_later: ["2", "3", "4"],
+  liked_blogs: ["2", "3", "4"]
 };

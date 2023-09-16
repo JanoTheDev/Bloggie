@@ -19,6 +19,7 @@ export const AllUserData = [
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: ["1", "2", "3"],
     followers: ["2", "3"],
+    profilesOpened: ["2", "3", "4"],
   },
   {
     username: "User2",
@@ -40,6 +41,7 @@ export const AllUserData = [
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: ["1", "2", "3"],
     followers: ["1", "3"],
+    profilesOpened: ["1", "3"],
   },
   {
     username: "User3",
@@ -61,6 +63,7 @@ export const AllUserData = [
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: ["1", "2", "3"],
     followers: ["1", "2"],
+    profilesOpened: ["1", "2", "4"],
   },
   {
     username: "User4",
@@ -82,5 +85,6 @@ export const AllUserData = [
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: [],
     followers: [],
+    profilesOpened: ["1", "2", "3"],
   },
 ];

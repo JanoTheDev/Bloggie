@@ -44,7 +44,6 @@ export default function Home() {
       }
     }
     
-    console.log(randomizedData);
     setRandomData(randomizedData);
     setLoading(false);
   }, [userAcc.user_id]);

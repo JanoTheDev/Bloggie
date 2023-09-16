@@ -110,6 +110,8 @@ export default function OtherProfile() {
                     <button className="text-white bg-gray-600 text-lg rounded-lg px-4 py-2 ">
                       {userProfile.user_id === userAcc.user_id
                         ? "Edit"
+                        : userProfile.followers.includes(userAcc.user_id)
+                        ? "Following"
                         : "Follow"}
                     </button>
                   </div>

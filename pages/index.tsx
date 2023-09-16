@@ -17,7 +17,7 @@ export default function Home() {
         <SideBar
           children={
             <div className="items-center justify-center flex pt-6 lg:pt-0 lg:justify-start lg:items-start pb-24">
-              <div className="flex flex-wrap justify-start gap-3">
+              <div className="flex flex-wrap justify-center lg:justify-start gap-3">
                 {BlogData.map((x: any, i: number) => (
                   <SmallCardInfo data={x} />
                 ))}

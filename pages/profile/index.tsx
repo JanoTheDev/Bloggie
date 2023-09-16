@@ -19,12 +19,18 @@ export default function Home() {
     setUserPosts(filteredPosts);
 
     const filteredHistory = BlogData.filter((data) => {
-      return data.info.views_count.includes(userAcc.user_id) && data.user.user_id !== userAcc.user_id;
+      return (
+        data.info.views_count.includes(userAcc.user_id) &&
+        data.user.user_id !== userAcc.user_id
+      );
     });
     setUserHistory(filteredHistory);
 
     const filteredLiked = BlogData.filter((data) => {
-      return data.info.like_count.includes(userAcc.user_id) && data.user.user_id !== userAcc.user_id;
+      return (
+        data.info.like_count.includes(userAcc.user_id) &&
+        data.user.user_id !== userAcc.user_id
+      );
     });
     setUserLiked(filteredLiked);
   }, []);
@@ -86,8 +92,8 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-6 pt-6 lg:pl-5">
-              <div className="flex space-x-4 ">
+            <div className="flex items-center justify-center lg:items-start lg:justify-start flex-wrap gap-12 pt-6 lg:pl-5">
+              <div className="flex space-x-6 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -157,16 +163,18 @@ export default function Home() {
                 />
               </a>
             </div>
-            
-            <div className="flex flex-wrap gap-6 pt-6 lg:pl-6">
+
+            <div className="flex flex-wrap gap-6 pt-6 lg:pl-6 lg:items-start lg:justify-start justify-center items-center">
               <p>Skills: {userAcc.skills.join(", ")}</p>
             </div>
 
             {userPosts.length > 0 ? (
               <div>
-                <p className="mt-12 text-xl pl-6">{userPosts.length} blogs posted</p>
+                <p className="mt-12 text-xl pl-6">
+                  {userPosts.length} blogs posted
+                </p>
 
-                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-6">
+                <div className="flex lg:pt-0 pb-6 m-4">
                   <div className="flex overflow-x-auto gap-3">
                     {userPosts.map((x: any, i: number) => (
                       <SmallCardInfo data={x} key={i} />
@@ -180,9 +188,11 @@ export default function Home() {
 
             {userHistory.length > 0 ? (
               <div>
-                <p className="text-xl pl-6">{userHistory.length} viewed blogs</p>
+                <p className="text-xl pl-6">
+                  {userHistory.length} viewed blogs
+                </p>
 
-                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-6">
+                <div className=" flex lg:pt-0 m-4 pb-6">
                   <div className="flex overflow-x-auto gap-3">
                     {userHistory.map((x: any, i: number) => (
                       <SmallCardInfo data={x} key={i} />
@@ -198,7 +208,7 @@ export default function Home() {
               <div>
                 <p className="text-xl pl-6">{userLiked.length} liked blogs</p>
 
-                <div className="items-center justify-center flex lg:pt-0 lg:justify-start lg:items-start pb-6">
+                <div className=" flex lg:pt-0 m-4 pb-6">
                   <div className="flex overflow-x-auto gap-3">
                     {userLiked.map((x: any, i: number) => (
                       <SmallCardInfo data={x} key={i} />

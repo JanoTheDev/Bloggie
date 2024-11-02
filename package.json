@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "bloggie-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,29 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.12",
-    "@heroicons/react": "^2.0.16",
-    "@material-tailwind/react": "^2.1.1",
-    "@types/node": "18.14.2",
-    "@types/react": "18.0.28",
-    "@types/react-dom": "18.0.11",
-    "antd": "^5.3.2",
-    "autoprefixer": "^10.4.13",
-    "axios": "^1.3.4",
-    "dotenv": "^16.0.3",
-    "eslint": "8.35.0",
-    "eslint-config-next": "13.2.1",
-    "jotai": "^2.4.2",
-    "next": "13.2.1",
-    "postcss": "^8.4.21",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^3.2.7",
-    "typescript": "4.9.5"
+    "@headlessui/react": "^2.2.0",
+    "jotai": "^2.10.1",
+    "next": "^15.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "install": "^0.13.0",
-    "npm": "^9.5.1",
-    "tailwind-scrollbar": "^2.1.0"
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }

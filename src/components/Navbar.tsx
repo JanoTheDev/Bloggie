@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/compat/router";
 import {
   Disclosure,
   Menu,
@@ -20,37 +20,39 @@ interface props {
 import { atom, useAtom } from "jotai";
 import { searchBarText, sidebarToggle } from "@/atoms/Navbar";
 import { userAccount } from "@/atoms/userAccount";
+import Link from "next/link";
 
 export default function SideBar({ children }: props) {
   const router = useRouter();
   const [sideItems, setSideItems] = useState<any>(SidebarItems);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    let someQueryParam = router.query.list;
-    let queryParamValue = "";
-    if (!someQueryParam) someQueryParam = "";
+    setMounted(true)
+  }, [])
 
-    // Check if someQueryParam is an array or a string
+  useEffect(() => {
+    if (!router || !mounted) return // Check if router exists and component is mounted
+
+    let someQueryParam = router.query.list
+    let queryParamValue = ""
+    if (!someQueryParam) someQueryParam = ""
+
     if (Array.isArray(someQueryParam)) {
-      // Handle if it's an array (e.g., someQueryParam=['value1', 'value2'])
-      queryParamValue = someQueryParam.join("").toLowerCase();
+      queryParamValue = someQueryParam.join("").toLowerCase()
     } else {
-      // Handle if it's a string (e.g., someQueryParam='value')
-      queryParamValue = someQueryParam.toLowerCase();
+      queryParamValue = someQueryParam.toLowerCase()
     }
 
-    const newPathName = `${router.pathname.toLowerCase()}${queryParamValue}`;
+    const newPathName = `${router.pathname.toLowerCase()}${queryParamValue}`
 
-    // Update the items array with the selected value
-    const updatedItems = SidebarItems.map((item) => {
-      return {
-        ...item,
-        selected: item.alias === newPathName,
-      };
-    });
+    const updatedItems = SidebarItems.map((item) => ({
+      ...item,
+      selected: item.alias === newPathName,
+    }))
 
-    setSideItems(updatedItems); // Update the state with the new items
-  }, [router.query, router.pathname]);
+    setSideItems(updatedItems)
+  }, [router?.query, router?.pathname, router, mounted])
 
   const [open, setOpen] = useAtom(sidebarToggle);
   const handleOpen = () => {
@@ -73,6 +75,8 @@ export default function SideBar({ children }: props) {
   const [userAcc, setUserAcc] = useAtom(userAccount);
   // Switching Accounts Soon
 
+  if (!mounted) return null; // Ensure the component is only rendered after mounting
+
   return (
     <div>
       <div className="flex m-4 z-[999] w-full mb-4">
@@ -93,9 +97,9 @@ export default function SideBar({ children }: props) {
               />
             </svg>
           </button>
-          <a href="/" className="text-3xl font-bold lg:block hidden">
+          <Link href="/" className="text-3xl font-bold lg:block hidden">
             Bloggie
-          </a>
+          </Link>
         </div>
         <div className="flex items-start justify-center w-[70%]">
           <form onSubmit={handleSearch}>
@@ -162,12 +166,12 @@ export default function SideBar({ children }: props) {
             leaveTo="transform opacity-0 scale-95"
           >
             <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-[#090410] py-1 shadow-lg ring-1 ring-[#090410] ring-opacity-5 focus:outline-none">
-              <a
+              <Link
                 href="#"
                 className="block px-4 py-2 text-sm cursor-pointer text-white"
               >
                 Sign out
-              </a>
+              </Link>
             </div>
           </Transition>
         </Menu>
@@ -182,7 +186,7 @@ export default function SideBar({ children }: props) {
             {open === true ? (
               <div className={`flex flex-col space-y-3 lg:pr-4 w-[200px]`}>
                 {sideItems.map((x: SidebarItem, i: number) => (
-                  <a href={x.href} key={i}>
+                  <Link href={x.href || "#"} key={i}>
                     {x.type === "Item" ? (
                       <div
                         className={`flex ${
@@ -205,14 +209,14 @@ export default function SideBar({ children }: props) {
                         key={i}
                       ></div>
                     )}
-                  </a>
+                  </Link>
                 ))}
               </div>
             ) : (
               <div className="lg:pr-4 hidden lg:block">
                 <div className="flex flex-col space-y-3">
                   {sideItems.map((x: SidebarItem, i: number) => (
-                    <a href={x.href} key={i}>
+                    <Link href={x.href || "#"} key={i}>
                       {x.type === "Item" ? (
                         <div
                           className={`${
@@ -230,7 +234,7 @@ export default function SideBar({ children }: props) {
                           key={i}
                         ></div>
                       )}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>

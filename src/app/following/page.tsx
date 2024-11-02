@@ -1,3 +1,5 @@
+"use client"
+
 import { userAccount } from "@/atoms/userAccount";
 import SideBar from "@/components/Navbar";
 import SmallCardInfo from "@/components/SmallCardInfo";

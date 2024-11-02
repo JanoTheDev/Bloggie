@@ -1,3 +1,5 @@
+"use client"
+
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { BlogData } from "@/data/BlogData";

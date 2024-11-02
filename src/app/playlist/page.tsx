@@ -1,3 +1,5 @@
+"use client"
+
 import { userAccount } from "@/atoms/userAccount";
 import SideBar from "@/components/Navbar";
 import SmallCardInfo from "@/components/SmallCardInfo";
@@ -5,18 +7,23 @@ import UserCardInfo from "@/components/UserCardInfo";
 import { AllUserData } from "@/data/AllUserData";
 import { BlogData } from "@/data/BlogData";
 import { useAtom } from "jotai";
-import { useRouter } from "next/router";
+import { useRouter } from "next/compat/router";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const { list } = router.query;
+  
 
   const [data, setData] = useState<any>([]);
   const [userAcc, setUserAcc] = useAtom(userAccount);
 
+  const [routerList, setRouterList] = useState<any>()
+
   useEffect(() => {
+    if(!router) return;
     if (router.isReady) {
+      const { list } = router.query;
+      setRouterList(list);
       if (list === "RH") {
         const usersToShow = AllUserData.filter((user) =>
           userAcc.profiles_opened.includes(user.user_id)
@@ -101,13 +108,13 @@ export default function Home() {
         }
       }
     }
-  }, [list, router.isReady, userAcc.profiles_opened, userAcc.user_id]);
+  }, [routerList, router?.isReady, userAcc.profiles_opened, userAcc.user_id, router]);
 
   return (
     <div>
       <SideBar>
         <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6 mb-6">
-          {list === "RH" ? "Blog history" : list === "LB" ? "Liked blogs" : "Read blogs later"}
+          {routerList === "RH" ? "Blog history" : routerList === "LB" ? "Liked blogs" : "Read blogs later"}
         </p>
         <div
         className="lg:ml-0"

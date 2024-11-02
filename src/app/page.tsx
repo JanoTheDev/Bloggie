@@ -1,3 +1,5 @@
+"use client"
+
 import { userAccount } from "@/atoms/userAccount";
 import SideBar from "@/components/Navbar";
 import SmallCardInfo from "@/components/SmallCardInfo";
@@ -5,7 +7,6 @@ import UserCardInfo from "@/components/UserCardInfo";
 import { AllUserData } from "@/data/AllUserData";
 import { BlogData } from "@/data/BlogData";
 import { useAtom } from "jotai";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {

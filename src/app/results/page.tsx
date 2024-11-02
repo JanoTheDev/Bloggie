@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/compat/router";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { BlogData } from "@/data/BlogData";
 import SideBar from "@/components/Navbar";
@@ -21,6 +21,7 @@ export default function ResultsPage() {
   const [open, setOpen] = useAtom(sidebarToggle);
 
   useEffect(() => {
+    if(!router) return;
     let SearchQuery = router.query.sq;
     let FilterQuery = router.query.fq;
     if (!SearchQuery) {
@@ -130,7 +131,7 @@ export default function ResultsPage() {
       setSearchQuery(SearchQuery?.toString());
       setFilterQuery(FilterQuery?.toString());
     }
-  }, [router.query]);
+  }, [router?.query, router]);
 
   return (
     <div>

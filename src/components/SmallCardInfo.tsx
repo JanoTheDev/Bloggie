@@ -37,7 +37,7 @@ export default function SmallCardInfo({ data }: data) {
     >
       <img
         className="w-full"
-        src="https://cdn.discordapp.com/attachments/1038339416843886612/1089146769541173359/PlaceHolderIMG.jpg"
+        src={"https://picsum.photos/200/300"}
         alt="Image Description"
       />
 

@@ -7,11 +7,11 @@ import UserCardInfo from "@/components/UserCardInfo";
 import { AllUserData } from "@/data/AllUserData";
 import { BlogData } from "@/data/BlogData";
 import { useAtom } from "jotai";
-import { useRouter } from "next/compat/router";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
-  const router = useRouter();
+  const searchParams = useSearchParams()
   
 
   const [data, setData] = useState<any>([]);
@@ -19,10 +19,8 @@ export default function Home() {
 
   const [routerList, setRouterList] = useState<any>()
 
-  useEffect(() => {
-    if(!router) return;
-    if (router.isReady) {
-      const { list } = router.query;
+  const findList = () => {
+    const list = searchParams.get("list");
       setRouterList(list);
       if (list === "RH") {
         const usersToShow = AllUserData.filter((user) =>
@@ -107,8 +105,15 @@ export default function Home() {
           setData(sortedData);
         }
       }
-    }
-  }, [routerList, router?.isReady, userAcc.profiles_opened, userAcc.user_id, router]);
+  }
+
+  useEffect(() => {
+      findList();
+  }, [routerList]);
+
+  useEffect(() => {
+    findList();
+}, []);
 
   return (
     <div>

@@ -37,7 +37,7 @@ export default function SmallCardInfo({ data }: data) {
     >
       <img
         className="w-full"
-        src={"https://picsum.photos/200/300"}
+        src={"https://picsum.photos/350/200"}
         alt="Image Description"
       />
 

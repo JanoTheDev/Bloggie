@@ -7,7 +7,7 @@ import UserCardInfo from "@/components/UserCardInfo";
 import { AllUserData } from "@/data/AllUserData";
 import { BlogData } from "@/data/BlogData";
 import { useAtom } from "jotai";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
 export default function Home() {
   const [data, setData] = useState<any>([]);
@@ -42,7 +42,7 @@ export default function Home() {
   }, [userAcc.profiles_opened, userAcc.user_id]);
 
   return (
-    <div>
+    <Suspense>
       <SideBar>
       <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6 mb-6">
           Follower's activity
@@ -71,6 +71,6 @@ export default function Home() {
           ))}
         </div>
       </SideBar>
-    </div>
+    </Suspense>
   );
 }

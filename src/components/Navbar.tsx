@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/compat/router";
 import {
   Disclosure,
@@ -9,7 +9,6 @@ import {
 } from "@headlessui/react";
 import { SidebarItem, SidebarItems } from "@/data/SidebarItems";
 import { useSearchParams } from "next/navigation";
-
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -31,29 +30,28 @@ export default function SideBar({ children }: props) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
-
     const someQueryParam = searchParams.get("list") || "";
-    let queryParamValue = ""
+    let queryParamValue = "";
 
     if (Array.isArray(someQueryParam)) {
-      queryParamValue = someQueryParam.join("").toLowerCase()
+      queryParamValue = someQueryParam.join("").toLowerCase();
     } else {
-      queryParamValue = someQueryParam.toLowerCase()
+      queryParamValue = someQueryParam.toLowerCase();
     }
 
-    const newPathName = `${router?.pathname.toLowerCase()}${queryParamValue}`
+    const newPathName = `${router?.pathname.toLowerCase()}${queryParamValue}`;
 
     const updatedItems = SidebarItems.map((item) => ({
       ...item,
       selected: item.alias === newPathName,
-    }))
+    }));
 
-    setSideItems(updatedItems)
-  }, [router?.query, router?.pathname, router, mounted])
+    setSideItems(updatedItems);
+  }, [router?.query, router?.pathname, router, mounted]);
 
   const [open, setOpen] = useAtom(sidebarToggle);
   const handleOpen = () => {
@@ -103,51 +101,54 @@ export default function SideBar({ children }: props) {
             Bloggie
           </Link>
         </div>
-        <div className="flex items-start justify-center w-[70%]">
-          <form onSubmit={handleSearch}>
-            <label
-              htmlFor="default-search"
-              className="mb-2 text-sm font-medium text-gray-900 sr-only"
-            >
-              Search
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-500"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="search"
-                id="default-search"
-                className="block w-full sm:w-96 p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 "
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={handleInputChange}
-                required
-              />
-              <button
-                type="submit"
-                className="text-gray-700 absolute right-2.5 bottom-2.5 bg-gray-300 hover:bg-gray-400 font-medium rounded-lg text-sm px-4 py-[4px]"
-                onClick={handleSearch}
+        <Suspense>
+          <div className="flex items-start justify-center w-[70%]">
+            <form onSubmit={handleSearch}>
+              <label
+                htmlFor="default-search"
+                className="mb-2 text-sm font-medium text-gray-900 sr-only"
               >
                 Search
-              </button>
-            </div>
-          </form>
-        </div>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-gray-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="search"
+                  id="default-search"
+                  className="block w-full sm:w-96 p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 "
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={handleInputChange}
+                  required
+                />
+                <button
+                  type="submit"
+                  className="text-gray-700 absolute right-2.5 bottom-2.5 bg-gray-300 hover:bg-gray-400 font-medium rounded-lg text-sm px-4 py-[4px]"
+                  onClick={handleSearch}
+                >
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
+        </Suspense>
+
         <Menu as="div" className="relative inline-block text-left w-[17%]">
           <div className="flex items-end justify-end">
             <Menu.Button className="flex justify-end rounded-full bg-[#090410] text-sm">

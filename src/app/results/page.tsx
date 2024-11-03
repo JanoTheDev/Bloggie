@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from "next/compat/router";
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState, Suspense } from "react";
 import { BlogData } from "@/data/BlogData";
 import SideBar from "@/components/Navbar";
 import SmallCardInfo, { searchBarFilter } from "@/components/SmallCardInfo";
@@ -11,7 +11,7 @@ import { searchBarText, sidebarToggle } from "@/atoms/Navbar";
 import { AllUserData } from "@/data/AllUserData";
 import UserCardInfo from "@/components/UserCardInfo";
 
-export default function ResultsPage() {
+function ResultsContent() {
   const router = useRouter();
   const searchParams = useSearchParams()
 
@@ -163,10 +163,17 @@ export default function ResultsPage() {
               </p>
             )}
             </div>
-            
           </SideBar>
         </div>
       )}
     </div>
+  );
+}
+
+export default function ResultsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResultsContent />
+    </Suspense>
   );
 }

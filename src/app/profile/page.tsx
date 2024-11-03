@@ -7,7 +7,7 @@ import { BlogData } from "@/data/BlogData";
 import { useAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
 export default function Home() {
   const [userAcc, setUserAcc] = useAtom(userAccount);
@@ -39,7 +39,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <Suspense>
       <Navbar
         children={
           <div className="ml-6 lg:ml-0">
@@ -228,6 +228,6 @@ export default function Home() {
           </div>
         }
       />
-    </div>
+    </Suspense>
   );
 }

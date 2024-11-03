@@ -72,7 +72,7 @@ export default function OtherProfile() {
                   <img
                     src={userProfile.profile_picture}
                     alt=""
-                    className="flex w-24 h-24"
+                    className="flex w-24 h-24 mr-8 rounded-full ml-6"
                   />
                   <div className="flex flex-col items-center lg:items-start justify-center">
                     <div className="flex items-center">

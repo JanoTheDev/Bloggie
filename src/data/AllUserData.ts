@@ -1,12 +1,12 @@
 export const AllUserData = [
   {
-    username: "0bama_7817",
+    username: "User1",
     verified: true,
     user_id: "1",
     profile_picture:
-      "https://cdn.discordapp.com/attachments/985005816253911044/1152546671113281536/SPOILER_0bamass.png",
+      "https://picsum.photos/200/300",
     join_date: "1693732421",
-    user_description: "i love jano",
+    user_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     work_place: "home",
     location: "redacted",
     socials: {
@@ -15,7 +15,7 @@ export const AllUserData = [
       youtube: "",
       instagram: "",
     },
-    skills: ["no", "skills", "4", "life"],
+    skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: ["1", "2", "3"],
     followers: ["2", "3"],
     following: ["2", "3"],
@@ -28,7 +28,7 @@ export const AllUserData = [
     verified: false,
     user_id: "2",
     profile_picture:
-      "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+      "https://picsum.photos/200/300",
     join_date: "1693732421",
     user_description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -53,7 +53,7 @@ export const AllUserData = [
     verified: false,
     user_id: "3",
     profile_picture:
-      "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+      "https://picsum.photos/200/300",
     join_date: "1693732421",
     user_description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -78,7 +78,7 @@ export const AllUserData = [
     verified: false,
     user_id: "4",
     profile_picture:
-      "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+      "https://picsum.photos/200/300",
     join_date: "1693732421",
     user_description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",

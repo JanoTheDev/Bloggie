@@ -7,7 +7,7 @@ export const BlogData = [
       user_id: "1",
       followers: ["2", "3"],
       profile_picture:
-        "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+        "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -16,7 +16,7 @@ export const BlogData = [
     },
     info: {
       time_posted: "1693732421",
-      image: "https://example.com/image1.jpg",
+      image: "https://picsum.photos/200/300",
       name: "Post 1",
       shortDescription: "Short description for Post 1.",
       read_later: ["2", "3", "4"],
@@ -34,7 +34,7 @@ export const BlogData = [
       user_id: "2",
       followers: ["1", "3"],
       profile_picture:
-        "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+        "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -43,7 +43,7 @@ export const BlogData = [
     },
     info: {
       time_posted: "1693732421",
-      image: "https://example.com/image2.jpg",
+      image: "https://picsum.photos/200/300",
       name: "Post 2",
       shortDescription: "Short description for Post 2.",
       read_later: ["1", "3", "4"],
@@ -61,7 +61,7 @@ export const BlogData = [
       user_id: "3",
       followers: ["1", "2"],
       profile_picture:
-        "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+        "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -70,7 +70,7 @@ export const BlogData = [
     },
     info: {
       time_posted: "1693732421",
-      image: "https://example.com/image3.jpg",
+      image: "https://picsum.photos/200/300",
       name: "Post 3",
       shortDescription: "Short description for Post 3.",
       read_later: ["2", "4"],
@@ -88,7 +88,7 @@ export const BlogData = [
       user_id: "3",
       followers: ["1", "2"],
       profile_picture:
-        "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+        "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -97,7 +97,7 @@ export const BlogData = [
     },
     info: {
       time_posted: "1693732421",
-      image: "https://example.com/image3.jpg",
+      image: "https://picsum.photos/200/300",
       name: "Post 4",
       shortDescription: "Short description for Post 3.",
       read_later: ["2", "3"],
@@ -115,7 +115,7 @@ export const BlogData = [
       user_id: "3",
       followers: ["1", "2"],
       profile_picture:
-        "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+        "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -124,7 +124,7 @@ export const BlogData = [
     },
     info: {
       time_posted: "1693732421",
-      image: "https://example.com/image3.jpg",
+      image: "https://picsum.photos/200/300",
       name: "Post 5",
       shortDescription: "Short description for Post 3.",
       read_later: ["2", "4"],
@@ -142,7 +142,7 @@ export const BlogData = [
       user_id: "3",
       followers: ["1", "2"],
       profile_picture:
-        "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+        "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -151,7 +151,7 @@ export const BlogData = [
     },
     info: {
       time_posted: "1693732421",
-      image: "https://example.com/image3.jpg",
+      image: "https://picsum.photos/200/300",
       name: "Post 6",
       shortDescription: "Short description for Post 3.",
       read_later: ["2", "3"],
@@ -169,7 +169,7 @@ export const BlogData = [
       user_id: "3",
       followers: ["1", "2"],
       profile_picture:
-        "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+        "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -178,7 +178,7 @@ export const BlogData = [
     },
     info: {
       time_posted: "1693732421",
-      image: "https://example.com/image3.jpg",
+      image: "https://picsum.photos/200/300",
       name: "Post 7",
       shortDescription: "Short description for Post 3.",
       read_later: ["1", "3", "4"],
@@ -196,7 +196,7 @@ export const BlogData = [
       user_id: "4",
       following: ["1", "2", "3"],
       profile_picture:
-        "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+        "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -205,7 +205,7 @@ export const BlogData = [
     },
     info: {
       time_posted: "1693732421",
-      image: "https://example.com/image3.jpg",
+      image: "https://picsum.photos/200/300",
       name: "Post 1",
       shortDescription: "Short description for Post 3.",
       read_later: ["1", "2", "3", "4"],
@@ -223,7 +223,7 @@ export const BlogData = [
       user_id: "3",
       followers: ["1", "2"],
       profile_picture:
-        "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+        "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -232,7 +232,7 @@ export const BlogData = [
     },
     info: {
       time_posted: "1693732421",
-      image: "https://example.com/image3.jpg",
+      image: "https://picsum.photos/200/300",
       name: "Post 9",
       shortDescription: "Short description for Post 3.",
       read_later: ["1", "2"],
@@ -250,7 +250,7 @@ export const BlogData = [
       user_id: "4",
       following: ["1", "2", "3"],
       profile_picture:
-        "https://cdn.discordapp.com/attachments/1038339416843886612/1151597798496677888/image.png",
+        "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -259,7 +259,7 @@ export const BlogData = [
     },
     info: {
       time_posted: "1693732421",
-      image: "https://example.com/image3.jpg",
+      image: "https://picsum.photos/200/300",
       name: "Post 2",
       shortDescription: "Short description for Post 3.",
       read_later: ["1", "4"],

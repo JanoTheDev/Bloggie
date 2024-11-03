@@ -13,7 +13,7 @@ export default function UserCardInfo({ data }: props) {
   return (
     <div className="flex flex-col space-y-6 lg:space-y-0 lg:flex-none lg:grid lg:grid-cols-2 pt-6">
       <Link href={`/profile/${data.user_id}`} className="flex flex-col lg:flex-row items-center justify-center lg:justify-start">
-        <img src={data.profile_picture} alt="" className="flex w-24 h-24" />
+        <img src={data.profile_picture} alt="" className="flex w-24 h-24 mr-8 rounded-full" />
         <div className="flex flex-col items-center lg:items-start justify-center">
           <div className="flex items-center">
             <p className="text-2xl font-bold mr-2">{data.username}</p>

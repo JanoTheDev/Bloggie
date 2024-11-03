@@ -8,6 +8,8 @@ import {
   Listbox,
 } from "@headlessui/react";
 import { SidebarItem, SidebarItems } from "@/data/SidebarItems";
+import { useSearchParams } from "next/navigation";
+
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -23,6 +25,7 @@ import { userAccount } from "@/atoms/userAccount";
 import Link from "next/link";
 
 export default function SideBar({ children }: props) {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [sideItems, setSideItems] = useState<any>(SidebarItems);
   const [mounted, setMounted] = useState(false);
@@ -32,11 +35,9 @@ export default function SideBar({ children }: props) {
   }, [])
 
   useEffect(() => {
-    if (!router || !mounted) return // Check if router exists and component is mounted
 
-    let someQueryParam = router.query.list
+    const someQueryParam = searchParams.get("list") || "";
     let queryParamValue = ""
-    if (!someQueryParam) someQueryParam = ""
 
     if (Array.isArray(someQueryParam)) {
       queryParamValue = someQueryParam.join("").toLowerCase()
@@ -44,7 +45,7 @@ export default function SideBar({ children }: props) {
       queryParamValue = someQueryParam.toLowerCase()
     }
 
-    const newPathName = `${router.pathname.toLowerCase()}${queryParamValue}`
+    const newPathName = `${router?.pathname.toLowerCase()}${queryParamValue}`
 
     const updatedItems = SidebarItems.map((item) => ({
       ...item,
@@ -62,6 +63,7 @@ export default function SideBar({ children }: props) {
   const [searchQuery, setSearchQuery] = useAtom(searchBarText);
 
   const handleSearch = (e: any) => {
+    console.log(searchQuery);
     e.preventDefault();
     // Redirect to /results?sq=Text
     setSearchQuery(searchQuery);
@@ -186,7 +188,7 @@ export default function SideBar({ children }: props) {
             {open === true ? (
               <div className={`flex flex-col space-y-3 lg:pr-4 w-[200px]`}>
                 {sideItems.map((x: SidebarItem, i: number) => (
-                  <Link href={x.href || "#"} key={i}>
+                  <a href={x.href || "#"} key={i}>
                     {x.type === "Item" ? (
                       <div
                         className={`flex ${
@@ -209,7 +211,7 @@ export default function SideBar({ children }: props) {
                         key={i}
                       ></div>
                     )}
-                  </Link>
+                  </a>
                 ))}
               </div>
             ) : (

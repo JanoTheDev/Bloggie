@@ -1,5 +1,6 @@
 "use client"
 
+import { useSearchParams } from 'next/navigation'
 import { useRouter } from "next/compat/router";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { BlogData } from "@/data/BlogData";
@@ -12,6 +13,7 @@ import UserCardInfo from "@/components/UserCardInfo";
 
 export default function ResultsPage() {
   const router = useRouter();
+  const searchParams = useSearchParams()
 
   const [loading, setLoading] = useState<boolean>(true);
   const [items, setItems] = useState<any>([]);
@@ -21,15 +23,9 @@ export default function ResultsPage() {
   const [open, setOpen] = useAtom(sidebarToggle);
 
   useEffect(() => {
-    if(!router) return;
-    let SearchQuery = router.query.sq;
-    let FilterQuery = router.query.fq;
-    if (!SearchQuery) {
-      SearchQuery = "";
-    }
-    if (!FilterQuery) {
-      FilterQuery = "";
-    }
+    let SearchQuery = searchParams.get('sq') || ''
+    let FilterQuery = searchParams.get('fq') || ''
+    console.log(SearchQuery , FilterQuery)
     setLoading(false);
 
     if (SearchQuery && !FilterQuery) {
@@ -131,7 +127,7 @@ export default function ResultsPage() {
       setSearchQuery(SearchQuery?.toString());
       setFilterQuery(FilterQuery?.toString());
     }
-  }, [router?.query, router]);
+  }, []);
 
   return (
     <div>

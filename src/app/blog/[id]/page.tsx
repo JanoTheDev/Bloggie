@@ -12,7 +12,7 @@ import { marked } from "marked";
 import DOMPurify from "dompurify";
 import hljs from "highlight.js";
 import "highlight.js/styles/default.css";
-
+import UserCardInfo from "@/components/UserCardInfo";
 
 export default function OtherProfile() {
   const params = useParams();
@@ -43,7 +43,12 @@ export default function OtherProfile() {
         <div>
           {loading === false && blogOwner.user_id && blogData.data ? (
             <div className="ml-6 lg:ml-0">
-              <div className="markdown-body" dangerouslySetInnerHTML={createMarkup(blogData.data)} />
+              <UserCardInfo data={blogOwner}/>
+              <hr className="my-4 mx-4 border-black" />
+              <div
+                className="markdown-body"
+                dangerouslySetInnerHTML={createMarkup(blogData.data)}
+              />
             </div>
           ) : loading === false && !blogOwner.user_id ? (
             <p className="text-center font-bold text-2xl">Blog not found</p>

@@ -219,7 +219,7 @@ export default function SideBar({ children }: props) {
               <div className="lg:pr-4 hidden lg:block">
                 <div className="flex flex-col space-y-3">
                   {sideItems.map((x: SidebarItem, i: number) => (
-                    <Link href={x.href || "#"} key={i}>
+                    <a href={x.href || "#"} key={i}>
                       {x.type === "Item" ? (
                         <div
                           className={`${
@@ -237,7 +237,7 @@ export default function SideBar({ children }: props) {
                           key={i}
                         ></div>
                       )}
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>

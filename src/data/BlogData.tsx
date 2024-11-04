@@ -39,9 +39,25 @@ export const BlogData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
 </body>
 </html>
 \`\`\`
@@ -121,9 +137,25 @@ export const BlogData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
 </body>
 </html>
 \`\`\`
@@ -203,9 +235,25 @@ export const BlogData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
 </body>
 </html>
 \`\`\`
@@ -285,9 +333,25 @@ export const BlogData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
 </body>
 </html>
 \`\`\`
@@ -367,9 +431,25 @@ export const BlogData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
 </body>
 </html>
 \`\`\`
@@ -449,9 +529,25 @@ export const BlogData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
 </body>
 </html>
 \`\`\`
@@ -531,9 +627,25 @@ export const BlogData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
 </body>
 </html>
 \`\`\`
@@ -613,9 +725,25 @@ export const BlogData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
 </body>
 </html>
 \`\`\`
@@ -695,9 +823,25 @@ export const BlogData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
 </body>
 </html>
 \`\`\`
@@ -777,9 +921,25 @@ export const BlogData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
 </body>
 </html>
 \`\`\`

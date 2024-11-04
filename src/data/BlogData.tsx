@@ -6,8 +6,7 @@ export const BlogData = [
       verified: true,
       user_id: "1",
       followers: ["2", "3"],
-      profile_picture:
-        "https://picsum.photos/200/300",
+      profile_picture: "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -24,6 +23,62 @@ export const BlogData = [
       like_count: ["1", "2", "3"],
       copy_count: ["1", "2", "3"],
       tags: ["tag1", "tag2", "tag3", "tag4", "tag5"],
+      data: `
+# Lorem Ipsum
+
+**Lorem ipsum** dolor sit amet, *consectetur adipiscing elit*. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+1. Sed nisi.
+2. Nulla quis sem at nibh elementum imperdiet.
+3. Duis sagittis ipsum.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+\`\`\`
+\n
+> **Note:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\n
+
+# Basic HTML Code: 
+\n\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
+</body>
+</html>
+`,
     },
   },
   {
@@ -33,8 +88,7 @@ export const BlogData = [
       verified: false,
       user_id: "2",
       followers: ["1", "3"],
-      profile_picture:
-        "https://picsum.photos/200/300",
+      profile_picture: "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -51,6 +105,62 @@ export const BlogData = [
       like_count: ["1", "2", "3"],
       copy_count: ["1", "2", "3"],
       tags: ["tag1", "tag2"],
+      data: `
+# Lorem Ipsum
+
+**Lorem ipsum** dolor sit amet, *consectetur adipiscing elit*. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+1. Sed nisi.
+2. Nulla quis sem at nibh elementum imperdiet.
+3. Duis sagittis ipsum.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+\`\`\`
+\n
+> **Note:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\n
+
+# Basic HTML Code: 
+\n\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
+</body>
+</html>
+`,
     },
   },
   {
@@ -60,8 +170,7 @@ export const BlogData = [
       verified: false,
       user_id: "3",
       followers: ["1", "2"],
-      profile_picture:
-        "https://picsum.photos/200/300",
+      profile_picture: "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -78,6 +187,62 @@ export const BlogData = [
       like_count: ["1", "2", "3"],
       copy_count: ["1", "2", "3"],
       tags: ["tag1", "tag2", "tag3", "tag4", "jano"],
+      data: `
+# Lorem Ipsum
+
+**Lorem ipsum** dolor sit amet, *consectetur adipiscing elit*. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+1. Sed nisi.
+2. Nulla quis sem at nibh elementum imperdiet.
+3. Duis sagittis ipsum.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+\`\`\`
+\n
+> **Note:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\n
+
+# Basic HTML Code: 
+\n\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
+</body>
+</html>
+`,
     },
   },
   {
@@ -87,8 +252,7 @@ export const BlogData = [
       verified: false,
       user_id: "3",
       followers: ["1", "2"],
-      profile_picture:
-        "https://picsum.photos/200/300",
+      profile_picture: "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -105,6 +269,62 @@ export const BlogData = [
       like_count: ["1", "2", "3"],
       copy_count: ["1", "2", "3"],
       tags: ["tag1", "tag2", "tag3", "tag4", "jano"],
+      data: `
+# Lorem Ipsum
+
+**Lorem ipsum** dolor sit amet, *consectetur adipiscing elit*. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+1. Sed nisi.
+2. Nulla quis sem at nibh elementum imperdiet.
+3. Duis sagittis ipsum.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+\`\`\`
+\n
+> **Note:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\n
+
+# Basic HTML Code: 
+\n\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
+</body>
+</html>
+`,
     },
   },
   {
@@ -114,8 +334,7 @@ export const BlogData = [
       verified: false,
       user_id: "3",
       followers: ["1", "2"],
-      profile_picture:
-        "https://picsum.photos/200/300",
+      profile_picture: "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -132,6 +351,62 @@ export const BlogData = [
       like_count: ["1", "2", "3"],
       copy_count: ["1", "2", "3"],
       tags: ["tag1", "tag2", "tag3", "tag4", "jano"],
+      data: `
+# Lorem Ipsum
+
+**Lorem ipsum** dolor sit amet, *consectetur adipiscing elit*. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+1. Sed nisi.
+2. Nulla quis sem at nibh elementum imperdiet.
+3. Duis sagittis ipsum.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+\`\`\`
+\n
+> **Note:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\n
+
+# Basic HTML Code: 
+\n\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
+</body>
+</html>
+`,
     },
   },
   {
@@ -141,8 +416,7 @@ export const BlogData = [
       verified: false,
       user_id: "3",
       followers: ["1", "2"],
-      profile_picture:
-        "https://picsum.photos/200/300",
+      profile_picture: "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -159,6 +433,62 @@ export const BlogData = [
       like_count: ["1", "2", "3"],
       copy_count: ["1", "2", "3"],
       tags: ["tag1", "tag2", "tag3", "tag4", "jano"],
+      data: `
+# Lorem Ipsum
+
+**Lorem ipsum** dolor sit amet, *consectetur adipiscing elit*. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+1. Sed nisi.
+2. Nulla quis sem at nibh elementum imperdiet.
+3. Duis sagittis ipsum.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+\`\`\`
+\n
+> **Note:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\n
+
+# Basic HTML Code: 
+\n\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
+</body>
+</html>
+`,
     },
   },
   {
@@ -168,8 +498,7 @@ export const BlogData = [
       verified: false,
       user_id: "3",
       followers: ["1", "2"],
-      profile_picture:
-        "https://picsum.photos/200/300",
+      profile_picture: "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -186,6 +515,62 @@ export const BlogData = [
       like_count: ["1", "2", "3"],
       copy_count: ["1", "2", "3"],
       tags: ["tag1", "tag2", "tag3", "tag4", "jano"],
+      data: `
+# Lorem Ipsum
+
+**Lorem ipsum** dolor sit amet, *consectetur adipiscing elit*. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+1. Sed nisi.
+2. Nulla quis sem at nibh elementum imperdiet.
+3. Duis sagittis ipsum.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+\`\`\`
+\n
+> **Note:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\n
+
+# Basic HTML Code: 
+\n\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
+</body>
+</html>
+`,
     },
   },
   {
@@ -195,8 +580,7 @@ export const BlogData = [
       verified: false,
       user_id: "4",
       following: ["1", "2", "3"],
-      profile_picture:
-        "https://picsum.photos/200/300",
+      profile_picture: "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -213,6 +597,62 @@ export const BlogData = [
       like_count: ["1", "2", "3"],
       copy_count: ["1", "2", "3"],
       tags: ["tag1", "tag2", "tag3", "tag4", "jano"],
+      data: `
+# Lorem Ipsum
+
+**Lorem ipsum** dolor sit amet, *consectetur adipiscing elit*. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+1. Sed nisi.
+2. Nulla quis sem at nibh elementum imperdiet.
+3. Duis sagittis ipsum.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+\`\`\`
+\n
+> **Note:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\n
+
+# Basic HTML Code: 
+\n\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
+</body>
+</html>
+`,
     },
   },
   {
@@ -222,8 +662,7 @@ export const BlogData = [
       verified: false,
       user_id: "3",
       followers: ["1", "2"],
-      profile_picture:
-        "https://picsum.photos/200/300",
+      profile_picture: "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -240,6 +679,62 @@ export const BlogData = [
       like_count: ["1", "2", "3"],
       copy_count: ["1", "2", "3"],
       tags: ["tag1", "tag2", "tag3", "tag4", "jano"],
+      data: `
+# Lorem Ipsum
+
+**Lorem ipsum** dolor sit amet, *consectetur adipiscing elit*. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+1. Sed nisi.
+2. Nulla quis sem at nibh elementum imperdiet.
+3. Duis sagittis ipsum.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+\`\`\`
+\n
+> **Note:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\n
+
+# Basic HTML Code: 
+\n\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
+</body>
+</html>
+`,
     },
   },
   {
@@ -249,8 +744,7 @@ export const BlogData = [
       verified: false,
       user_id: "4",
       following: ["1", "2", "3"],
-      profile_picture:
-        "https://picsum.photos/200/300",
+      profile_picture: "https://picsum.photos/200/300",
       join_date: "1693732421",
       user_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -267,6 +761,62 @@ export const BlogData = [
       like_count: ["1", "2", "3"],
       copy_count: ["1", "2", "3"],
       tags: ["tag1", "tag2", "tag3", "tag4", "jano"],
+      data: `
+# Lorem Ipsum
+
+**Lorem ipsum** dolor sit amet, *consectetur adipiscing elit*. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+1. Sed nisi.
+2. Nulla quis sem at nibh elementum imperdiet.
+3. Duis sagittis ipsum.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+</html>
+\`\`\`
+\n
+> **Note:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\n
+
+# Basic HTML Code: 
+\n\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum</title>
+    <style>
+        .text {
+            color: red;
+            text-align: center;
+            font-size: 24px;
+        }
+        .background {
+          background-color: black;
+          padding-top: 50px;
+          padding-bottom: 50px;
+          margin-bottom: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="background">
+   <p class="text" href="https://google.com/">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+    
+</body>
+</html>
+`,
     },
   },
 ];

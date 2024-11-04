@@ -30,7 +30,7 @@ export default function SmallCardInfo({ data }: data) {
   }
   return (
     <Link
-      href={`/${data.cardID}`}
+      href={`/blog/${data.cardID}`}
       className={`max-w-sm rounded overflow-hidden shadow-md bg-gray-200 min-w-[320px] w-[350px] ${
         open === false ? "lg:w-[350px]" : "lg:w-[320px]"
       }  cursor-pointer`}

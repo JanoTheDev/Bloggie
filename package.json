@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
+    "@supabase/ssr": "^0.10.0",
+    "@supabase/supabase-js": "^2.102.1",
     "dompurify": "^3.3.3",
     "highlight.js": "^11.11.1",
     "jotai": "^2.19.1",

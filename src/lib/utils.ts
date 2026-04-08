@@ -30,3 +30,15 @@ export function debounce<T extends (...args: any[]) => void>(fn: T, ms: number):
     timer = setTimeout(() => fn(...args), ms);
   }) as T;
 }
+
+// Throttle - rate limit function calls (max once per `ms` milliseconds)
+export function throttle<T extends (...args: any[]) => void>(fn: T, ms: number): T {
+  let last = 0;
+  return ((...args: any[]) => {
+    const now = Date.now();
+    if (now - last >= ms) {
+      last = now;
+      fn(...args);
+    }
+  }) as T;
+}

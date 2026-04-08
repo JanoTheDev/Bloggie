@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState, useMemo, Suspense, useEffect, useCallback } from "react";
+import React, { useState, useMemo, useRef, Suspense, useEffect, useCallback } from "react";
 import SideBar from "@/components/Navbar";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { createPost } from "@/lib/supabase/api";
 import { useToast } from "@/components/Toast";
 import { useRouter } from "next/navigation";
+import MarkdownToolbar from "@/components/MarkdownToolbar";
+import ImageUpload from "@/components/ImageUpload";
 
 function CreatePostContent() {
   const [title, setTitle] = useState("");
@@ -14,6 +16,8 @@ function CreatePostContent() {
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
   const [markdown, setMarkdown] = useState("");
+  const [coverImage, setCoverImage] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const previewHtml = useMemo(() => {
     if (!markdown) return "";
@@ -71,6 +75,7 @@ function CreatePostContent() {
         title,
         content: markdown,
         short_description: description,
+        cover_image: coverImage || undefined,
         tags,
         published: true,
       });
@@ -177,6 +182,14 @@ function CreatePostContent() {
                 />
               </div>
 
+              {/* Cover image */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1.5">
+                  Cover Image
+                </label>
+                <ImageUpload bucket="covers" currentUrl={coverImage} onUpload={setCoverImage} />
+              </div>
+
               {/* Markdown editor */}
               <div>
                 <label
@@ -185,13 +198,15 @@ function CreatePostContent() {
                 >
                   Content (Markdown)
                 </label>
+                <MarkdownToolbar textareaRef={textareaRef} onUpdate={setMarkdown} />
                 <textarea
+                  ref={textareaRef}
                   id="markdown"
                   placeholder="Write your post content in Markdown..."
                   value={markdown}
                   onChange={(e) => setMarkdown(e.target.value)}
                   rows={18}
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700 focus:border-transparent text-sm font-mono leading-relaxed resize-y"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-b-lg text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700 focus:border-transparent text-sm font-mono leading-relaxed resize-y"
                 />
               </div>
             </div>

@@ -9,6 +9,7 @@ import { useToast } from "@/components/Toast";
 import { relativeTime, readingTime } from "@/lib/utils";
 import { toggleLike, toggleBookmark } from "@/lib/supabase/api";
 import { useUser } from "@/lib/supabase/hooks";
+import AnimatedCounter from "@/components/AnimatedCounter";
 
 const BLUR_DATA_URL = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjI2IiBmaWxsPSIjZTVlN2ViIi8+PC9zdmc+";
 
@@ -29,24 +30,36 @@ export default function SmallCardInfo({ data }: { data: any }) {
     e.preventDefault();
     e.stopPropagation();
     if (!user) { toast("Sign in to like posts", "info"); return; }
+    // Optimistic update
+    const wasLiked = liked;
+    setLiked(!wasLiked);
+    setLikeCount((c: number) => c + (wasLiked ? -1 : 1));
     try {
-      const { liked: nowLiked } = await toggleLike(data.id);
-      setLiked(nowLiked);
-      setLikeCount((c: number) => c + (nowLiked ? 1 : -1));
-      toast(nowLiked ? "Liked" : "Unliked", "success");
-    } catch { toast("Failed to like", "error"); }
+      await toggleLike(data.id);
+    } catch {
+      // Revert on error
+      setLiked(wasLiked);
+      setLikeCount((c: number) => c + (wasLiked ? 1 : -1));
+      toast("Failed to like", "error");
+    }
   }
 
   async function handleSave(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
     if (!user) { toast("Sign in to save posts", "info"); return; }
+    // Optimistic update
+    const wasSaved = saved;
+    setSaved(!wasSaved);
+    setSaveCount((c: number) => c + (wasSaved ? -1 : 1));
     try {
-      const { bookmarked } = await toggleBookmark(data.id);
-      setSaved(bookmarked);
-      setSaveCount((c: number) => c + (bookmarked ? 1 : -1));
-      toast(bookmarked ? "Saved" : "Removed", "success");
-    } catch { toast("Failed to save", "error"); }
+      await toggleBookmark(data.id);
+    } catch {
+      // Revert on error
+      setSaved(wasSaved);
+      setSaveCount((c: number) => c + (wasSaved ? 1 : -1));
+      toast("Failed to save", "error");
+    }
   }
 
   function handleTag(e: React.MouseEvent, tag: string) {
@@ -92,13 +105,13 @@ export default function SmallCardInfo({ data }: { data: any }) {
 
         <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 dark:border-neutral-800">
           <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1 text-xs text-gray-400"><IconEye className="w-4 h-4" /> {viewCount}</span>
+            <span className="flex items-center gap-1 text-xs text-gray-400"><IconEye className="w-4 h-4" /> <AnimatedCounter value={viewCount} /></span>
             <button onClick={handleLike} className={`flex items-center gap-1 text-xs transition-colors ${liked ? "text-red-500" : "text-gray-400 hover:text-red-400"}`} aria-label="Like">
-              <IconHeart className={`w-4 h-4 ${liked ? "fill-current" : ""}`} /> {likeCount}
+              <IconHeart className={`w-4 h-4 ${liked ? "fill-current" : ""}`} /> <AnimatedCounter value={likeCount} />
             </button>
           </div>
           <button onClick={handleSave} className={`flex items-center gap-1 text-xs transition-colors ${saved ? "text-blue-500" : "text-gray-400 hover:text-blue-400"}`} aria-label="Save">
-            <IconBookmark className={`w-4 h-4 ${saved ? "fill-current" : ""}`} /> {saveCount}
+            <IconBookmark className={`w-4 h-4 ${saved ? "fill-current" : ""}`} /> <AnimatedCounter value={saveCount} />
           </button>
         </div>
       </div>

@@ -12,6 +12,8 @@ import DOMPurify from "dompurify";
 import "highlight.js/styles/default.css";
 import { useToast } from "@/components/Toast";
 import { relativeTime, readingTime } from "@/lib/utils";
+import TableOfContents from "@/components/TableOfContents";
+import RelatedPosts from "@/components/RelatedPosts";
 
 export default function BlogPost() {
   const { id: slug } = useParams<{ id: string }>();
@@ -76,26 +78,35 @@ export default function BlogPost() {
 
   return (
     <SideBar>
-      <div className="max-w-3xl">
-        <UserCardInfo data={{ ...author, user_id: author.id, profile_picture: author.avatar_url, user_description: author.bio || "", followers: [] }} />
+      <div className="flex gap-8">
+        <div className="flex-1 min-w-0 max-w-3xl">
+          <UserCardInfo data={{ ...author, user_id: author.id, profile_picture: author.avatar_url, user_description: author.bio || "", followers: [] }} />
 
-        <div className="flex items-center gap-3 mt-4 text-sm text-gray-400 dark:text-neutral-500">
-          <span>{relativeTime(ts)}</span>
-          <span>·</span>
-          <span>{readingTime(post.content)}</span>
-          <button onClick={handleShare} className="ml-auto flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-600 dark:text-neutral-400 bg-gray-100 dark:bg-neutral-900 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-800 transition-colors" aria-label="Share">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935-2.186 2.25 2.25 0 0 0-3.935 2.186Zm0-12.814a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Z" />
-            </svg>
-            Share
-          </button>
+          <div className="flex items-center gap-3 mt-4 text-sm text-gray-400 dark:text-neutral-500">
+            <span>{relativeTime(ts)}</span>
+            <span>·</span>
+            <span>{readingTime(post.content)}</span>
+            <button onClick={handleShare} className="ml-auto flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-600 dark:text-neutral-400 bg-gray-100 dark:bg-neutral-900 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-800 transition-colors" aria-label="Share">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935-2.186 2.25 2.25 0 0 0-3.935 2.186Zm0-12.814a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Z" />
+              </svg>
+              Share
+            </button>
+          </div>
+
+          <hr className="my-6 border-gray-200 dark:border-neutral-800" />
+          <article className="markdown-body text-gray-900 dark:text-neutral-100" dangerouslySetInnerHTML={createMarkup(post.content)} />
+
+          <hr className="my-8 border-gray-200 dark:border-neutral-800" />
+          <RelatedPosts currentPostId={post.id} tags={post.tags || []} />
+
+          <hr className="my-8 border-gray-200 dark:border-neutral-800" />
+          <Comments postId={post.id} />
         </div>
 
-        <hr className="my-6 border-gray-200 dark:border-neutral-800" />
-        <article className="markdown-body text-gray-900 dark:text-neutral-100" dangerouslySetInnerHTML={createMarkup(post.content)} />
-
-        <hr className="my-8 border-gray-200 dark:border-neutral-800" />
-        <Comments postId={post.id} />
+        <div className="hidden xl:block w-64 shrink-0">
+          <TableOfContents content={post.content} />
+        </div>
       </div>
     </SideBar>
   );

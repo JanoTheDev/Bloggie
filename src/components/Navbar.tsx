@@ -12,6 +12,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { IconMenu, IconSearch, IconSun, IconMoon } from "@/components/Icons";
 import NotificationBell from "@/components/NotificationBell";
+import SearchAutocomplete from "@/components/SearchAutocomplete";
 import { debounce } from "@/lib/utils";
 
 function SideBarInner({ children }: { children: React.ReactNode }) {
@@ -91,16 +92,7 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
 
           <Suspense>
             <form onSubmit={handleSearch} className="flex-1 max-w-lg mx-auto hidden sm:block">
-              <div className="relative">
-                <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="search"
-                  className="w-full pl-10 pr-4 py-2 text-sm bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700 text-gray-900 dark:text-neutral-100 placeholder-gray-400"
-                  placeholder="Search posts, users..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
+              <SearchAutocomplete value={searchQuery} onChange={setSearchQuery} onSubmit={() => { if (searchQuery.trim()) navigateSearch(searchQuery); }} />
             </form>
           </Suspense>
 

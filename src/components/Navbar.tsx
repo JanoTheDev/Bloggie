@@ -65,11 +65,20 @@ export default function SideBar({ children }: Props) {
           ${open ? "w-56 translate-x-0" : "-translate-x-full lg:translate-x-0 lg:w-16"}
         `}
       >
-        <div className="flex items-center h-16 px-4 border-b border-gray-200 shrink-0">
-          {open && (
+        <div className="flex items-center justify-center h-16 px-4 border-b border-gray-200 shrink-0">
+          {open ? (
             <Link href="/" className="text-xl font-bold text-gray-900 truncate">
               Bloggie
             </Link>
+          ) : (
+            <button
+              onClick={() => setOpen(true)}
+              className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </button>
           )}
         </div>
         <nav className="flex-1 overflow-y-auto py-3 px-2">

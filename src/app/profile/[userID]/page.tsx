@@ -79,7 +79,7 @@ export default function OtherProfile() {
       {posts.length > 0 && (
         <section className="mb-8">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-neutral-100 mb-3">{posts.length} posts</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
             {posts.map((p) => <SmallCardInfo data={p} key={p.cardID} />)}
           </div>
         </section>
@@ -87,7 +87,7 @@ export default function OtherProfile() {
       {viewed.length > 0 && (
         <section className="mb-8">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-neutral-100 mb-3">{viewed.length} viewed</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
             {viewed.map((p) => <SmallCardInfo data={p} key={p.cardID} />)}
           </div>
         </section>
@@ -95,7 +95,7 @@ export default function OtherProfile() {
       {liked.length > 0 && (
         <section className="mb-8">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-neutral-100 mb-3">{liked.length} liked</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
             {liked.map((p) => <SmallCardInfo data={p} key={p.cardID} />)}
           </div>
         </section>

@@ -1,46 +1,49 @@
 "use client";
 
-import { userAccount } from "@/atoms/userAccount";
 import SideBar from "@/components/Navbar";
 import SmallCardInfo from "@/components/SmallCardInfo";
-import UserCardInfo from "@/components/UserCardInfo";
 import { SkeletonGrid } from "@/components/Skeleton";
-import { AllUserData } from "@/data/AllUserData";
-import { BlogData } from "@/data/BlogData";
-import { useAtom } from "jotai";
+import { createClient } from "@/lib/supabase/client";
+import { useUser } from "@/lib/supabase/hooks";
 import { useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
-import type { BlogPost, User } from "@/types";
+import Link from "next/link";
 
+const POST_SELECT = `*, author:profiles!author_id(*), likes(count), comments(count), bookmarks(count), views(count)`;
 const titles: Record<string, string> = { RH: "Blog History", LB: "Liked Blogs", RL: "Read Later" };
 
 function PlaylistContent() {
   const searchParams = useSearchParams();
-  const [blogs, setBlogs] = useState<BlogPost[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
+  const { user, loading: authLoading } = useUser();
+  const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [userAcc] = useAtom(userAccount);
   const list = searchParams.get("list") || "";
 
   useEffect(() => {
-    let filteredUsers: User[] = [];
-    let filteredBlogs: BlogPost[] = [];
+    if (authLoading) return;
+    if (!user) { setLoading(false); return; }
+
+    const supabase = createClient();
+    let query;
 
     if (list === "RH") {
-      filteredUsers = AllUserData.filter((u) => userAcc.profiles_opened.includes(u.user_id));
-      filteredBlogs = BlogData.filter((p) => p.info.views_count.includes(userAcc.user_id));
-    } else if (list === "RL") {
-      filteredUsers = AllUserData.filter((u) => userAcc.read_later.includes(u.user_id));
-      filteredBlogs = BlogData.filter((p) => p.info.read_later.includes(userAcc.user_id));
+      query = supabase.from("views").select(`post_id, posts:post_id(${POST_SELECT})`).eq("user_id", user.id).order("created_at", { ascending: false });
     } else if (list === "LB") {
-      filteredUsers = AllUserData.filter((u) => userAcc.liked_blogs.includes(u.user_id));
-      filteredBlogs = BlogData.filter((p) => p.info.like_count.includes(userAcc.user_id));
+      query = supabase.from("likes").select(`post_id, posts:post_id(${POST_SELECT})`).eq("user_id", user.id).order("created_at", { ascending: false });
+    } else if (list === "RL") {
+      query = supabase.from("bookmarks").select(`post_id, posts:post_id(${POST_SELECT})`).eq("user_id", user.id).order("created_at", { ascending: false });
     }
 
-    setUsers(filteredUsers);
-    setBlogs(filteredBlogs);
-    setLoading(false);
-  }, [searchParams, userAcc, list]);
+    if (query) {
+      query.then(({ data }) => {
+        const mapped = (data || []).map((r: any) => r.posts).filter(Boolean);
+        setPosts(mapped);
+        setLoading(false);
+      });
+    } else {
+      setLoading(false);
+    }
+  }, [searchParams, user, authLoading, list]);
 
   return (
     <SideBar>
@@ -48,22 +51,20 @@ function PlaylistContent() {
 
       {loading ? (
         <SkeletonGrid count={6} />
-      ) : blogs.length === 0 ? (
+      ) : !user ? (
+        <div className="text-center py-16">
+          <p className="text-gray-400 dark:text-neutral-500 text-lg">Sign in to view this list</p>
+          <Link href="/login" className="mt-4 inline-block px-6 py-2.5 text-sm font-medium bg-gray-900 dark:bg-neutral-100 text-white dark:text-black rounded-lg">Sign in</Link>
+        </div>
+      ) : posts.length === 0 ? (
         <div className="text-center py-16">
           <p className="text-gray-400 dark:text-neutral-500 text-lg">Nothing here yet.</p>
-          <p className="text-gray-400 dark:text-neutral-400 text-sm mt-1">Start browsing to fill this list.</p>
+          <p className="text-gray-400 dark:text-neutral-500 text-sm mt-1">Start browsing to fill this list.</p>
         </div>
       ) : (
-        <>
-          {users.length > 0 && (
-            <div className="flex flex-col gap-3 mb-8">
-              {users.map((u) => <UserCardInfo data={u} key={u.user_id} />)}
-            </div>
-          )}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-            {blogs.map((p) => <SmallCardInfo data={p} key={p.cardID} />)}
-          </div>
-        </>
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          {posts.map((p: any) => <SmallCardInfo data={p} key={p.id} />)}
+        </div>
       )}
     </SideBar>
   );

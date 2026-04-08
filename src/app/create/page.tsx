@@ -1,9 +1,12 @@
 "use client";
 
-import React, { useState, useMemo, Suspense } from "react";
+import React, { useState, useMemo, Suspense, useEffect, useCallback } from "react";
 import SideBar from "@/components/Navbar";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
+import { createPost } from "@/lib/supabase/api";
+import { useToast } from "@/components/Toast";
+import { useRouter } from "next/navigation";
 
 function CreatePostContent() {
   const [title, setTitle] = useState("");
@@ -33,10 +36,52 @@ function CreatePostContent() {
     setTags(tags.filter((t) => t !== tagToRemove));
   };
 
-  const handlePublish = () => {
-    const post = { title, description, tags, markdown };
-    console.log("Publishing post:", post);
-    alert("Post published! (No backend connected)");
+  const toast = useToast();
+  const router = useRouter();
+  const [publishing, setPublishing] = useState(false);
+
+  // Auto-save draft to localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("draft");
+    if (saved) {
+      try {
+        const d = JSON.parse(saved);
+        if (d.title) setTitle(d.title);
+        if (d.description) setDescription(d.description);
+        if (d.tags) setTags(d.tags);
+        if (d.markdown) setMarkdown(d.markdown);
+      } catch {}
+    }
+  }, []);
+
+  const saveDraft = useCallback(() => {
+    localStorage.setItem("draft", JSON.stringify({ title, description, tags, markdown }));
+  }, [title, description, tags, markdown]);
+
+  useEffect(() => {
+    const timer = setTimeout(saveDraft, 1000);
+    return () => clearTimeout(timer);
+  }, [saveDraft]);
+
+  const handlePublish = async () => {
+    if (publishing) return;
+    setPublishing(true);
+    try {
+      const post = await createPost({
+        title,
+        content: markdown,
+        short_description: description,
+        tags,
+        published: true,
+      });
+      localStorage.removeItem("draft");
+      toast("Post published!", "success");
+      router.push(`/blog/${post.slug}`);
+    } catch (err: any) {
+      toast(err.message || "Failed to publish", "error");
+    } finally {
+      setPublishing(false);
+    }
   };
 
   return (
@@ -205,10 +250,10 @@ function CreatePostContent() {
           <button
             type="button"
             onClick={handlePublish}
-            disabled={!title.trim() || !markdown.trim()}
+            disabled={!title.trim() || !markdown.trim() || publishing}
             className="px-6 py-2.5 bg-gray-900 dark:bg-neutral-100 text-white dark:text-black text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            Publish
+            {publishing ? "Publishing..." : "Publish"}
           </button>
         </div>
       </div>

@@ -1,30 +1,49 @@
 "use client";
 
-import { useAtom } from "jotai";
-import { userAccount } from "@/atoms/userAccount";
 import Link from "next/link";
 import Image from "next/image";
-import { IconVerified, IconLocation, IconWork } from "@/components/Icons";
+import { IconLocation, IconWork } from "@/components/Icons";
 import { useToast } from "@/components/Toast";
-import type { User, BlogUser } from "@/types";
+import { toggleFollow } from "@/lib/supabase/api";
+import { useUser } from "@/lib/supabase/hooks";
+import { useState } from "react";
 
-export default function UserCardInfo({ data }: { data: User | BlogUser }) {
-  const [userAcc] = useAtom(userAccount);
+export default function UserCardInfo({ data }: { data: any }) {
+  const { user } = useUser();
   const toast = useToast();
-  const isFollowing = "followers" in data && data.followers?.includes(userAcc.user_id);
+  const [following, setFollowing] = useState(false);
+
+  const userId = data.user_id || data.id;
+  const username = data.username || "Unknown";
+  const avatar = data.profile_picture || data.avatar_url;
+  const bio = data.user_description || data.bio || "";
+  const isOwn = user?.id === userId;
+
+  async function handleFollow() {
+    if (!user) { toast("Sign in to follow", "info"); return; }
+    if (isOwn) return;
+    try {
+      const { following: nowFollowing } = await toggleFollow(userId);
+      setFollowing(nowFollowing);
+      toast(nowFollowing ? `Following ${username}` : `Unfollowed ${username}`, "success");
+    } catch { toast("Failed", "error"); }
+  }
 
   return (
     <div className="flex items-center gap-4 p-4 bg-white dark:bg-neutral-950 rounded-xl border border-gray-100 dark:border-neutral-800">
-      <Link href={`/profile/${data.user_id}`} className="shrink-0">
-        <Image src={data.profile_picture} alt={data.username} width={48} height={48} className="rounded-full object-cover" />
+      <Link href={`/profile/${userId}`} className="shrink-0">
+        {avatar ? (
+          <Image src={avatar} alt={username} width={48} height={48} className="rounded-full object-cover" />
+        ) : (
+          <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-neutral-800" />
+        )}
       </Link>
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5">
-          <Link href={`/profile/${data.user_id}`} className="font-semibold text-gray-900 dark:text-neutral-100 truncate hover:underline">
-            {data.username}
+          <Link href={`/profile/${userId}`} className="font-semibold text-gray-900 dark:text-neutral-100 truncate hover:underline">
+            {username}
           </Link>
-          {data.verified && <IconVerified className="w-4 h-4 text-blue-500 shrink-0" />}
           {data.location && (
             <span className="hidden sm:flex items-center gap-1 text-xs text-gray-400 ml-2">
               <IconLocation className="w-3.5 h-3.5" /> {data.location}
@@ -36,23 +55,23 @@ export default function UserCardInfo({ data }: { data: User | BlogUser }) {
             </span>
           )}
         </div>
-        <div className="flex items-center gap-2 mt-0.5">
-          {"followers" in data && <span className="text-sm text-gray-500 dark:text-neutral-400">{data.followers?.length || 0} followers</span>}
-          <span className="text-gray-300 dark:text-neutral-400">·</span>
-          <span className="text-sm text-gray-400 dark:text-neutral-500 truncate">{data.user_description}</span>
-        </div>
+        {bio && (
+          <p className="text-sm text-gray-400 dark:text-neutral-500 truncate mt-0.5">{bio}</p>
+        )}
       </div>
 
-      <button
-        onClick={() => toast(isFollowing ? `Unfollowed ${data.username}` : `Following ${data.username}`, "success")}
-        className={`shrink-0 px-4 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-          isFollowing
-            ? "bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-neutral-300 hover:bg-gray-200 dark:hover:bg-neutral-800"
-            : "bg-gray-900 dark:bg-neutral-100 text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-100"
-        }`}
-      >
-        {isFollowing ? "Following" : "Follow"}
-      </button>
+      {!isOwn && (
+        <button
+          onClick={handleFollow}
+          className={`shrink-0 px-4 py-1.5 text-sm font-medium rounded-lg transition-colors ${
+            following
+              ? "bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-neutral-300 hover:bg-gray-200 dark:hover:bg-neutral-800"
+              : "bg-gray-900 dark:bg-neutral-100 text-white dark:text-black hover:bg-gray-800 dark:hover:bg-neutral-200"
+          }`}
+        >
+          {following ? "Following" : "Follow"}
+        </button>
+      )}
     </div>
   );
 }

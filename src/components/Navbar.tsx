@@ -11,6 +11,7 @@ import { themeAtom } from "@/atoms/theme";
 import Link from "next/link";
 import Image from "next/image";
 import { IconMenu, IconSearch, IconSun, IconMoon } from "@/components/Icons";
+import NotificationBell from "@/components/NotificationBell";
 import { debounce } from "@/lib/utils";
 
 function SideBarInner({ children }: { children: React.ReactNode }) {
@@ -104,6 +105,7 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
           </Suspense>
 
           <div className="flex items-center gap-2 ml-auto">
+            <NotificationBell />
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-neutral-900 transition-colors"

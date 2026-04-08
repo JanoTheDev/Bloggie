@@ -122,7 +122,7 @@ export default function SideBar({ children }: Props) {
         <header className="sticky top-0 z-30 flex items-center h-16 px-4 bg-white border-b border-gray-200 gap-4 shrink-0">
           <button
             onClick={() => setOpen(!open)}
-            className={`p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors ${open ? "lg:hidden" : ""}`}
+            className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors lg:hidden"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />

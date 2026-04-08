@@ -65,15 +65,25 @@ export default function SideBar({ children }: Props) {
           ${open ? "w-56 translate-x-0" : "-translate-x-full lg:translate-x-0 lg:w-16"}
         `}
       >
-        <div className="flex items-center justify-center h-16 px-4 border-b border-gray-200 shrink-0">
+        <div className="flex items-center h-16 px-4 border-b border-gray-200 shrink-0">
           {open ? (
-            <Link href="/" className="text-xl font-bold text-gray-900 truncate">
-              Bloggie
-            </Link>
+            <>
+              <Link href="/" className="text-xl font-bold text-gray-900 truncate flex-1">
+                Bloggie
+              </Link>
+              <button
+                onClick={() => setOpen(false)}
+                className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+              </button>
+            </>
           ) : (
             <button
               onClick={() => setOpen(true)}
-              className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+              className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors mx-auto"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -112,7 +122,7 @@ export default function SideBar({ children }: Props) {
         <header className="sticky top-0 z-30 flex items-center h-16 px-4 bg-white border-b border-gray-200 gap-4 shrink-0">
           <button
             onClick={() => setOpen(!open)}
-            className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+            className={`p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors ${open ? "lg:hidden" : ""}`}
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />

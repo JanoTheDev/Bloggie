@@ -11,6 +11,7 @@ import { themeAtom } from "@/atoms/theme";
 import Link from "next/link";
 import Image from "next/image";
 import { IconMenu, IconSearch, IconSun, IconMoon } from "@/components/Icons";
+import { debounce } from "@/lib/utils";
 
 function SideBarInner({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
@@ -33,11 +34,14 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
     );
   }, [searchParams, pathname, mounted]);
 
+  const navigateSearch = React.useMemo(
+    () => debounce((q: string) => router.push(`/results?sq=${encodeURIComponent(q)}`), 300),
+    [router]
+  );
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/results?sq=${encodeURIComponent(searchQuery)}`);
-    }
+    if (searchQuery.trim()) navigateSearch(searchQuery);
   };
 
   if (!mounted) return null;
@@ -53,12 +57,12 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
           {open ? (
             <>
               <Link href="/" className="text-xl font-bold text-gray-900 dark:text-neutral-100 truncate flex-1">Bloggie</Link>
-              <button onClick={() => setOpen(false)} className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-neutral-900 transition-colors">
+              <button onClick={() => setOpen(false)} className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-neutral-900 transition-colors" aria-label="Close sidebar">
                 <IconMenu />
               </button>
             </>
           ) : (
-            <button onClick={() => setOpen(true)} className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-neutral-900 transition-colors mx-auto">
+            <button onClick={() => setOpen(true)} className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-neutral-900 transition-colors mx-auto" aria-label="Open sidebar">
               <IconMenu />
             </button>
           )}
@@ -79,7 +83,7 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
 
       <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${open ? "lg:ml-56" : "lg:ml-16"}`}>
         <header className="sticky top-0 z-30 flex items-center h-16 px-4 bg-white dark:bg-neutral-950 border-b border-gray-200 dark:border-neutral-800 gap-4 shrink-0">
-          <button onClick={() => setOpen(!open)} className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-neutral-900 transition-colors lg:hidden">
+          <button onClick={() => setOpen(!open)} className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-neutral-900 transition-colors lg:hidden" aria-label="Toggle sidebar">
             <IconMenu />
           </button>
           <Link href="/" className="text-xl font-bold text-gray-900 dark:text-neutral-100 lg:hidden">Bloggie</Link>
@@ -133,7 +137,7 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
           </div>
         </Suspense>
 
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
+        <main id="main-content" className="flex-1 overflow-y-auto p-4 sm:p-6">
           <div className="animate-fade-in">{children}</div>
         </main>
       </div>

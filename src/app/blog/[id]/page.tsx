@@ -2,8 +2,7 @@
 
 import { userAccount } from "@/atoms/userAccount";
 import SideBar from "@/components/Navbar";
-import SmallCardInfo from "@/components/SmallCardInfo";
-import { AllUserData } from "@/data/AllUserData";
+import UserCardInfo from "@/components/UserCardInfo";
 import { BlogData } from "@/data/BlogData";
 import { useAtom } from "jotai";
 import { useParams } from "next/navigation";
@@ -12,16 +11,15 @@ import { marked } from "marked";
 import DOMPurify from "dompurify";
 import hljs from "highlight.js";
 import "highlight.js/styles/default.css";
-import UserCardInfo from "@/components/UserCardInfo";
 
-export default function OtherProfile() {
+export default function BlogPost() {
   const params = useParams();
   const blogID = params.id;
 
-  const [userAcc, setUserAcc] = useAtom(userAccount);
+  const [userAcc] = useAtom(userAccount);
   const [blogOwner, setBlogOwner] = useState<any>({});
   const [blogData, setBlogData] = useState<any>({});
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const post = BlogData.filter((d) => d.cardID === blogID);
@@ -33,32 +31,23 @@ export default function OtherProfile() {
   }, [blogID]);
 
   const createMarkup = (markdown: string): { __html: string } => {
-    const rawHtml: any = marked(markdown);
+    const rawHtml = marked.parse(markdown, { async: false }) as string;
     return { __html: DOMPurify.sanitize(rawHtml) };
   };
 
+  if (loading) return <SideBar><p className="text-center text-gray-500 py-12">Loading...</p></SideBar>;
+  if (!blogOwner.user_id) return <SideBar><p className="text-center text-gray-500 py-12">Blog not found</p></SideBar>;
+
   return (
-    <div>
-      <SideBar>
-        <div>
-          {loading === false && blogOwner.user_id && blogData.data ? (
-            <div className="ml-6 lg:ml-0">
-              <UserCardInfo data={blogOwner}/>
-              <hr className="my-4 mx-4 border-black" />
-              <div
-                className="markdown-body"
-                dangerouslySetInnerHTML={createMarkup(blogData.data)}
-              />
-            </div>
-          ) : loading === false && !blogOwner.user_id ? (
-            <p className="text-center font-bold text-2xl">Blog not found</p>
-          ) : loading === true && !blogOwner.user_id ? (
-            <p className="text-center font-bold text-2xl">Loading</p>
-          ) : (
-            <></>
-          )}
-        </div>
-      </SideBar>
-    </div>
+    <SideBar>
+      <div className="max-w-3xl">
+        <UserCardInfo data={blogOwner} />
+        <hr className="my-6 border-gray-200" />
+        <div
+          className="markdown-body prose prose-gray max-w-none"
+          dangerouslySetInnerHTML={createMarkup(blogData.data)}
+        />
+      </div>
+    </SideBar>
   );
 }

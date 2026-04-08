@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { userAccount } from "@/atoms/userAccount";
 import SideBar from "@/components/Navbar";
@@ -11,118 +11,90 @@ import { useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 
 function PlaylistContent() {
-  const searchParams = useSearchParams()
-  const [data, setData] = useState<any>([]);
-  const [userAcc, setUserAcc] = useAtom(userAccount);
-  const [routerList, setRouterList] = useState<any>()
-
-  const findList = () => {
-    const list = searchParams.get("list");
-    setRouterList(list);
-    if (list === "RH") {
-      const usersToShow = AllUserData.filter((user) =>
-        userAcc.profiles_opened.includes(user.user_id)
-      );
-
-      const blogPostsToShow = BlogData.filter((post) =>
-        post.info.views_count.includes(userAcc.user_id)
-      );
-
-      const sortedData = [];
-
-      for (const user of usersToShow) {
-        sortedData.push(user);
-        const userBlogPosts = blogPostsToShow.filter(
-          (post) => post.user.user_id === user.user_id
-        );
-        sortedData.push(...userBlogPosts);
-      }
-
-      setData(sortedData);
-    } else if (list === "RL") {
-      const usersToShow = AllUserData.filter((user) =>
-        userAcc.read_later.includes(user.user_id)
-      );
-
-      const blogPostsToShow = BlogData.filter((post) =>
-        post.info.read_later.includes(userAcc.user_id)
-      );
-
-      const sortedData = [];
-
-      for (const user of usersToShow) {
-        const userBlogPosts = blogPostsToShow.filter(
-          (post) => post.user.user_id === user.user_id
-        );
-
-        if (userBlogPosts.length > 0) {
-          sortedData.push(user);
-          sortedData.push(...userBlogPosts);
-        }
-        setData(sortedData);
-      }
-    } else if (list === "LB") {
-      const usersToShow = AllUserData.filter((user) =>
-        userAcc.liked_blogs.includes(user.user_id)
-      );
-
-      const blogPostsToShow = BlogData.filter((post) =>
-        post.info.like_count.includes(userAcc.user_id)
-      );
-
-      const sortedData = [];
-
-      for (const user of usersToShow) {
-        const userBlogPosts = blogPostsToShow.filter(
-          (post) => post.user.user_id === user.user_id
-        );
-
-        if (userBlogPosts.length > 0) {
-          sortedData.push(user);
-          sortedData.push(...userBlogPosts);
-        }
-        setData(sortedData);
-      }
-    }
-  }
+  const searchParams = useSearchParams();
+  const [data, setData] = useState<any[]>([]);
+  const [userAcc] = useAtom(userAccount);
+  const [routerList, setRouterList] = useState("");
 
   useEffect(() => {
-    findList();
-  }, []);
+    const list = searchParams.get("list") || "";
+    setRouterList(list);
+
+    let usersToShow: typeof AllUserData = [];
+    let blogPostsToShow: typeof BlogData = [];
+
+    if (list === "RH") {
+      usersToShow = AllUserData.filter((user) =>
+        userAcc.profiles_opened.includes(user.user_id)
+      );
+      blogPostsToShow = BlogData.filter((post) =>
+        post.info.views_count.includes(userAcc.user_id)
+      );
+    } else if (list === "RL") {
+      usersToShow = AllUserData.filter((user) =>
+        userAcc.read_later.includes(user.user_id)
+      );
+      blogPostsToShow = BlogData.filter((post) =>
+        post.info.read_later.includes(userAcc.user_id)
+      );
+    } else if (list === "LB") {
+      usersToShow = AllUserData.filter((user) =>
+        userAcc.liked_blogs.includes(user.user_id)
+      );
+      blogPostsToShow = BlogData.filter((post) =>
+        post.info.like_count.includes(userAcc.user_id)
+      );
+    }
+
+    const sortedData: any[] = [];
+    for (const user of usersToShow) {
+      const userBlogPosts = blogPostsToShow.filter(
+        (post) => post.user.user_id === user.user_id
+      );
+      if (userBlogPosts.length > 0 || list === "RH") {
+        sortedData.push(user);
+        sortedData.push(...userBlogPosts);
+      }
+    }
+    setData(sortedData);
+  }, [searchParams, userAcc]);
+
+  const title =
+    routerList === "RH"
+      ? "Blog History"
+      : routerList === "LB"
+      ? "Liked Blogs"
+      : "Read Later";
+
+  const blogs = data.filter((x) => x.cardID);
+  const users = data.filter((x) => !x.cardID);
 
   return (
     <SideBar>
-      <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6 mb-6">
-        {routerList === "RH" ? "Blog history" : routerList === "LB" ? "Liked blogs" : "Read blogs later"}
-      </p>
-      <div
-        className="lg:ml-0"
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-        }}
-      >
-        {data.map((x: any, i: number) => (
-          <React.Fragment key={i}>
-            <div className="items-center justify-center flex pt-6 lg:pt-0 lg:justify-start lg:items-start pb-6">
-              <div className="flex justify-center lg:justify-start lg:pl-3">
-                {x.cardID && <SmallCardInfo data={x} />}
-              </div>
-            </div>
-            {!x.cardID && (
-              <div className="w-full pt-6 pb-6 lg:pt-0 ">
-                <UserCardInfo data={x} />
-              </div>
-            )}
-          </React.Fragment>
-        ))}
-      </div>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">{title}</h1>
+
+      {users.length > 0 && (
+        <div className="flex flex-col gap-3 mb-8">
+          {users.map((x: any, i: number) => (
+            <UserCardInfo data={x} key={i} />
+          ))}
+        </div>
+      )}
+
+      {blogs.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          {blogs.map((x: any, i: number) => (
+            <SmallCardInfo data={x} key={i} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500 py-12">Nothing here yet.</p>
+      )}
     </SideBar>
   );
 }
 
-export default function Home() {
+export default function PlaylistPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <PlaylistContent />

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { userAccount } from "@/atoms/userAccount";
 import SideBar from "@/components/Navbar";
@@ -10,38 +10,22 @@ import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [randomData, setRandomData] = useState<any[]>([]);
-  const [userAcc, setUserAcc] = useAtom(userAccount);
+  const [userAcc] = useAtom(userAccount);
 
   useEffect(() => {
-    const randomizedData = [];
-
-    // Shuffle the BlogData array randomly
+    const randomizedData: any[] = [];
     const shuffledBlogData = [...BlogData].sort(() => Math.random() - 0.5);
-
-    // Shuffle the AllUserData array randomly
     const shuffledUserData = [...AllUserData].sort(() => Math.random() - 0.5);
 
-    // Get the IDs of users that the current user follows
-    const followedUserIds = userAcc.user_id
-      ? AllUserData.find((user) => user.user_id === userAcc.user_id)
-          ?.followers || []
-      : [];
-
     let blogIndex = 0;
-
-    // Loop to generate the pattern
     for (let i = 0; i < 5; i++) {
-      // Push 5 blog posts
       const blogSlice = shuffledBlogData.slice(blogIndex, blogIndex + 5);
       randomizedData.push(...blogSlice);
       blogIndex += 5;
-
-      // Push a user if there are more users
       if (i < 4) {
-        const userSlice = shuffledUserData.slice(i, i + 1);
-        randomizedData.push(...userSlice);
+        randomizedData.push(...shuffledUserData.slice(i, i + 1));
       }
     }
 
@@ -49,40 +33,39 @@ export default function Home() {
     setLoading(false);
   }, [userAcc.user_id]);
 
+  if (loading) return null;
+
+  const blogs = randomData.filter((x) => x.cardID);
+  const users = randomData.filter((x) => !x.cardID);
+
   return (
-    <div>
-      {loading === true ? (
-        <></>
-      ) : (
-        <SideBar>
-          <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6 mb-6">
-            Home
-          </p>
-          <div
-            className="ml-6 lg:ml-0"
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-            }}
-          >
-            {randomData.map((x: any, i: number) => (
-              <React.Fragment key={i}>
-                <div className="items-center justify-center flex pt-6 lg:pt-0 lg:justify-start lg:items-start pb-6">
-                  <div className="flex flex-wrap justify-center lg:justify-start lg:pl-3">
-                    {x.cardID && <SmallCardInfo data={x} />}
-                  </div>
-                </div>
-                {!x.cardID && (
-                  <div className="w-full pt-6 pb-6 lg:pt-0 ">
-                    <UserCardInfo data={x} />
-                  </div>
-                )}
-              </React.Fragment>
+    <SideBar>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">Home</h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
+        {blogs.slice(0, 6).map((x: any, i: number) => (
+          <SmallCardInfo data={x} key={i} />
+        ))}
+      </div>
+
+      {users.length > 0 && (
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">Suggested for you</h2>
+          <div className="flex flex-col gap-3">
+            {users.map((x: any, i: number) => (
+              <UserCardInfo data={x} key={i} />
             ))}
           </div>
-        </SideBar>
+        </div>
       )}
-    </div>
+
+      {blogs.length > 6 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          {blogs.slice(6).map((x: any, i: number) => (
+            <SmallCardInfo data={x} key={i} />
+          ))}
+        </div>
+      )}
+    </SideBar>
   );
 }

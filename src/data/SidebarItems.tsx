@@ -1,10 +1,12 @@
+import React from "react";
+
 export interface SidebarItem {
   type: "Item" | "Dividor";
   alias?: string;
   selected?: boolean;
   href?: string;
   name?: string;
-  image?: JSX.Element;
+  image?: React.ReactNode;
 }
 
 export const SidebarItems: SidebarItem[] = [

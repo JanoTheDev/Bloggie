@@ -3,8 +3,7 @@ export const AllUserData = [
     username: "User1",
     verified: true,
     user_id: "1",
-    profile_picture:
-      "https://picsum.photos/200/300",
+    profile_picture: "https://picsum.photos/seed/user1/200/200",
     join_date: "1693732421",
     user_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     work_place: "home",
@@ -27,8 +26,7 @@ export const AllUserData = [
     username: "User2",
     verified: false,
     user_id: "2",
-    profile_picture:
-      "https://picsum.photos/200/300",
+    profile_picture: "https://picsum.photos/seed/user2/200/200",
     join_date: "1693732421",
     user_description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -52,8 +50,7 @@ export const AllUserData = [
     username: "User3",
     verified: false,
     user_id: "3",
-    profile_picture:
-      "https://picsum.photos/200/300",
+    profile_picture: "https://picsum.photos/seed/user3/200/200",
     join_date: "1693732421",
     user_description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -77,8 +74,7 @@ export const AllUserData = [
     username: "User4",
     verified: false,
     user_id: "4",
-    profile_picture:
-      "https://picsum.photos/200/300",
+    profile_picture: "https://picsum.photos/seed/user4/200/200",
     join_date: "1693732421",
     user_description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",

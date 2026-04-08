@@ -1,172 +1,87 @@
-"use client"
+"use client";
 
-import { useSearchParams } from 'next/navigation'
-import { useRouter } from "next/compat/router";
-import React, { Fragment, useEffect, useMemo, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState, Suspense } from "react";
 import { BlogData } from "@/data/BlogData";
 import SideBar from "@/components/Navbar";
 import SmallCardInfo, { searchBarFilter } from "@/components/SmallCardInfo";
 import { useAtom } from "jotai";
-import { searchBarText, sidebarToggle } from "@/atoms/Navbar";
+import { searchBarText } from "@/atoms/Navbar";
 import { AllUserData } from "@/data/AllUserData";
 import UserCardInfo from "@/components/UserCardInfo";
 
 function ResultsContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams()
-
-  const [loading, setLoading] = useState<boolean>(true);
-  const [items, setItems] = useState<any>([]);
-  const [users, setUsers] = useState<any>([]);
+  const searchParams = useSearchParams();
+  const [items, setItems] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useAtom(searchBarText);
-  const [filterQuery, setFilterQuery] = useAtom(searchBarFilter);
-  const [open, setOpen] = useAtom(sidebarToggle);
+  const [, setFilterQuery] = useAtom(searchBarFilter);
 
   useEffect(() => {
-    let SearchQuery = searchParams.get('sq') || ''
-    let FilterQuery = searchParams.get('fq') || ''
-    console.log(SearchQuery , FilterQuery)
-    setLoading(false);
+    const sq = searchParams.get("sq") || "";
+    const fq = searchParams.get("fq") || "";
+    setSearchQuery(sq);
+    setFilterQuery(fq);
 
-    if (SearchQuery && !FilterQuery) {
-      const filteredData = BlogData.filter((item) => {
-        const user = item.user;
-        const info = item.info;
+    const sqLower = sq.toLowerCase();
+    const fqLower = fq.toLowerCase();
 
-        return (
-          user.username
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          info.name
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          info.shortDescription
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          info.tags.includes(FilterQuery?.toString().toLowerCase() as string)
-        );
-      });
+    let filteredData = BlogData;
 
-      const filteredUsers = AllUserData.filter((user) => {
-        return (
-          user.user_id
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          user.username
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          user.work_place
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          user.location
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          user.user_description
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string)
-        );
-      });
-
-      setItems(filteredData);
-      setUsers(filteredUsers);
-      setSearchQuery(SearchQuery?.toString());
-      setFilterQuery(FilterQuery?.toString());
-    } else if (SearchQuery && FilterQuery) {
-      const filteredData = BlogData.filter((item) => {
-        const user = item.user;
-        const info = item.info;
-
-        return (
-          info.tags.includes(FilterQuery?.toString().toLowerCase() as string) &&
-          (user.username
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-            info.shortDescription
-              .toLowerCase()
-              .includes(SearchQuery?.toString().toLowerCase() as string) ||
-            info.name
-              .toLowerCase()
-              .includes(SearchQuery?.toString().toLowerCase() as string))
-        );
-      });
-
-      const filteredUsers = AllUserData.filter((user) => {
-        return (
-          user.user_id
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          user.username
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          user.work_place
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          user.location
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string) ||
-          user.user_description
-            .toLowerCase()
-            .includes(SearchQuery?.toString().toLowerCase() as string)
-        );
-      });
-
-      setItems(filteredData);
-      setUsers(filteredUsers);
-      setSearchQuery(SearchQuery?.toString());
-      setFilterQuery(FilterQuery?.toString());
-    } else if (FilterQuery && !SearchQuery) {
-      const filteredData = BlogData.filter((item) => {
-        const user = item.user;
-        const info = item.info;
-        return info.tags.includes(
-          FilterQuery?.toString().toLowerCase() as string
-        );
-      });
-
-      setItems(filteredData);
-      setSearchQuery(SearchQuery?.toString());
-      setFilterQuery(FilterQuery?.toString());
+    if (fq) {
+      filteredData = filteredData.filter((item) =>
+        item.info.tags.includes(fqLower)
+      );
     }
-  }, []);
+
+    if (sq) {
+      filteredData = filteredData.filter((item) =>
+        item.user.username.toLowerCase().includes(sqLower) ||
+        item.info.name.toLowerCase().includes(sqLower) ||
+        item.info.shortDescription.toLowerCase().includes(sqLower)
+      );
+    }
+
+    setItems(filteredData);
+
+    if (sq) {
+      setUsers(
+        AllUserData.filter(
+          (user) =>
+            user.user_id.toLowerCase().includes(sqLower) ||
+            user.username.toLowerCase().includes(sqLower) ||
+            user.work_place.toLowerCase().includes(sqLower) ||
+            user.location.toLowerCase().includes(sqLower) ||
+            user.user_description.toLowerCase().includes(sqLower)
+        )
+      );
+    }
+  }, [searchParams]);
 
   return (
-    <div>
-      {loading === true ? (
-        <></>
-      ) : (
-        <div>
-          <SideBar>
-            <p className="text-3xl font-bold ml-6 text-center lg:text-start pb-6 border-b-2 border-black mr-6 mb-6">
-              Results for {searchQuery}
-            </p>
-            <div className="ml-6 lg:ml-0">
-            {users.length > 0 ? (
-              <div>
-                {users.map((x: any, i: number) => (
-                  <UserCardInfo data={x} key={i} />
-                ))}
-              </div>
-            ) : (
-              <></>
-            )}
-            {items.length > 0 ? (
-              <div className="items-center justify-center flex pt-6 lg:pt-0 lg:justify-start lg:items-start pb-24">
-                <div className="flex flex-wrap justify-center lg:justify-start gap-3">
-                  {items.map((x: any, i: number) => (
-                    <SmallCardInfo key={i} data={x} />
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <p className="text-4xl flex items-center justify-center">
-                No items found
-              </p>
-            )}
-            </div>
-          </SideBar>
+    <SideBar>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">
+        Results for &ldquo;{searchQuery}&rdquo;
+      </h1>
+
+      {users.length > 0 && (
+        <div className="flex flex-col gap-3 mb-8">
+          {users.map((x: any, i: number) => (
+            <UserCardInfo data={x} key={i} />
+          ))}
         </div>
       )}
-    </div>
+
+      {items.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          {items.map((x: any, i: number) => (
+            <SmallCardInfo key={i} data={x} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500 py-12">No items found</p>
+      )}
+    </SideBar>
   );
 }
 

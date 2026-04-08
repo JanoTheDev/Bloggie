@@ -4,67 +4,66 @@ import { userAccount } from "@/atoms/userAccount";
 import SideBar from "@/components/Navbar";
 import SmallCardInfo from "@/components/SmallCardInfo";
 import UserCardInfo from "@/components/UserCardInfo";
+import { SkeletonGrid, SkeletonUserCard } from "@/components/Skeleton";
 import { AllUserData } from "@/data/AllUserData";
 import { BlogData } from "@/data/BlogData";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
+import type { BlogPost, User } from "@/types";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [randomData, setRandomData] = useState<any[]>([]);
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [userAcc] = useAtom(userAccount);
 
   useEffect(() => {
-    const randomizedData: any[] = [];
-    const shuffledBlogData = [...BlogData].sort(() => Math.random() - 0.5);
-    const shuffledUserData = [...AllUserData].sort(() => Math.random() - 0.5);
-
-    let blogIndex = 0;
-    for (let i = 0; i < 5; i++) {
-      const blogSlice = shuffledBlogData.slice(blogIndex, blogIndex + 5);
-      randomizedData.push(...blogSlice);
-      blogIndex += 5;
-      if (i < 4) {
-        randomizedData.push(...shuffledUserData.slice(i, i + 1));
-      }
-    }
-
-    setRandomData(randomizedData);
+    const shuffledBlogs = [...BlogData].sort(() => Math.random() - 0.5);
+    const shuffledUsers = [...AllUserData].sort(() => Math.random() - 0.5);
+    setBlogs(shuffledBlogs);
+    setUsers(shuffledUsers.slice(0, 4));
     setLoading(false);
   }, [userAcc.user_id]);
 
-  if (loading) return null;
-
-  const blogs = randomData.filter((x) => x.cardID);
-  const users = randomData.filter((x) => !x.cardID);
-
   return (
     <SideBar>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Home</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Home</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
-        {blogs.slice(0, 6).map((x: any, i: number) => (
-          <SmallCardInfo data={x} key={i} />
-        ))}
-      </div>
-
-      {users.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">Suggested for you</h2>
-          <div className="flex flex-col gap-3">
-            {users.map((x: any, i: number) => (
-              <UserCardInfo data={x} key={i} />
+      {loading ? (
+        <>
+          <SkeletonGrid count={6} />
+          <div className="flex flex-col gap-3 mt-8">
+            <SkeletonUserCard />
+            <SkeletonUserCard />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
+            {blogs.slice(0, 6).map((post) => (
+              <SmallCardInfo data={post} key={post.cardID} />
             ))}
           </div>
-        </div>
-      )}
 
-      {blogs.length > 6 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-          {blogs.slice(6).map((x: any, i: number) => (
-            <SmallCardInfo data={x} key={i} />
-          ))}
-        </div>
+          {users.length > 0 && (
+            <div className="mb-8">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Suggested for you</h2>
+              <div className="flex flex-col gap-3">
+                {users.map((user) => (
+                  <UserCardInfo data={user} key={user.user_id} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {blogs.length > 6 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+              {blogs.slice(6).map((post) => (
+                <SmallCardInfo data={post} key={post.cardID} />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </SideBar>
   );

@@ -1,4 +1,6 @@
-export const AllUserData = [
+import type { User } from "@/types";
+
+export const AllUserData: User[] = [
   {
     username: "User1",
     verified: true,
@@ -8,12 +10,7 @@ export const AllUserData = [
     user_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     work_place: "home",
     location: "redacted",
-    socials: {
-      github: "",
-      twitter: "",
-      youtube: "",
-      instagram: "",
-    },
+    socials: { github: "", twitter: "", youtube: "", instagram: "" },
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: ["1", "2", "3"],
     followers: ["2", "3"],
@@ -28,16 +25,10 @@ export const AllUserData = [
     user_id: "2",
     profile_picture: "https://picsum.photos/seed/user2/200/200",
     join_date: "1693732421",
-    user_description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    user_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     work_place: "Workplace 2",
     location: "Location 2",
-    socials: {
-      github: "",
-      twitter: "",
-      youtube: "",
-      instagram: "",
-    },
+    socials: { github: "", twitter: "", youtube: "", instagram: "" },
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: ["1", "2", "3"],
     followers: ["1", "3"],
@@ -52,16 +43,10 @@ export const AllUserData = [
     user_id: "3",
     profile_picture: "https://picsum.photos/seed/user3/200/200",
     join_date: "1693732421",
-    user_description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    user_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     work_place: "Workplace 3",
     location: "Location 3",
-    socials: {
-      github: "",
-      twitter: "",
-      youtube: "",
-      instagram: "",
-    },
+    socials: { github: "", twitter: "", youtube: "", instagram: "" },
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: ["1", "2", "3"],
     followers: ["1", "2"],
@@ -76,16 +61,10 @@ export const AllUserData = [
     user_id: "4",
     profile_picture: "https://picsum.photos/seed/user4/200/200",
     join_date: "1693732421",
-    user_description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    user_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     work_place: "Workplace 4",
     location: "Location 4",
-    socials: {
-      github: "",
-      twitter: "",
-      youtube: "",
-      instagram: "",
-    },
+    socials: { github: "", twitter: "", youtube: "", instagram: "" },
     skills: ["Lang1", "Lang2", "Lang3", "Lang4"],
     history: [],
     followers: [],

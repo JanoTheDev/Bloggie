@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import ThemeProvider from "@/components/ThemeProvider";
+import { Toast } from "@/components/Toast";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,8 +16,12 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Bloggie",
-  description: "A basic and open sourced blog website",
+  title: {
+    default: "Bloggie",
+    template: "%s | Bloggie",
+  },
+  description: "A modern blog platform for developers to share knowledge, discover posts, and connect with other creators.",
+  keywords: ["blog", "developer", "programming", "articles", "tech"],
 };
 
 export default function RootLayout({
@@ -24,11 +30,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors`}
       >
-        {children}
+        <ThemeProvider>
+          {children}
+          <Toast />
+        </ThemeProvider>
       </body>
     </html>
   );

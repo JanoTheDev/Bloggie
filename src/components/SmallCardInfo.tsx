@@ -23,7 +23,7 @@ export default function SmallCardInfo({ data }: { data: BlogPost }) {
   return (
     <Link
       href={`/blog/${data.cardID}`}
-      className="group block bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 dark:border-gray-800 transition-all duration-200"
+      className="group block bg-white dark:bg-neutral-950 rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 dark:border-neutral-800 transition-all duration-200"
     >
       <div className="aspect-[3/2] overflow-hidden relative">
         <Image
@@ -39,7 +39,7 @@ export default function SmallCardInfo({ data }: { data: BlogPost }) {
         {data.info.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-3">
             {data.info.tags.slice(0, 3).map((tag, i) => (
-              <button key={i} onClick={(e) => handleTag(e, tag)} className="px-2 py-0.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+              <button key={i} onClick={(e) => handleTag(e, tag)} className="px-2 py-0.5 text-xs font-medium bg-gray-100 dark:bg-neutral-900 text-gray-600 dark:text-neutral-400 rounded-full hover:bg-gray-200 dark:hover:bg-neutral-800 transition-colors">
                 {tag.charAt(0).toUpperCase() + tag.slice(1)}
               </button>
             ))}
@@ -51,14 +51,14 @@ export default function SmallCardInfo({ data }: { data: BlogPost }) {
 
         <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); router.push(`/profile/${data.user.user_id}`); }} className="flex items-center gap-2 mb-2">
           <Image src={data.user.profile_picture} alt={data.user.username} width={24} height={24} className="rounded-full object-cover" />
-          <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">{data.user.username}</span>
+          <span className="text-sm text-gray-500 dark:text-neutral-400 font-medium">{data.user.username}</span>
           {data.user.verified && <IconVerified className="w-4 h-4 text-blue-500" />}
         </button>
 
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-1 line-clamp-1">{data.info.name}</h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{data.info.shortDescription}</p>
+        <h3 className="font-semibold text-gray-900 dark:text-neutral-100 mb-1 line-clamp-1">{data.info.name}</h3>
+        <p className="text-sm text-gray-500 dark:text-neutral-400 line-clamp-2">{data.info.shortDescription}</p>
 
-        <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+        <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 dark:border-neutral-800">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1 text-xs text-gray-400">
               <IconEye className="w-4 h-4" /> {data.info.views_count.length}

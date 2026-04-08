@@ -66,10 +66,10 @@ code {
 }
 
 /* Dark mode markdown overrides */
-.dark .markdown-body { color: #e2e8f0; }
-.dark .markdown-body blockquote { background-color: #1e293b; border-left-color: #475569; color: #94a3b8; }
-.dark .markdown-body code { background-color: #334155; color: #e2e8f0; }
-.dark .markdown-body pre { background-color: #0f172a; }
+.dark .markdown-body { color: #d4d4d4; }
+.dark .markdown-body blockquote { background-color: #171717; border-left-color: #404040; color: #a3a3a3; }
+.dark .markdown-body code { background-color: #262626; color: #d4d4d4; }
+.dark .markdown-body pre { background-color: #0a0a0a; }
 
 /* Fade-in animation for page content */
 @keyframes fadeIn {

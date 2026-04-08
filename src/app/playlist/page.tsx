@@ -44,14 +44,14 @@ function PlaylistContent() {
 
   return (
     <SideBar>
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{titles[list] || "Playlist"}</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-6">{titles[list] || "Playlist"}</h1>
 
       {loading ? (
         <SkeletonGrid count={6} />
       ) : blogs.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-gray-400 dark:text-gray-500 text-lg">Nothing here yet.</p>
-          <p className="text-gray-400 dark:text-gray-600 text-sm mt-1">Start browsing to fill this list.</p>
+          <p className="text-gray-400 dark:text-neutral-500 text-lg">Nothing here yet.</p>
+          <p className="text-gray-400 dark:text-neutral-400 text-sm mt-1">Start browsing to fill this list.</p>
         </div>
       ) : (
         <>

@@ -1,14 +1,14 @@
 function Shimmer({ className }: { className?: string }) {
   return (
     <div
-      className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded ${className || ""}`}
+      className={`animate-pulse bg-gray-200 dark:bg-neutral-800 rounded ${className || ""}`}
     />
   );
 }
 
 export function SkeletonCard() {
   return (
-    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
+    <div className="rounded-xl border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
       {/* Image placeholder */}
       <Shimmer className="aspect-[3/2] w-full rounded-none" />
 
@@ -47,7 +47,7 @@ export function SkeletonCard() {
 
 export function SkeletonUserCard() {
   return (
-    <div className="flex items-center gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
+    <div className="flex items-center gap-4 rounded-xl border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4">
       {/* Avatar */}
       <Shimmer className="h-12 w-12 shrink-0 rounded-full" />
 

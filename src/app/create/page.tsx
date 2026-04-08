@@ -44,10 +44,10 @@ function CreatePostContent() {
       <div className="max-w-7xl mx-auto">
         {/* Page header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100">
             Create New Post
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-500 dark:text-neutral-400">
             Write your post in Markdown and see a live preview.
           </p>
         </div>
@@ -56,12 +56,12 @@ function CreatePostContent() {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Left panel - Editor */}
           <div className="flex-1 min-w-0">
-            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5 space-y-4">
+            <div className="bg-white dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 rounded-xl p-5 space-y-4">
               {/* Title */}
               <div>
                 <label
                   htmlFor="title"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
+                  className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1.5"
                 >
                   Title
                 </label>
@@ -71,7 +71,7 @@ function CreatePostContent() {
                   placeholder="Your post title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-4 py-2.5 text-lg font-semibold bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 focus:border-transparent"
+                  className="w-full px-4 py-2.5 text-lg font-semibold bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700 focus:border-transparent"
                 />
               </div>
 
@@ -79,7 +79,7 @@ function CreatePostContent() {
               <div>
                 <label
                   htmlFor="description"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
+                  className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1.5"
                 >
                   Short Description
                 </label>
@@ -89,7 +89,7 @@ function CreatePostContent() {
                   placeholder="A brief summary of your post"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 focus:border-transparent text-sm"
+                  className="w-full px-4 py-2 bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700 focus:border-transparent text-sm"
                 />
               </div>
 
@@ -97,7 +97,7 @@ function CreatePostContent() {
               <div>
                 <label
                   htmlFor="tags"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
+                  className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1.5"
                 >
                   Tags
                 </label>
@@ -107,7 +107,7 @@ function CreatePostContent() {
                       key={tag}
                       type="button"
                       onClick={() => removeTag(tag)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-red-50 hover:text-red-600 hover:border-red-200 dark:hover:bg-red-900/20 dark:hover:text-red-400 dark:hover:border-red-800 transition-colors"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-neutral-300 border border-gray-200 dark:border-neutral-800 rounded-full hover:bg-red-50 hover:text-red-600 hover:border-red-200 dark:hover:bg-red-900/20 dark:hover:text-red-400 dark:hover:border-red-800 transition-colors"
                     >
                       {tag}
                       <svg
@@ -128,7 +128,7 @@ function CreatePostContent() {
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyDown={handleTagKeyDown}
-                  className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 focus:border-transparent text-sm"
+                  className="w-full px-4 py-2 bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700 focus:border-transparent text-sm"
                 />
               </div>
 
@@ -136,7 +136,7 @@ function CreatePostContent() {
               <div>
                 <label
                   htmlFor="markdown"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
+                  className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1.5"
                 >
                   Content (Markdown)
                 </label>
@@ -146,7 +146,7 @@ function CreatePostContent() {
                   value={markdown}
                   onChange={(e) => setMarkdown(e.target.value)}
                   rows={18}
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 focus:border-transparent text-sm font-mono leading-relaxed resize-y"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700 focus:border-transparent text-sm font-mono leading-relaxed resize-y"
                 />
               </div>
             </div>
@@ -154,18 +154,18 @@ function CreatePostContent() {
 
           {/* Right panel - Preview */}
           <div className="flex-1 min-w-0">
-            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5 sticky top-24">
-              <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
+            <div className="bg-white dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 rounded-xl p-5 sticky top-24">
+              <h2 className="text-sm font-medium text-gray-500 dark:text-neutral-400 uppercase tracking-wide mb-4">
                 Preview
               </h2>
 
               {title && (
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-2">
                   {title}
                 </h1>
               )}
               {description && (
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                <p className="text-sm text-gray-500 dark:text-neutral-400 mb-1">
                   {description}
                 </p>
               )}
@@ -174,7 +174,7 @@ function CreatePostContent() {
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"
+                      className="px-2 py-0.5 text-xs font-medium bg-gray-100 dark:bg-neutral-900 text-gray-600 dark:text-neutral-400 rounded-full"
                     >
                       {tag}
                     </span>
@@ -182,7 +182,7 @@ function CreatePostContent() {
                 </div>
               )}
               {(title || description || tags.length > 0) && markdown && (
-                <hr className="border-gray-200 dark:border-gray-700 mb-4" />
+                <hr className="border-gray-200 dark:border-neutral-800 mb-4" />
               )}
 
               {markdown ? (
@@ -191,7 +191,7 @@ function CreatePostContent() {
                   dangerouslySetInnerHTML={{ __html: previewHtml }}
                 />
               ) : (
-                <p className="text-sm text-gray-400 dark:text-gray-500 italic">
+                <p className="text-sm text-gray-400 dark:text-neutral-500 italic">
                   Start writing Markdown on the left to see a live preview
                   here.
                 </p>
@@ -206,7 +206,7 @@ function CreatePostContent() {
             type="button"
             onClick={handlePublish}
             disabled={!title.trim() || !markdown.trim()}
-            className="px-6 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-6 py-2.5 bg-gray-900 dark:bg-neutral-100 text-white dark:text-black text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Publish
           </button>

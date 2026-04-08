@@ -28,14 +28,14 @@ export default function Following() {
   return (
     <Suspense>
       <SideBar>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Following</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-6">Following</h1>
 
         {loading ? (
           <SkeletonGrid count={6} />
         ) : blogs.length === 0 && users.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-400 dark:text-gray-500 text-lg">No activity from people you follow yet.</p>
-            <p className="text-gray-400 dark:text-gray-600 text-sm mt-1">Follow creators to see their posts here.</p>
+            <p className="text-gray-400 dark:text-neutral-500 text-lg">No activity from people you follow yet.</p>
+            <p className="text-gray-400 dark:text-neutral-400 text-sm mt-1">Follow creators to see their posts here.</p>
           </div>
         ) : (
           <>

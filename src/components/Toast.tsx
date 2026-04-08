@@ -54,12 +54,12 @@ function ToastItem({ toast, onRemove }: { toast: ToastMessage; onRemove: () => v
         visible
           ? "opacity-100 translate-y-0"
           : "opacity-0 translate-y-4"
-      } bg-white dark:bg-gray-800`}
+      } bg-white dark:bg-neutral-900`}
     >
       {/* Color accent bar */}
       <div className={`w-1 shrink-0 ${accentColors[toast.type]}`} />
 
-      <p className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
+      <p className="px-4 py-3 text-sm text-gray-900 dark:text-neutral-100">
         {toast.message}
       </p>
     </div>

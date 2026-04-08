@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <SideBar>
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Home</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-6">Home</h1>
 
       {loading ? (
         <>
@@ -47,7 +47,7 @@ export default function Home() {
 
           {users.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Suggested for you</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-neutral-100 mb-3">Suggested for you</h2>
               <div className="flex flex-col gap-3">
                 {users.map((user) => (
                   <UserCardInfo data={user} key={user.user_id} />

@@ -51,7 +51,7 @@ function ResultsContent() {
 
   return (
     <SideBar>
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-6">
         Results for &ldquo;{searchQuery}&rdquo;
       </h1>
 
@@ -59,8 +59,8 @@ function ResultsContent() {
         <SkeletonGrid count={6} />
       ) : items.length === 0 && users.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-gray-400 dark:text-gray-500 text-lg">No results found.</p>
-          <p className="text-gray-400 dark:text-gray-600 text-sm mt-1">Try a different search term.</p>
+          <p className="text-gray-400 dark:text-neutral-500 text-lg">No results found.</p>
+          <p className="text-gray-400 dark:text-neutral-400 text-sm mt-1">Try a different search term.</p>
         </div>
       ) : (
         <>

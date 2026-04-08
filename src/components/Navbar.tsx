@@ -6,7 +6,6 @@ import { SidebarItem, SidebarItems } from "@/data/SidebarItems";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { searchBarText, sidebarToggle } from "@/atoms/Navbar";
-import { userAccount } from "@/atoms/userAccount";
 import { themeAtom } from "@/atoms/theme";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,6 +13,8 @@ import { IconMenu, IconSearch, IconSun, IconMoon } from "@/components/Icons";
 import NotificationBell from "@/components/NotificationBell";
 import SearchAutocomplete from "@/components/SearchAutocomplete";
 import { debounce } from "@/lib/utils";
+import { useUser, useProfile } from "@/lib/supabase/hooks";
+import { createClient } from "@/lib/supabase/client";
 
 function SideBarInner({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
@@ -23,8 +24,9 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useAtom(sidebarToggle);
   const [searchQuery, setSearchQuery] = useAtom(searchBarText);
-  const [userAcc] = useAtom(userAccount);
   const [theme, setTheme] = useAtom(themeAtom);
+  const { user } = useUser();
+  const { profile } = useProfile(user?.id);
 
   useEffect(() => setMounted(true), []);
 
@@ -106,17 +108,30 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
               {theme === "dark" ? <IconSun /> : <IconMoon />}
             </button>
 
-            <Menu as="div" className="relative">
-              <Menu.Button className="rounded-full ring-2 ring-gray-200 dark:ring-neutral-800 hover:ring-gray-300 dark:hover:ring-neutral-700 transition-all">
-                <Image src={userAcc.profile_picture} alt="Profile" width={32} height={32} className="rounded-full object-cover" />
-              </Menu.Button>
-              <Transition as={Fragment} enter="transition ease-out duration-100" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="transition ease-in duration-75" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
-                <Menu.Items className="absolute right-0 z-10 mt-2 w-48 rounded-lg bg-white dark:bg-neutral-900 shadow-lg ring-1 ring-gray-200 dark:ring-neutral-800 py-1 focus:outline-none">
-                  <Menu.Item>{({ active }) => <Link href="/profile" className={`block px-4 py-2 text-sm ${active ? "bg-gray-50 dark:bg-neutral-800" : ""} text-gray-700 dark:text-neutral-200`}>Your Profile</Link>}</Menu.Item>
-                  <Menu.Item>{({ active }) => <button className={`block w-full text-left px-4 py-2 text-sm ${active ? "bg-gray-50 dark:bg-neutral-800" : ""} text-gray-700 dark:text-neutral-200`}>Sign out</button>}</Menu.Item>
-                </Menu.Items>
-              </Transition>
-            </Menu>
+            {user ? (
+              <Menu as="div" className="relative">
+                <Menu.Button className="rounded-full ring-2 ring-gray-200 dark:ring-neutral-800 hover:ring-gray-300 dark:hover:ring-neutral-700 transition-all">
+                  {profile?.avatar_url ? (
+                    <Image src={profile.avatar_url} alt="Profile" width={32} height={32} className="rounded-full object-cover" />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-gray-300 dark:bg-neutral-700 flex items-center justify-center text-xs font-medium text-gray-600 dark:text-neutral-300">
+                      {(profile?.username || user.email || "?")[0].toUpperCase()}
+                    </div>
+                  )}
+                </Menu.Button>
+                <Transition as={Fragment} enter="transition ease-out duration-100" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="transition ease-in duration-75" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
+                  <Menu.Items className="absolute right-0 z-10 mt-2 w-48 rounded-lg bg-white dark:bg-neutral-900 shadow-lg ring-1 ring-gray-200 dark:ring-neutral-800 py-1 focus:outline-none">
+                    <Menu.Item>{({ active }) => <Link href="/profile" className={`block px-4 py-2 text-sm ${active ? "bg-gray-50 dark:bg-neutral-800" : ""} text-gray-700 dark:text-neutral-200`}>Your Profile</Link>}</Menu.Item>
+                    <Menu.Item>{({ active }) => <Link href="/settings" className={`block px-4 py-2 text-sm ${active ? "bg-gray-50 dark:bg-neutral-800" : ""} text-gray-700 dark:text-neutral-200`}>Settings</Link>}</Menu.Item>
+                    <Menu.Item>{({ active }) => <button onClick={async () => { const sb = createClient(); await sb.auth.signOut(); router.push("/login"); }} className={`block w-full text-left px-4 py-2 text-sm ${active ? "bg-gray-50 dark:bg-neutral-800" : ""} text-gray-700 dark:text-neutral-200`}>Sign out</button>}</Menu.Item>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
+            ) : (
+              <Link href="/login" className="px-4 py-1.5 text-sm font-medium bg-gray-900 dark:bg-neutral-100 text-white dark:text-black rounded-lg hover:bg-gray-800 dark:hover:bg-neutral-200 transition-colors">
+                Sign in
+              </Link>
+            )}
           </div>
         </header>
 

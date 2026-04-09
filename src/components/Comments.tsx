@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ConfirmDialog from "@/components/ConfirmDialog";
 import { useUser } from "@/lib/supabase/hooks";
 import { getComments, addComment, deleteComment } from "@/lib/supabase/api";
 import { useToast } from "@/components/Toast";
@@ -28,6 +29,7 @@ export default function Comments({ postId }: { postId: string }) {
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState("");
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   const fetchComments = useCallback(async () => {
     try { setComments(await getComments(postId)); }
@@ -50,8 +52,7 @@ export default function Comments({ postId }: { postId: string }) {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Delete this comment?")) return;
-    try { await deleteComment(id); await fetchComments(); }
+    try { await deleteComment(id); await fetchComments(); setDeleteTarget(null); }
     catch { toast("Failed to delete", "error"); }
   }
 
@@ -122,7 +123,7 @@ export default function Comments({ postId }: { postId: string }) {
                 </button>
               )}
               {isOwn && (
-                <button onClick={() => handleDelete(comment.id)} className="text-xs font-medium text-gray-400 hover:text-red-500 dark:text-neutral-500 dark:hover:text-red-400">
+                <button onClick={() => setDeleteTarget(comment.id)} className="text-xs font-medium text-gray-400 hover:text-red-500 dark:text-neutral-500 dark:hover:text-red-400">
                   Delete
                 </button>
               )}
@@ -204,6 +205,15 @@ export default function Comments({ postId }: { postId: string }) {
           </div>
         )}
       </div>
+      <ConfirmDialog
+        open={!!deleteTarget}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={() => deleteTarget && handleDelete(deleteTarget)}
+        title="Delete comment"
+        message="Are you sure? This can't be undone."
+        confirmLabel="Delete"
+        destructive
+      />
     </div>
   );
 }

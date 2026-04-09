@@ -131,12 +131,14 @@ function LoginForm() {
           Continue with GitHub
         </button>
 
-        <p className="mt-6 text-center text-sm text-gray-600 dark:text-neutral-400">
+        <p className="mt-4 text-center text-sm">
+          <Link href="/forgot-password" className="text-gray-500 hover:text-gray-700 dark:text-neutral-500 dark:hover:text-neutral-300">
+            Forgot your password?
+          </Link>
+        </p>
+        <p className="mt-3 text-center text-sm text-gray-600 dark:text-neutral-400">
           Don&apos;t have an account?{" "}
-          <Link
-            href="/signup"
-            className="font-medium text-gray-900 hover:underline dark:text-neutral-100"
-          >
+          <Link href="/signup" className="font-medium text-gray-900 hover:underline dark:text-neutral-100">
             Sign up
           </Link>
         </p>

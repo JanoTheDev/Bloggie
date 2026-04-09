@@ -17,6 +17,7 @@ function CreatePostContent() {
   const [tagInput, setTagInput] = useState("");
   const [markdown, setMarkdown] = useState("");
   const [coverImage, setCoverImage] = useState("");
+  const [scheduleDate, setScheduleDate] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const previewHtml = useMemo(() => {
@@ -67,21 +68,25 @@ function CreatePostContent() {
     return () => clearTimeout(timer);
   }, [saveDraft]);
 
-  const handlePublish = async () => {
+  const handlePublish = async (scheduled = false) => {
     if (publishing) return;
     setPublishing(true);
     try {
-      const post = await createPost({
+      const postData: any = {
         title,
         content: markdown,
         short_description: description,
         cover_image: coverImage || undefined,
         tags,
-        published: true,
-      });
+        published: !scheduled,
+      };
+      if (scheduled && scheduleDate) {
+        postData.publish_at = new Date(scheduleDate).toISOString();
+      }
+      const post = await createPost(postData);
       localStorage.removeItem("draft");
-      toast("Post published!", "success");
-      router.push(`/blog/${post.slug}`);
+      toast(scheduled ? "Post scheduled!" : "Post published!", "success");
+      router.push(scheduled ? "/profile" : `/blog/${post.slug}`);
     } catch (err: any) {
       toast(err.message || "Failed to publish", "error");
     } finally {
@@ -263,15 +268,34 @@ function CreatePostContent() {
           </div>
         </div>
 
-        {/* Publish button */}
-        <div className="mt-6 flex justify-end">
+        {/* Publish / Schedule */}
+        <div className="mt-6 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-gray-500 dark:text-neutral-400">Schedule:</label>
+            <input
+              type="datetime-local"
+              value={scheduleDate}
+              onChange={(e) => setScheduleDate(e.target.value)}
+              className="px-3 py-1.5 text-sm bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg text-gray-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700"
+            />
+            {scheduleDate && (
+              <button
+                type="button"
+                onClick={() => handlePublish(true)}
+                disabled={!title.trim() || !markdown.trim() || publishing}
+                className="px-4 py-2 text-sm font-medium bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-neutral-300 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-800 transition-colors disabled:opacity-40"
+              >
+                {publishing ? "Scheduling..." : "Schedule"}
+              </button>
+            )}
+          </div>
           <button
             type="button"
-            onClick={handlePublish}
+            onClick={() => handlePublish(false)}
             disabled={!title.trim() || !markdown.trim() || publishing}
             className="px-6 py-2.5 bg-gray-900 dark:bg-neutral-100 text-white dark:text-black text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            {publishing ? "Publishing..." : "Publish"}
+            {publishing ? "Publishing..." : "Publish now"}
           </button>
         </div>
       </div>

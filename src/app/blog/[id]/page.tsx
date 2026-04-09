@@ -14,6 +14,7 @@ import { useToast } from "@/components/Toast";
 import { relativeTime, readingTime } from "@/lib/utils";
 import TableOfContents from "@/components/TableOfContents";
 import RelatedPosts from "@/components/RelatedPosts";
+import EmbedRenderer from "@/components/EmbedRenderer";
 import Image from "next/image";
 import Link from "next/link";
 import { useUser } from "@/lib/supabase/hooks";
@@ -131,7 +132,9 @@ export default function BlogPost() {
 
         {/* Content + TOC side-by-side */}
         <div className="flex gap-8 mt-6">
-          <article className="markdown-body text-gray-900 dark:text-neutral-100 flex-1 min-w-0" dangerouslySetInnerHTML={createMarkup(post.content)} />
+          <article className="markdown-body text-gray-900 dark:text-neutral-100 flex-1 min-w-0">
+            <EmbedRenderer html={createMarkup(post.content).__html} />
+          </article>
           <div className="hidden xl:block w-56 shrink-0">
             <TableOfContents content={post.content} />
           </div>

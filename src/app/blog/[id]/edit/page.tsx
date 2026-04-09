@@ -10,6 +10,7 @@ import { useToast } from "@/components/Toast";
 import { useParams, useRouter } from "next/navigation";
 import MarkdownToolbar from "@/components/MarkdownToolbar";
 import ImageUpload from "@/components/ImageUpload";
+import ConfirmDialog from "@/components/ConfirmDialog";
 
 function EditPostContent() {
   const { id: slug } = useParams<{ id: string }>();
@@ -117,13 +118,10 @@ function EditPostContent() {
     }
   };
 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const handleDelete = async () => {
     if (deleting || !post) return;
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this post? This action cannot be undone."
-    );
-    if (!confirmed) return;
-
     setDeleting(true);
     try {
       const { error } = await supabase
@@ -400,9 +398,9 @@ function EditPostContent() {
         <div className="mt-6 flex justify-between">
           <button
             type="button"
-            onClick={handleDelete}
+            onClick={() => setShowDeleteModal(true)}
             disabled={deleting}
-            className="px-5 py-2.5 bg-red-600 dark:bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 dark:hover:bg-red-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-5 py-2.5 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {deleting ? "Deleting..." : "Delete Post"}
           </button>
@@ -415,6 +413,15 @@ function EditPostContent() {
             {updating ? "Updating..." : "Update"}
           </button>
         </div>
+        <ConfirmDialog
+          open={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          onConfirm={handleDelete}
+          title="Delete post"
+          message="Are you sure you want to delete this post? This can't be undone."
+          confirmLabel="Delete"
+          destructive
+        />
       </div>
     </SideBar>
   );

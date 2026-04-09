@@ -1,31 +1,59 @@
 # Bloggie
 
-A modern, full-stack blog platform built with Next.js and Supabase, featuring real-time interactions, markdown-powered posts, and a polished developer experience.
+A modern, full-stack blog platform built with Next.js and Supabase.
 
 ## Features
 
-- **Authentication** -- Email/password and GitHub OAuth via Supabase Auth
-- **Blog posts** -- Create, edit, and publish markdown posts with live preview
-- **Markdown editor** -- Toolbar with formatting buttons, drag-and-drop image upload, auto-save drafts
-- **Comments** -- Threaded comment system with replies
-- **Social interactions** -- Like, bookmark, follow with optimistic UI and animated counters
-- **Search** -- Autocomplete search with keyboard navigation
-- **Notifications** -- Bell icon with unread badge, real-time polling
-- **User profiles** -- Editable profiles with avatar, bio, skills, location
-- **Dark mode** -- Pure black theme with persisted preference
-- **Responsive sidebar** -- Collapsible navigation with persisted state, user profile section at bottom
-- **Blog reader** -- Table of contents sidebar, related posts, code copy buttons, share link
-- **Infinite scroll** -- Load more pagination on the home feed
-- **SEO** -- Dynamic Open Graph and Twitter Card meta tags per post
-- **Accessibility** -- Skip-to-content, ARIA labels, keyboard navigation, focus management
-- **Performance** -- Skeleton loading states, blur image placeholders, page transition animations
-- **PWA** -- Web app manifest for installability
-- **Error handling** -- Error boundary with recovery, custom 404 page
+**Core**
+- Email/password and GitHub OAuth authentication
+- Password reset flow with email verification
+- Create, edit, and delete blog posts with markdown editor
+- Markdown toolbar (bold, italic, heading, code, link, image, quote, list)
+- Drag-and-drop image upload to Supabase Storage
+- Post scheduling with date picker
+- Auto-save drafts to localStorage
+- Live word count in editor
+
+**Reading**
+- Blog posts with cover image hero, code syntax highlighting, and copy-code buttons
+- YouTube and Twitter/X embed support in posts
+- Table of contents sidebar generated from headings
+- Related posts based on matching tags
+- Reading progress bar
+- Reading time estimates
+
+**Social**
+- Like, bookmark, and follow with optimistic UI and animated counters
+- Threaded comment system with Reddit-style thread lines
+- Comment editing (within 5 minutes) and deletion with confirmation modals
+- Notification system with bell icon, unread badge, and polling
+- User profiles with follower/following counts
+- Post analytics dashboard with stats and bar chart
+
+**Search and Discovery**
+- Autocomplete search across titles, descriptions, and tags with hierarchy
+- Full-text search with Postgres tsvector (optional migration)
+- Infinite scroll with intersection observer
+- Tag-based filtering
+
+**Polish**
+- Dark mode with pure black/neutral palette, persisted preference
+- Responsive sidebar with user profile section and settings popover
+- Skeleton loading states and blur image placeholders
+- Page transition animations and loading bar
+- Keyboard shortcuts (n=new post, /=search, ?=help)
+- Confirmation modals for destructive actions (no browser alerts)
+- Back-to-top button
+- Skip-to-content link and ARIA labels
+- Custom 404 page and error boundary
+- PWA manifest
+- RSS feed and dynamic sitemap
+- Dynamic Open Graph and Twitter Card meta tags per post
 
 ## Tech Stack
 
 - **Framework:** Next.js 16 (App Router)
-- **Backend:** Supabase (PostgreSQL, Auth, Storage, Row Level Security)
+- **Backend:** Supabase (PostgreSQL, Auth, Storage, RLS)
 - **UI:** React 19, Tailwind CSS v4, Headless UI
 - **Language:** TypeScript
 - **State:** Jotai
@@ -35,8 +63,8 @@ A modern, full-stack blog platform built with Next.js and Supabase, featuring re
 
 ### Prerequisites
 
-- Node.js 20 or later
-- A Supabase project ([supabase.com](https://supabase.com))
+- Node.js 20+
+- A Supabase project
 
 ### Setup
 
@@ -46,64 +74,57 @@ cd Bloggie
 npm install
 ```
 
-Create a `.env.local` file:
+Create `.env.local`:
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=your-project-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-Run the database schema and storage setup in the Supabase SQL Editor:
+Run these SQL files in the Supabase SQL Editor (in order):
 
-1. `supabase/schema.sql` -- Creates tables, RLS policies, triggers, and indexes
-2. `supabase/storage.sql` -- Creates storage buckets for avatars and cover images
-3. `supabase/seed.sql` -- (Optional) Sample data after creating a user account
-
-Start the dev server:
+1. `supabase/schema.sql` - Tables, RLS policies, triggers, indexes
+2. `supabase/storage.sql` - Storage buckets for avatars and cover images
+3. `supabase/search.sql` - (Optional) Full-text search with tsvector
+4. `supabase/scheduling.sql` - (Optional) Post scheduling support
+5. `supabase/seed.sql` - (Optional) Sample data
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-### GitHub OAuth (Optional)
+### GitHub OAuth
 
 1. Supabase Dashboard > Authentication > Providers > GitHub
 2. Create a GitHub OAuth App at github.com/settings/developers
-3. Set the callback URL to `https://your-project.supabase.co/auth/v1/callback`
+3. Callback URL: `https://your-project.supabase.co/auth/v1/callback`
 
 ## Project Structure
 
 ```
 src/
-  app/              Pages and layouts (App Router)
-    blog/[id]/      Blog post detail with comments
-    create/         Post editor with markdown toolbar
-    login/          Authentication
-    signup/
-    profile/        User profiles
-    settings/       Profile settings
-    following/      Feed from followed users
-    playlist/       Bookmarks, history, liked posts
-    results/        Search results
-  components/       Shared UI components
+  app/              Pages (App Router)
+    blog/[id]/      Blog post detail + edit
+    create/         Post editor
+    dashboard/      Analytics
+    login/, signup/ Auth
+    forgot-password/, reset-password/
+    profile/, settings/
+    following/, playlist/, results/
+  components/       UI components
   lib/
-    supabase/       Supabase client, server, hooks, API layer
-    utils.ts        Utilities (relative time, reading time, debounce)
-  atoms/            Jotai state atoms
+    supabase/       Client, server, hooks, API
+    utils.ts        Utilities
+  atoms/            Jotai state
   types/            TypeScript interfaces
-supabase/
-  schema.sql        Database schema and RLS policies
-  storage.sql       Storage bucket setup
-  seed.sql          Sample data
+supabase/           SQL migrations
 ```
 
 ## Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start development server |
+| `npm run dev` | Development server |
 | `npm run build` | Production build |
-| `npm run start` | Serve production build |
-| `npm run lint` | Run ESLint |
+| `npm run start` | Serve production |
+| `npm run lint` | ESLint |

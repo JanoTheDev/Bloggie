@@ -96,6 +96,7 @@ export async function createPost(data: {
   cover_image?: string;
   tags: string[];
   published: boolean;
+  publish_at?: string;
 }) {
   const supabase = createClient();
   const userId = await getCurrentUserId();

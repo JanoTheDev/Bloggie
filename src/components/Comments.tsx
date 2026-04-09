@@ -13,8 +13,8 @@ interface Comment {
   content: string;
   created_at: string;
   parent_id: string | null;
-  user_id: string;
-  profile: {
+  author_id: string;
+  author: {
     id: string;
     username: string;
     avatar_url: string;
@@ -85,24 +85,24 @@ export default function Comments({ postId }: { postId: string }) {
     comments.filter((c) => c.parent_id === parentId);
 
   function renderComment(comment: Comment, isReply = false) {
-    const isOwn = user?.id === comment.user_id;
+    const isOwn = user?.id === comment.author_id;
 
     return (
       <div key={comment.id} className={isReply ? "ml-10" : ""}>
         <div className="flex gap-3 py-4">
           {/* Avatar */}
           <div className="shrink-0">
-            {comment.profile.avatar_url ? (
+            {comment.author.avatar_url ? (
               <Image
-                src={comment.profile.avatar_url}
-                alt={comment.profile.username}
+                src={comment.author.avatar_url}
+                alt={comment.author.username}
                 width={32}
                 height={32}
                 className="rounded-full object-cover"
               />
             ) : (
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-200 text-xs font-medium text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400">
-                {comment.profile.username?.charAt(0).toUpperCase() ?? "?"}
+                {comment.author.username?.charAt(0).toUpperCase() ?? "?"}
               </div>
             )}
           </div>
@@ -111,10 +111,10 @@ export default function Comments({ postId }: { postId: string }) {
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                {comment.profile.username}
+                {comment.author.username}
               </span>
               <span className="text-xs text-neutral-500 dark:text-neutral-500">
-                {relativeTime(comment.created_at)}
+                {relativeTime(String(Math.floor(new Date(comment.created_at).getTime() / 1000)))}
               </span>
             </div>
             <p className="mt-1 text-sm text-neutral-700 dark:text-neutral-300">

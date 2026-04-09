@@ -143,19 +143,21 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
 
       {/* Main area */}
       <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${open ? "lg:ml-56" : "lg:ml-16"}`}>
-        <header className="sticky top-0 z-30 flex items-center h-14 px-4 bg-white dark:bg-neutral-950 border-b border-gray-200 dark:border-neutral-800 gap-3 shrink-0">
-          <button onClick={() => setOpen(!open)} className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-neutral-900 transition-colors lg:hidden" aria-label="Toggle sidebar">
-            <IconMenu />
-          </button>
-          <Link href="/" className="text-xl font-bold text-gray-900 dark:text-neutral-100 lg:hidden">Bloggie</Link>
+        <header className="sticky top-0 z-30 grid grid-cols-[auto_1fr_auto] items-center h-14 px-4 bg-white dark:bg-neutral-950 border-b border-gray-200 dark:border-neutral-800 gap-3 shrink-0">
+          <div className="flex items-center gap-3">
+            <button onClick={() => setOpen(!open)} className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-neutral-900 transition-colors lg:hidden" aria-label="Toggle sidebar">
+              <IconMenu />
+            </button>
+            <Link href="/" className="text-xl font-bold text-gray-900 dark:text-neutral-100 lg:hidden">Bloggie</Link>
+          </div>
 
           <Suspense>
-            <form onSubmit={handleSearch} className="flex-1 max-w-xl mx-auto hidden sm:block">
+            <form onSubmit={handleSearch} className="max-w-xl w-full mx-auto hidden sm:block">
               <SearchAutocomplete value={searchQuery} onChange={setSearchQuery} onSubmit={() => { if (searchQuery.trim()) navigateSearch(searchQuery); }} />
             </form>
           </Suspense>
 
-          <div className="flex items-center gap-1 ml-auto">
+          <div className="flex items-center gap-1 justify-end">
             <NotificationBell />
           </div>
         </header>

@@ -64,7 +64,7 @@ export default function SearchAutocomplete({ value, onChange, onSubmit }: Props)
           onFocus={() => { if (suggestions.length > 0 || showEmpty) setIsOpen(true); }}
           onBlur={() => setTimeout(() => setIsOpen(false), 150)}
           placeholder="Search..."
-          className="w-full pl-10 pr-4 py-1.5 text-sm bg-transparent text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none"
+          className="w-full pl-10 pr-4 py-1.5 text-sm bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700 focus:border-transparent"
         />
       </div>
 

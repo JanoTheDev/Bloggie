@@ -3,11 +3,13 @@
 import SideBar from "@/components/Navbar";
 import SmallCardInfo from "@/components/SmallCardInfo";
 import { SkeletonGrid } from "@/components/Skeleton";
-import { getPostsByAuthor, getProfile, getFollowCounts } from "@/lib/supabase/api";
+import ConfirmDialog from "@/components/ConfirmDialog";
+import { getPostsByAuthor, getProfile, getFollowCounts, deletePost } from "@/lib/supabase/api";
 import { useUser } from "@/lib/supabase/hooks";
+import { useToast } from "@/components/Toast";
 import React, { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
-import { IconVerified, IconLocation, IconWork } from "@/components/Icons";
+import { IconLocation, IconWork } from "@/components/Icons";
 import Link from "next/link";
 
 export default function Profile() {
@@ -16,6 +18,8 @@ export default function Profile() {
   const [posts, setPosts] = useState<any[]>([]);
   const [counts, setCounts] = useState({ followers: 0, following: 0 });
   const [loading, setLoading] = useState(true);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const toast = useToast();
 
   useEffect(() => {
     if (authLoading) return;
@@ -85,12 +89,37 @@ export default function Profile() {
               <section>
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-neutral-100 mb-3">{posts.length} posts</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                  {posts.map((p: any) => <SmallCardInfo data={p} key={p.id} />)}
+                  {posts.map((p: any) => (
+                    <div key={p.id} className="relative group/card">
+                      <SmallCardInfo data={p} />
+                      <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover/card:opacity-100 transition-opacity z-10">
+                        <Link href={`/blog/${p.slug}/edit`} className="px-2 py-1 text-xs font-medium bg-white dark:bg-neutral-900 text-gray-700 dark:text-neutral-300 rounded-md shadow-sm border border-gray-200 dark:border-neutral-700 hover:bg-gray-50 dark:hover:bg-neutral-800">Edit</Link>
+                        <button onClick={() => setDeleteTarget(p.id)} className="px-2 py-1 text-xs font-medium bg-white dark:bg-neutral-900 text-red-600 dark:text-red-400 rounded-md shadow-sm border border-gray-200 dark:border-neutral-700 hover:bg-red-50 dark:hover:bg-red-950">Delete</button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </section>
             )}
           </>
         )}
+        <ConfirmDialog
+          open={!!deleteTarget}
+          onClose={() => setDeleteTarget(null)}
+          onConfirm={async () => {
+            if (!deleteTarget) return;
+            try {
+              await deletePost(deleteTarget);
+              setPosts((prev) => prev.filter((p: any) => p.id !== deleteTarget));
+              setDeleteTarget(null);
+              toast("Post deleted", "success");
+            } catch { toast("Failed to delete", "error"); }
+          }}
+          title="Delete post"
+          message="Are you sure? This can't be undone."
+          confirmLabel="Delete"
+          destructive
+        />
       </SideBar>
     </Suspense>
   );

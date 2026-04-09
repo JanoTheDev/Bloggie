@@ -3,7 +3,11 @@
 import { Suspense, useEffect, useState } from "react";
 import SideBar from "@/components/Navbar";
 import { useUser } from "@/lib/supabase/hooks";
+import { useToast } from "@/components/Toast";
 import { createClient } from "@/lib/supabase/client";
+import { deletePost } from "@/lib/supabase/api";
+import ConfirmDialog from "@/components/ConfirmDialog";
+import Link from "next/link";
 
 interface PostAnalytics {
   id: string;
@@ -19,6 +23,8 @@ function DashboardContent() {
   const { user, loading: userLoading } = useUser();
   const [posts, setPosts] = useState<PostAnalytics[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const toast = useToast();
 
   useEffect(() => {
     if (!user) return;
@@ -160,6 +166,7 @@ function DashboardContent() {
                 <th className="px-5 py-3 font-medium text-right">Likes</th>
                 <th className="px-5 py-3 font-medium text-right">Comments</th>
                 <th className="px-5 py-3 font-medium text-right">Published</th>
+                <th className="px-5 py-3 font-medium text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -183,12 +190,18 @@ function DashboardContent() {
                   <td className="px-5 py-3 text-right text-gray-500 dark:text-neutral-400">
                     {new Date(post.created_at).toLocaleDateString()}
                   </td>
+                  <td className="px-5 py-3 text-right">
+                    <div className="flex justify-end gap-2">
+                      <Link href={`/blog/${post.slug}/edit`} className="text-xs font-medium text-gray-500 dark:text-neutral-400 hover:text-gray-700 dark:hover:text-neutral-200">Edit</Link>
+                      <button onClick={() => setDeleteTarget(post.id)} className="text-xs font-medium text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                    </div>
+                  </td>
                 </tr>
               ))}
               {sortedByViews.length === 0 && (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     className="px-5 py-8 text-center text-gray-500 dark:text-neutral-400"
                   >
                     No published posts yet
@@ -199,6 +212,23 @@ function DashboardContent() {
           </table>
         </div>
       </div>
+      <ConfirmDialog
+        open={!!deleteTarget}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={async () => {
+          if (!deleteTarget) return;
+          try {
+            await deletePost(deleteTarget);
+            setPosts((prev) => prev.filter((p) => p.id !== deleteTarget));
+            setDeleteTarget(null);
+            toast("Post deleted", "success");
+          } catch { toast("Failed to delete", "error"); }
+        }}
+        title="Delete post"
+        message="Are you sure? This can't be undone."
+        confirmLabel="Delete"
+        destructive
+      />
     </div>
   );
 }

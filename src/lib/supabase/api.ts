@@ -127,10 +127,12 @@ export async function updatePost(
   }>
 ) {
   const supabase = createClient();
+  const userId = await getCurrentUserId();
   const { data: post, error } = await supabase
     .from("posts")
     .update({ ...data, updated_at: new Date().toISOString() })
     .eq("id", id)
+    .eq("author_id", userId)
     .select()
     .single();
 
@@ -140,7 +142,8 @@ export async function updatePost(
 
 export async function deletePost(id: string) {
   const supabase = createClient();
-  const { error } = await supabase.from("posts").delete().eq("id", id);
+  const userId = await getCurrentUserId();
+  const { error } = await supabase.from("posts").delete().eq("id", id).eq("author_id", userId);
 
   if (error) throw error;
 }
@@ -426,7 +429,8 @@ export async function addComment(
 
 export async function deleteComment(id: string) {
   const supabase = createClient();
-  const { error } = await supabase.from("comments").delete().eq("id", id);
+  const userId = await getCurrentUserId();
+  const { error } = await supabase.from("comments").delete().eq("id", id).eq("author_id", userId);
 
   if (error) throw error;
 }

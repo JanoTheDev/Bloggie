@@ -65,7 +65,7 @@ function EditPostContent() {
   // Check authorization once user and post are loaded
   useEffect(() => {
     if (userLoading || loading) return;
-    if (post && user && post.user_id !== user.id) {
+    if (post && user && post.author_id !== user.id) {
       router.replace(`/blog/${slug}`);
     }
   }, [user, userLoading, post, loading, slug, router]);
@@ -221,7 +221,7 @@ function EditPostContent() {
   }
 
   // Not authorized (will redirect, show nothing in the meantime)
-  if (!user || (post && post.user_id !== user.id)) {
+  if (!user || (post && post.author_id !== user.id)) {
     return null;
   }
 

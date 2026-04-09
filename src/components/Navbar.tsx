@@ -78,10 +78,10 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
             item.type === "Dividor" ? (
               <div key={i} className="my-2 mx-2 h-px bg-gray-200 dark:bg-neutral-900" />
             ) : (
-              <a key={i} href={item.href || "#"} className={`flex items-center gap-3 rounded-lg px-3 py-2.5 mb-0.5 transition-colors duration-150 text-sm font-medium ${item.selected ? "bg-gray-100 dark:bg-neutral-800 text-gray-900 dark:text-neutral-100" : "text-gray-600 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-900 hover:text-gray-900 dark:hover:text-neutral-100"} ${!open ? "lg:justify-center lg:px-0" : ""}`}>
+              <Link key={i} href={item.href || "#"} prefetch className={`flex items-center gap-3 rounded-lg px-3 py-2.5 mb-0.5 transition-colors duration-150 text-sm font-medium ${item.selected ? "bg-gray-100 dark:bg-neutral-800 text-gray-900 dark:text-neutral-100" : "text-gray-600 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-900 hover:text-gray-900 dark:hover:text-neutral-100"} ${!open ? "lg:justify-center lg:px-0" : ""}`}>
                 <span className="shrink-0 [&>svg]:w-5 [&>svg]:h-5">{item.image}</span>
                 {open && <span className="truncate">{item.name}</span>}
-              </a>
+              </Link>
             )
           )}
         </nav>

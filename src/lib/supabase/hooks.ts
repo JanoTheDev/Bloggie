@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { createClient } from "./client";
 import type { User } from "@supabase/supabase-js";
 
-const supabase = createClient();
-
 export function useUser() {
+  const supabase = useMemo(() => createClient(), []);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -24,17 +23,18 @@ export function useUser() {
     );
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [supabase]);
 
   return { user, loading };
 }
 
 export function useProfile(userId: string | undefined) {
+  const supabase = useMemo(() => createClient(), []);
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) { setLoading(false); return; }
     supabase
       .from("profiles")
       .select("*")
@@ -44,7 +44,7 @@ export function useProfile(userId: string | undefined) {
         setProfile(data);
         setLoading(false);
       });
-  }, [userId]);
+  }, [userId, supabase]);
 
   return { profile, loading };
 }

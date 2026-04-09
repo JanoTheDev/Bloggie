@@ -8,19 +8,22 @@ import { useParams } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
-import "highlight.js/styles/default.css";
+import hljs from "highlight.js";
+import "highlight.js/styles/github-dark.css";
 import { useToast } from "@/components/Toast";
 import { relativeTime, readingTime } from "@/lib/utils";
 import TableOfContents from "@/components/TableOfContents";
 import RelatedPosts from "@/components/RelatedPosts";
 import Image from "next/image";
 import Link from "next/link";
+import { useUser } from "@/lib/supabase/hooks";
 
 export default function BlogPost() {
   const { id: slug } = useParams<{ id: string }>();
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const toast = useToast();
+  const { user } = useUser();
 
   useEffect(() => {
     if (!slug) return;
@@ -45,6 +48,11 @@ export default function BlogPost() {
 
   useEffect(() => {
     if (!post) return;
+    // Syntax highlighting
+    document.querySelectorAll(".markdown-body pre code").forEach((el) => {
+      hljs.highlightElement(el as HTMLElement);
+    });
+    // Copy buttons
     document.querySelectorAll(".markdown-body pre").forEach((pre) => {
       if (pre.querySelector("[data-copy-code]")) return;
       pre.classList.add("relative", "group/code");
@@ -105,6 +113,11 @@ export default function BlogPost() {
               <span>{readingTime(post.content)}</span>
             </div>
           </div>
+          {user?.id === author.id && (
+            <Link href={`/blog/${slug}/edit`} className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-neutral-400 bg-gray-100 dark:bg-neutral-900 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-800 transition-colors">
+              Edit
+            </Link>
+          )}
           <button
             onClick={() => { navigator.clipboard.writeText(window.location.href); toast("Link copied", "success"); }}
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-neutral-400 bg-gray-100 dark:bg-neutral-900 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-800 transition-colors"

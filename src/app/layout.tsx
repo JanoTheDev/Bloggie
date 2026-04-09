@@ -6,6 +6,8 @@ import { Toast } from "@/components/Toast";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import LoadingBar from "@/components/LoadingBar";
 import BackToTop from "@/components/BackToTop";
+import ReadingProgress from "@/components/ReadingProgress";
+import KeyboardShortcuts from "@/components/KeyboardShortcuts";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,11 +40,13 @@ export default function RootLayout({
         </a>
         <ThemeProvider>
           <LoadingBar />
+          <ReadingProgress />
           <ErrorBoundary>
             {children}
           </ErrorBoundary>
           <Toast />
           <BackToTop />
+          <KeyboardShortcuts />
         </ThemeProvider>
       </body>
     </html>

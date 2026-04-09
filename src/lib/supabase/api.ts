@@ -513,6 +513,15 @@ export async function getFollowing(userId: string) {
   return data.map((row) => row.following);
 }
 
+export async function getFollowCounts(userId: string) {
+  const supabase = createClient();
+  const [followers, following] = await Promise.all([
+    supabase.from("follows").select("*", { count: "exact", head: true }).eq("following_id", userId),
+    supabase.from("follows").select("*", { count: "exact", head: true }).eq("follower_id", userId),
+  ]);
+  return { followers: followers.count || 0, following: following.count || 0 };
+}
+
 // ---------------------------------------------------------------------------
 // Feed
 // ---------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 import type { SidebarItem } from "@/types";
-import { IconHome, IconProfile, IconFollowing, IconHistory, IconReadLater, IconLikedBlogs, IconPlus } from "@/components/Icons";
+import { IconHome, IconProfile, IconFollowing, IconHistory, IconReadLater, IconLikedBlogs, IconPlus, IconChart } from "@/components/Icons";
 
 export type { SidebarItem };
 
@@ -13,4 +13,5 @@ export const SidebarItems: SidebarItem[] = [
   { type: "Item", alias: "/playlistlb", selected: false, href: "/playlist?list=LB", name: "Liked Blogs", image: <IconLikedBlogs /> },
   { type: "Dividor" },
   { type: "Item", alias: "/create", selected: false, href: "/create", name: "New Post", image: <IconPlus /> },
+  { type: "Item", alias: "/dashboard", selected: false, href: "/dashboard", name: "Dashboard", image: <IconChart /> },
 ];

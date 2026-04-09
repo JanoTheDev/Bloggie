@@ -4,13 +4,24 @@ import React, { useState, useMemo, useRef, Suspense, useEffect, useCallback } fr
 import SideBar from "@/components/Navbar";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
-import { createPost } from "@/lib/supabase/api";
+import { createClient } from "@/lib/supabase/client";
+import { useUser } from "@/lib/supabase/hooks";
 import { useToast } from "@/components/Toast";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import MarkdownToolbar from "@/components/MarkdownToolbar";
 import ImageUpload from "@/components/ImageUpload";
 
-function CreatePostContent() {
+function EditPostContent() {
+  const { id: slug } = useParams<{ id: string }>();
+  const { user, loading: userLoading } = useUser();
+  const toast = useToast();
+  const router = useRouter();
+  const supabase = createClient();
+
+  const [post, setPost] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState<string[]>([]);
@@ -18,6 +29,46 @@ function CreatePostContent() {
   const [markdown, setMarkdown] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const [updating, setUpdating] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  // Fetch the post
+  useEffect(() => {
+    if (!slug) return;
+
+    async function fetchPost() {
+      const { data, error } = await supabase
+        .from("posts")
+        .select("*")
+        .eq("slug", slug)
+        .single();
+
+      if (error || !data) {
+        setNotFound(true);
+        setLoading(false);
+        return;
+      }
+
+      setPost(data);
+      setTitle(data.title || "");
+      setDescription(data.short_description || "");
+      setTags(data.tags || []);
+      setMarkdown(data.content || "");
+      setCoverImage(data.cover_image || "");
+      setLoading(false);
+    }
+
+    fetchPost();
+  }, [slug]);
+
+  // Check authorization once user and post are loaded
+  useEffect(() => {
+    if (userLoading || loading) return;
+    if (post && user && post.user_id !== user.id) {
+      router.replace(`/blog/${slug}`);
+    }
+  }, [user, userLoading, post, loading, slug, router]);
 
   const previewHtml = useMemo(() => {
     if (!markdown) return "";
@@ -40,54 +91,139 @@ function CreatePostContent() {
     setTags(tags.filter((t) => t !== tagToRemove));
   };
 
-  const toast = useToast();
-  const router = useRouter();
-  const [publishing, setPublishing] = useState(false);
-
-  // Auto-save draft to localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem("draft");
-    if (saved) {
-      try {
-        const d = JSON.parse(saved);
-        if (d.title) setTitle(d.title);
-        if (d.description) setDescription(d.description);
-        if (d.tags) setTags(d.tags);
-        if (d.markdown) setMarkdown(d.markdown);
-      } catch {}
-    }
-  }, []);
-
-  const saveDraft = useCallback(() => {
-    localStorage.setItem("draft", JSON.stringify({ title, description, tags, markdown }));
-  }, [title, description, tags, markdown]);
-
-  useEffect(() => {
-    const timer = setTimeout(saveDraft, 1000);
-    return () => clearTimeout(timer);
-  }, [saveDraft]);
-
-  const handlePublish = async () => {
-    if (publishing) return;
-    setPublishing(true);
+  const handleUpdate = async () => {
+    if (updating || !post) return;
+    setUpdating(true);
     try {
-      const post = await createPost({
-        title,
-        content: markdown,
-        short_description: description,
-        cover_image: coverImage || undefined,
-        tags,
-        published: true,
-      });
-      localStorage.removeItem("draft");
-      toast("Post published!", "success");
-      router.push(`/blog/${post.slug}`);
+      const { error } = await supabase
+        .from("posts")
+        .update({
+          title,
+          content: markdown,
+          short_description: description,
+          cover_image: coverImage || null,
+          tags,
+        })
+        .eq("id", post.id);
+
+      if (error) throw error;
+
+      toast("Post updated!", "success");
+      router.push(`/blog/${slug}`);
     } catch (err: any) {
-      toast(err.message || "Failed to publish", "error");
+      toast(err.message || "Failed to update", "error");
     } finally {
-      setPublishing(false);
+      setUpdating(false);
     }
   };
+
+  const handleDelete = async () => {
+    if (deleting || !post) return;
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this post? This action cannot be undone."
+    );
+    if (!confirmed) return;
+
+    setDeleting(true);
+    try {
+      const { error } = await supabase
+        .from("posts")
+        .delete()
+        .eq("id", post.id);
+
+      if (error) throw error;
+
+      toast("Post deleted.", "success");
+      router.push("/profile");
+    } catch (err: any) {
+      toast(err.message || "Failed to delete", "error");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  // Loading skeleton
+  if (loading || userLoading) {
+    return (
+      <SideBar>
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-6">
+            <div className="h-8 w-48 bg-gray-200 dark:bg-neutral-800 rounded-lg animate-pulse" />
+            <div className="mt-2 h-4 w-72 bg-gray-200 dark:bg-neutral-800 rounded animate-pulse" />
+          </div>
+          <div className="flex flex-col lg:flex-row gap-6">
+            <div className="flex-1 min-w-0">
+              <div className="bg-white dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 rounded-xl p-5 space-y-4">
+                <div className="h-5 w-12 bg-gray-200 dark:bg-neutral-800 rounded animate-pulse" />
+                <div className="h-11 w-full bg-gray-100 dark:bg-neutral-900 rounded-lg animate-pulse" />
+                <div className="h-5 w-28 bg-gray-200 dark:bg-neutral-800 rounded animate-pulse" />
+                <div className="h-10 w-full bg-gray-100 dark:bg-neutral-900 rounded-lg animate-pulse" />
+                <div className="h-5 w-10 bg-gray-200 dark:bg-neutral-800 rounded animate-pulse" />
+                <div className="h-10 w-full bg-gray-100 dark:bg-neutral-900 rounded-lg animate-pulse" />
+                <div className="h-5 w-24 bg-gray-200 dark:bg-neutral-800 rounded animate-pulse" />
+                <div className="h-32 w-full bg-gray-100 dark:bg-neutral-900 rounded-lg animate-pulse" />
+                <div className="h-5 w-36 bg-gray-200 dark:bg-neutral-800 rounded animate-pulse" />
+                <div className="h-64 w-full bg-gray-100 dark:bg-neutral-900 rounded-lg animate-pulse" />
+              </div>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="bg-white dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 rounded-xl p-5">
+                <div className="h-4 w-16 bg-gray-200 dark:bg-neutral-800 rounded animate-pulse mb-4" />
+                <div className="space-y-3">
+                  <div className="h-4 w-full bg-gray-100 dark:bg-neutral-900 rounded animate-pulse" />
+                  <div className="h-4 w-3/4 bg-gray-100 dark:bg-neutral-900 rounded animate-pulse" />
+                  <div className="h-4 w-5/6 bg-gray-100 dark:bg-neutral-900 rounded animate-pulse" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SideBar>
+    );
+  }
+
+  // Post not found
+  if (notFound) {
+    return (
+      <SideBar>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col items-center justify-center py-20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-16 h-16 text-gray-300 dark:text-neutral-700 mb-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+              />
+            </svg>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-neutral-100 mb-2">
+              Post not found
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-neutral-400 mb-6">
+              The post you are looking for does not exist or has been removed.
+            </p>
+            <button
+              onClick={() => router.push("/")}
+              className="px-5 py-2 bg-gray-900 dark:bg-neutral-100 text-white dark:text-black text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
+            >
+              Go Home
+            </button>
+          </div>
+        </div>
+      </SideBar>
+    );
+  }
+
+  // Not authorized (will redirect, show nothing in the meantime)
+  if (!user || (post && post.user_id !== user.id)) {
+    return null;
+  }
 
   return (
     <SideBar>
@@ -95,10 +231,10 @@ function CreatePostContent() {
         {/* Page header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100">
-            Create New Post
+            Edit Post
           </h1>
           <p className="mt-1 text-sm text-gray-500 dark:text-neutral-400">
-            Write your post in Markdown and see a live preview.
+            Update your post content and settings.
           </p>
         </div>
 
@@ -208,9 +344,6 @@ function CreatePostContent() {
                   rows={18}
                   className="w-full px-4 py-3 bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-b-lg text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700 focus:border-transparent text-sm font-mono leading-relaxed resize-y"
                 />
-                <div className="flex justify-end mt-1 text-xs text-gray-400 dark:text-neutral-500">
-                  {markdown.trim() ? `${markdown.trim().split(/\s+/).length} words` : "0 words"}
-                </div>
               </div>
             </div>
           </div>
@@ -263,15 +396,23 @@ function CreatePostContent() {
           </div>
         </div>
 
-        {/* Publish button */}
-        <div className="mt-6 flex justify-end">
+        {/* Action buttons */}
+        <div className="mt-6 flex justify-between">
           <button
             type="button"
-            onClick={handlePublish}
-            disabled={!title.trim() || !markdown.trim() || publishing}
+            onClick={handleDelete}
+            disabled={deleting}
+            className="px-5 py-2.5 bg-red-600 dark:bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 dark:hover:bg-red-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {deleting ? "Deleting..." : "Delete Post"}
+          </button>
+          <button
+            type="button"
+            onClick={handleUpdate}
+            disabled={!title.trim() || !markdown.trim() || updating}
             className="px-6 py-2.5 bg-gray-900 dark:bg-neutral-100 text-white dark:text-black text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            {publishing ? "Publishing..." : "Publish"}
+            {updating ? "Updating..." : "Update"}
           </button>
         </div>
       </div>
@@ -279,10 +420,10 @@ function CreatePostContent() {
   );
 }
 
-export default function CreatePostPage() {
+export default function EditPostPage() {
   return (
     <Suspense fallback={<div className="p-6">Loading...</div>}>
-      <CreatePostContent />
+      <EditPostContent />
     </Suspense>
   );
 }

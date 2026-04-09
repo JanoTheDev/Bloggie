@@ -3,7 +3,7 @@
 import SideBar from "@/components/Navbar";
 import SmallCardInfo from "@/components/SmallCardInfo";
 import { SkeletonGrid } from "@/components/Skeleton";
-import { getPostsByAuthor, getProfile, updateProfile } from "@/lib/supabase/api";
+import { getPostsByAuthor, getProfile, getFollowCounts } from "@/lib/supabase/api";
 import { useUser } from "@/lib/supabase/hooks";
 import React, { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
@@ -14,6 +14,7 @@ export default function Profile() {
   const { user, loading: authLoading } = useUser();
   const [profile, setProfile] = useState<any>(null);
   const [posts, setPosts] = useState<any[]>([]);
+  const [counts, setCounts] = useState({ followers: 0, following: 0 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,9 +23,11 @@ export default function Profile() {
     Promise.all([
       getProfile(user.id),
       getPostsByAuthor(user.id),
-    ]).then(([p, posts]) => {
+      getFollowCounts(user.id),
+    ]).then(([p, posts, c]) => {
       setProfile(p);
       setPosts(posts || []);
+      setCounts(c);
     }).catch(() => {})
     .finally(() => setLoading(false));
   }, [user, authLoading]);
@@ -58,6 +61,7 @@ export default function Profile() {
                 )}
                 <div className="flex-1 text-center sm:text-left">
                   <h2 className="text-xl font-bold text-gray-900 dark:text-neutral-100">{profile.username}</h2>
+                  <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">{counts.followers} followers · {counts.following} following</p>
                   {profile.bio && <p className="text-sm text-gray-600 dark:text-neutral-300 mt-1">{profile.bio}</p>}
                   <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mt-3 text-sm text-gray-500 dark:text-neutral-400">
                     {profile.location && <span className="flex items-center gap-1"><IconLocation className="w-4 h-4" /> {profile.location}</span>}

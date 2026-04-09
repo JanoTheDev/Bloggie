@@ -26,6 +26,8 @@ export default function Comments({ postId }: { postId: string }) {
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editContent, setEditContent] = useState("");
 
   const fetchComments = useCallback(async () => {
     try { setComments(await getComments(postId)); }
@@ -48,8 +50,19 @@ export default function Comments({ postId }: { postId: string }) {
   }
 
   async function handleDelete(id: string) {
+    if (!confirm("Delete this comment?")) return;
     try { await deleteComment(id); await fetchComments(); }
     catch { toast("Failed to delete", "error"); }
+  }
+
+  async function handleEditSave(id: string) {
+    if (!editContent.trim()) return;
+    const { createClient } = await import("@/lib/supabase/client");
+    const supabase = createClient();
+    const { error } = await supabase.from("comments").update({ content: editContent.trim() }).eq("id", id);
+    if (error) { toast("Failed to edit", "error"); return; }
+    setEditingId(null);
+    await fetchComments();
   }
 
   const topLevel = comments.filter((c) => !c.parent_id);
@@ -85,7 +98,15 @@ export default function Comments({ postId }: { postId: string }) {
               </Link>
               <span className="text-xs text-gray-400 dark:text-neutral-600">{relativeTime(ts)}</span>
             </div>
-            <p className="mt-0.5 text-sm text-gray-700 dark:text-neutral-300 leading-relaxed">{comment.content}</p>
+            {editingId === comment.id ? (
+              <div className="mt-1 flex gap-2">
+                <input type="text" value={editContent} onChange={(e) => setEditContent(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") handleEditSave(comment.id); if (e.key === "Escape") setEditingId(null); }} className="flex-1 rounded-lg border border-gray-200 dark:border-neutral-800 bg-transparent px-3 py-1.5 text-sm text-gray-900 dark:text-neutral-100 focus:outline-none focus:border-gray-400 dark:focus:border-neutral-600" autoFocus />
+                <button onClick={() => handleEditSave(comment.id)} className="rounded-lg bg-gray-900 dark:bg-neutral-100 px-3 py-1.5 text-xs font-medium text-white dark:text-black">Save</button>
+                <button onClick={() => setEditingId(null)} className="text-xs text-gray-400">Cancel</button>
+              </div>
+            ) : (
+              <p className="mt-0.5 text-sm text-gray-700 dark:text-neutral-300 leading-relaxed">{comment.content}</p>
+            )}
             <div className="mt-1.5 flex items-center gap-3">
               {user && (
                 <button
@@ -93,6 +114,11 @@ export default function Comments({ postId }: { postId: string }) {
                   className="text-xs font-medium text-gray-400 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-neutral-300"
                 >
                   Reply
+                </button>
+              )}
+              {isOwn && (Date.now() - new Date(comment.created_at).getTime()) < 5 * 60 * 1000 && (
+                <button onClick={() => { setEditingId(comment.id); setEditContent(comment.content); }} className="text-xs font-medium text-gray-400 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-neutral-300">
+                  Edit
                 </button>
               )}
               {isOwn && (

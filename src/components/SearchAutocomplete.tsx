@@ -91,8 +91,8 @@ export default function SearchAutocomplete({ value, onChange, onSubmit }: Props)
           value={value}
           onChange={(e) => { onChange(e.target.value); setHighlighted(-1); }}
           onKeyDown={handleKeyDown}
-          onFocus={() => { if (results.length > 0 || showEmpty) setIsOpen(true); }}
-          onBlur={() => setTimeout(() => setIsOpen(false), 150)}
+          onFocus={() => { if (value.trim().length > 0 && (results.length > 0 || showEmpty)) setIsOpen(true); }}
+          onBlur={() => setTimeout(() => { setIsOpen(false); setHighlighted(-1); }, 120)}
           placeholder="Search posts, tags..."
           className="w-full pl-10 pr-4 py-1.5 text-sm bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-neutral-700 focus:border-transparent"
         />

@@ -17,8 +17,9 @@ export default function Home() {
   const loadPosts = useCallback(async (pageNum: number) => {
     try {
       const data = await getPosts(pageNum, 12);
-      if (pageNum === 0) setPosts(data || []);
-      else setPosts((prev) => [...prev, ...(data || [])]);
+      const dedup = (arr: any[]) => { const seen = new Set<string>(); return arr.filter((p) => { if (seen.has(p.id)) return false; seen.add(p.id); return true; }); };
+      if (pageNum === 0) setPosts(dedup(data || []));
+      else setPosts((prev) => dedup([...prev, ...(data || [])]));
       setHasMore((data?.length || 0) === 12);
     } catch {
       setPosts([]);

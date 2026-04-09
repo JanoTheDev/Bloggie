@@ -17,7 +17,10 @@ export default function Following() {
     if (authLoading) return;
     if (!user) { setLoading(false); return; }
     getFeed()
-      .then((data) => setPosts(data || []))
+      .then((data) => {
+        const seen = new Set<string>();
+        setPosts((data || []).filter((p: any) => { if (seen.has(p.id)) return false; seen.add(p.id); return true; }));
+      })
       .catch(() => setPosts([]))
       .finally(() => setLoading(false));
   }, [user, authLoading]);

@@ -241,7 +241,7 @@ export default function NotificationBell() {
                       {notificationMessage(n)}
                     </p>
                     <p className="mt-0.5 text-xs text-neutral-500 dark:text-neutral-500">
-                      {relativeTime(n.created_at)}
+                      {relativeTime(String(Math.floor(new Date(n.created_at).getTime() / 1000)))}
                     </p>
                   </div>
 

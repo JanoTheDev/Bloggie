@@ -25,6 +25,18 @@ async function getCurrentUserId() {
   return user.id;
 }
 
+// Create a notification (fire-and-forget, never throw)
+async function notify(userId: string, type: string, actorId: string, postId?: string) {
+  if (userId === actorId) return; // don't notify yourself
+  const supabase = createClient();
+  await supabase.from("notifications").insert({
+    user_id: userId,
+    type,
+    actor_id: actorId,
+    post_id: postId || null,
+  }).then(() => {});
+}
+
 // Common select string for posts with author + counts
 const POST_SELECT = `
   *,
@@ -135,19 +147,34 @@ export async function deletePost(id: string) {
 
 export async function searchPosts(query: string) {
   const supabase = createClient();
-  const pattern = `%${query}%`;
+  const q = query.trim().toLowerCase();
+  const pattern = `%${q}%`;
 
-  const { data, error } = await supabase
+  // Search title, description, and content via ilike
+  const textSearch = supabase
     .from("posts")
     .select(POST_SELECT)
     .eq("published", true)
-    .or(
-      `title.ilike.${pattern},content.ilike.${pattern},short_description.ilike.${pattern}`
-    )
+    .or(`title.ilike.${pattern},short_description.ilike.${pattern},content.ilike.${pattern}`)
     .order("created_at", { ascending: false });
 
-  if (error) throw error;
-  return data;
+  // Search tags via contains
+  const tagSearch = supabase
+    .from("posts")
+    .select(POST_SELECT)
+    .eq("published", true)
+    .contains("tags", [q])
+    .order("created_at", { ascending: false });
+
+  const [textRes, tagRes] = await Promise.all([textSearch, tagSearch]);
+  if (textRes.error) throw textRes.error;
+
+  // Merge with deduplication, text matches first
+  const seen = new Set<string>();
+  const merged = [];
+  for (const p of textRes.data || []) { if (!seen.has(p.id)) { seen.add(p.id); merged.push(p); } }
+  for (const p of tagRes.data || []) { if (!seen.has(p.id)) { seen.add(p.id); merged.push(p); } }
+  return merged;
 }
 
 // ---------------------------------------------------------------------------
@@ -231,6 +258,11 @@ export async function toggleLike(postId: string) {
     .from("likes")
     .insert({ user_id: userId, post_id: postId });
   if (error) throw error;
+
+  // Notify post author
+  const { data: post } = await supabase.from("posts").select("author_id").eq("id", postId).single();
+  if (post) notify(post.author_id, "like", userId, postId);
+
   return { liked: true };
 }
 
@@ -287,6 +319,9 @@ export async function toggleFollow(followingId: string) {
     .from("follows")
     .insert({ follower_id: userId, following_id: followingId });
   if (error) throw error;
+
+  notify(followingId, "follow", userId);
+
   return { following: true };
 }
 
@@ -381,6 +416,11 @@ export async function addComment(
     .single();
 
   if (error) throw error;
+
+  // Notify post author
+  const { data: post } = await supabase.from("posts").select("author_id").eq("id", postId).single();
+  if (post) notify(post.author_id, "comment", userId, postId);
+
   return data;
 }
 

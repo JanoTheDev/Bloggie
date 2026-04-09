@@ -128,7 +128,7 @@ function SideBarInner({ children }: { children: React.ReactNode }) {
                 </Transition>
               </Menu>
             ) : (
-              <Link href="/login" className="px-4 py-1.5 text-sm font-medium bg-gray-900 dark:bg-neutral-100 text-white dark:text-black rounded-lg hover:bg-gray-800 dark:hover:bg-neutral-200 transition-colors">
+              <Link href="/login" className="px-4 py-1.5 text-sm font-medium rounded-lg transition-colors border border-gray-300 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 hover:bg-gray-100 dark:hover:bg-neutral-900">
                 Sign in
               </Link>
             )}
